@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.soil</groupId>
+  <artifactId>jsf-dependencies</artifactId>
+  <version>0.0.1</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <jsf.version>0.0.1</jsf.version>
+    <satoken.version>1.44.0</satoken.version>
+    <bouncycastle.version>1.80</bouncycastle.version>
+    <justauth.version>1.16.7</justauth.version>
+    <skywalking-toolkit.version>9.3.0</skywalking-toolkit.version>
+
+    <bouncycastle.version>1.80</bouncycastle.version>
+    <lombok.version>1.18.46</lombok.version>
+    <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
+    <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
+    <justauth.version>1.16.7</justauth.version>
+    <!-- 离线IP地址定位库 -->
+    <ip2region.version>2.7.0</ip2region.version>
+    <!-- 临时修复 fastjson 漏洞 -->
+    <fastjson.version>1.2.83</fastjson.version>
+
+    <!-- OSS 配置 -->
+    <aws.sdk.version>2.28.22</aws.sdk.version>
+
+    <!-- SMS 配置 -->
+    <sms4j.version>3.3.4</sms4j.version>
+    <!-- 面向运行时的D-ORM依赖 -->
+    <anyline.version>8.7.2-20250101</anyline.version>
+    <!-- 工作流配置 -->
+    <warm-flow.version>1.7.3</warm-flow.version>
+    <!-- mq配置 -->
+    <rocketmq.version>2.3.0</rocketmq.version>
+    <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
+    <!-- 插件版本号 -->
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+    <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+    <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
+    <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+    <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.8.6.2</spotbugs-maven-plugin.version>
+    <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
+    <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+    <maven.compiler.release>25</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.soil</groupId>
+        <artifactId>jsf-common-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.soil</groupId>
+        <artifactId>jsf-spring-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.soil</groupId>
+        <artifactId>jsf-alibaba-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.soil</groupId>
+        <artifactId>jsf-jdbc-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.soil</groupId>
+        <artifactId>jsf-redis-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.soil</groupId>
+        <artifactId>jsf-tools-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+
+
+      <!-- sa-token -->
+      <dependency>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-core</artifactId>
+        <version>${satoken.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-spring-boot3-starter</artifactId>
+        <version>${satoken.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-jwt</artifactId>
+        <version>${satoken.version}</version>
+      </dependency>
+
+      <!-- 加密包引入 -->
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk15to18</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+
+      <!-- JustAuth 的依赖配置-->
+      <dependency>
+        <groupId>me.zhyd.oauth</groupId>
+        <artifactId>JustAuth</artifactId>
+        <version>${justauth.version}</version>
+      </dependency>
+
+      <!-- skywalking 整合 logback -->
+      <dependency>
+        <groupId>org.apache.skywalking</groupId>
+        <artifactId>apm-toolkit-logback-1.x</artifactId>
+        <version>${skywalking-toolkit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.skywalking</groupId>
+        <artifactId>apm-toolkit-trace</artifactId>
+        <version>${skywalking-toolkit.version}</version>
+      </dependency>
+
+      <!--  AWS SDK for Java 2.x  -->
+      <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>s3</artifactId>
+        <version>${aws.sdk.version}</version>
+      </dependency>
+      <!-- 基于 AWS CRT 的 S3 客户端的性能增强的 S3 传输管理器 -->
+      <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>s3-transfer-manager</artifactId>
+        <version>${aws.sdk.version}</version>
+      </dependency>
+      <!-- 将基于 Netty 的 HTTP 客户端从类路径中移除 -->
+      <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>netty-nio-client</artifactId>
+        <version>${aws.sdk.version}</version>
+      </dependency>
+
+      <!--短信sms4j-->
+      <dependency>
+        <groupId>org.dromara.sms4j</groupId>
+        <artifactId>sms4j-spring-boot-starter</artifactId>
+        <version>${sms4j.version}</version>
+      </dependency>
+
+      <!-- 离线IP地址定位库 ip2region -->
+      <dependency>
+        <groupId>org.lionsoul</groupId>
+        <artifactId>ip2region</artifactId>
+        <version>${ip2region.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+
+      <!-- dubbo 专用 -->
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.github.linpeilie</groupId>
+        <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
+        <version>${mapstruct-plus.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-dubbo3</artifactId>
+        <version>${satoken.version}</version>
+      </dependency>
+
+      <!--消息队列-->
+      <dependency>
+        <groupId>org.apache.rocketmq</groupId>
+        <artifactId>rocketmq-spring-boot-starter</artifactId>
+        <version>${rocketmq.version}</version>
+      </dependency>
+
+      <!-- logback appenders -->
+      <dependency>
+        <groupId>net.logstash.logback</groupId>
+        <artifactId>logstash-logback-encoder</artifactId>
+        <version>${logstash-logback-encoder.version}</version>
+      </dependency>
+    </dependencies>
+
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <!-- https://maven.apache.org/plugins/maven-dependency-plugin/ -->
+          <!-- The dependency plugin provides the capability to manipulate artifacts.
+               It can copy and/or unpack artifacts from local or remote repositories to a specified location. -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven-dependency-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <!-- https://maven.apache.org/plugins/maven-jar-plugin/ -->
+          <!-- This plugin provides the capability to build jars. To sign jars,
+               use the Maven Jarsigner Plugin. -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <!-- https://maven.apache.org/plugins/maven-resources-plugin/ -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+          <configuration>
+            <propertiesEncoding>UTF-8</propertiesEncoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <!-- https://maven.apache.org/plugins/maven-shade-plugin -->
+          <!-- This plugin provides the capability to package the artifact in an uber-jar,
+               including its dependencies and to shade - i.e. rename - the packages of some of the dependencies. -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>${maven-shade-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <!-- https://maven.apache.org/plugins/maven-source-plugin/ -->
+          <!-- The Source Plugin creates a jar archive of the source files of the current project.  -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven-checkstyle-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>${spotbugs-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!--  <distributionManagement>-->
+  <!--    <repository>-->
+  <!--      <uniqueVersion>true</uniqueVersion>-->
+  <!--      <id>maven-skylink</id>-->
+  <!--      <name>skylink-release</name>-->
+  <!--      <url>http://asianlink.ph:6800/repository/skylink-release/</url>-->
+  <!--    </repository>-->
+  <!--    <snapshotRepository>-->
+  <!--      <uniqueVersion>true</uniqueVersion>-->
+  <!--      <id>maven-skylink</id>-->
+  <!--      <name>skylink-snapshots</name>-->
+  <!--      <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>-->
+  <!--    </snapshotRepository>-->
+  <!--  </distributionManagement>-->
+</project>

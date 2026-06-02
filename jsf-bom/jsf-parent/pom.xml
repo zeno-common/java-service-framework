@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.soil</groupId>
+    <artifactId>jsf-dependencies</artifactId>
+    <version>0.0.1</version>
+  </parent>
+
+  <artifactId>jsf-parent</artifactId>
+  <packaging>pom</packaging>
+
+  <properties>
+  </properties>
+
+  <dependencies>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>d-local</id>
+      <properties>
+        <env>local</env>
+        <spring.active>local</spring.active>
+      </properties>
+    </profile>
+    <profile>
+      <id>d-backend</id>
+      <properties>
+        <env>backend</env>
+        <spring.active>backend</spring.active>
+      </properties>
+    </profile>
+    <profile>
+      <id>d-dev</id>
+      <properties>
+        <env>dev</env>
+        <spring.active>dev</spring.active>
+      </properties>
+    </profile>
+    <profile>
+      <id>d-uat</id>
+      <properties>
+        <env>uat</env>
+        <spring.active>uat</spring.active>
+        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
+      </properties>
+    </profile>
+    <profile>
+      <id>d-prod</id>
+      <properties>
+        <env>prod</env>
+        <spring.active>prod</spring.active>
+        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
+      </properties>
+    </profile>
+    <profile>
+      <id>d-live</id>
+      <properties>
+        <env>live</env>
+        <spring.active>live</spring.active>
+        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>pd-docker</id>
+      <properties>
+        <docker.workdir>/programs</docker.workdir>
+        <docker.from>eclipse-temurin:21.0.4_7-jre-alpine</docker.from>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.46.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <imagePullPolicy>IfNotPresent</imagePullPolicy>
+              <useColor>true</useColor>
+              <verbose>true</verbose>
+              <images>
+                <image>
+                  <alias>${project.artifactId}</alias>
+                  <name>soil/${project.artifactId}</name>
+                  <build>
+                    <from>${docker.from}</from>
+                    <tags>
+                      <!--<tag>${maven.build.timestamp}</tag>-->
+                      <tag>${env}-${project.version}</tag>
+                      <tag>${env}-latest</tag>
+                    </tags>
+                    <workdir>${docker.workdir}</workdir>
+                    <assemblies>
+                      <assembly>
+                        <name>executable-jar</name>
+                        <descriptorRef>artifact</descriptorRef>
+                        <targetDir>${docker.workdir}</targetDir>
+                      </assembly>
+                    </assemblies>
+                    <!--                    <runCmds>-->
+                    <!--                      &lt;!&ndash; 设置镜像时区 &ndash;&gt;-->
+                    <!--                      <run>ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; echo Asia/Shanghai > \-->
+                    <!--                        /etc/timezone-->
+                    <!--                      </run>-->
+                    <!--                    </runCmds>-->
+                    <buildOptions>
+                      <forcerm>true</forcerm>
+                    </buildOptions>
+                    <entryPoint>
+                      <exec>
+                        <arg>java</arg>
+                        <arg>-Dspring.profiles.active=${spring.active}</arg>
+                        <arg>-jar</arg>
+                        <arg>${project.build.finalName}.jar</arg>
+                      </exec>
+                    </entryPoint>
+                  </build>
+                  <run>
+                    <!--                    <hostname>${project.artifactId}-${env}</hostname>-->
+                    <network>
+                      <mode>bridge</mode>
+                    </network>
+                    <restartPolicy>
+                      <name>on-failure</name>
+                    </restartPolicy>
+                    <containerNamePattern>%n</containerNamePattern>
+                    <!--                    <extraHosts>-->
+                    <!--                      <host>ssy-dev:192.168.1.200</host>-->
+                    <!--                    </extraHosts>-->
+                  </run>
+                </image>
+              </images>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!--    <profile>-->
+    <!--      <id>s-checkstyle</id>-->
+    <!--      <properties>-->
+    <!--        <checkstyle.config-location>scripts/checkstyle/alibaba-code-style.xml</checkstyle.config-location>-->
+    <!--      </properties>-->
+    <!--      <build>-->
+    <!--        <plugins>-->
+    <!--          <plugin>-->
+    <!--            <groupId>org.apache.maven.plugins</groupId>-->
+    <!--            <artifactId>maven-checkstyle-plugin</artifactId>-->
+    <!--            <configuration>-->
+    <!--              <configLocation>${checkstyle.config-location}</configLocation>-->
+    <!--              <consoleOutput>true</consoleOutput>-->
+    <!--              <failsOnError>true</failsOnError>-->
+    <!--              <linkXRef>false</linkXRef>-->
+    <!--            </configuration>-->
+    <!--            <executions>-->
+    <!--              <execution>-->
+    <!--                <phase>validate</phase>-->
+    <!--                <goals>-->
+    <!--                  <goal>check</goal>-->
+    <!--                </goals>-->
+    <!--              </execution>-->
+    <!--            </executions>-->
+    <!--          </plugin>-->
+    <!--        </plugins>-->
+    <!--      </build>-->
+    <!--    </profile>-->
+    <!--    <profile>-->
+    <!--      <id>s-sonar</id>-->
+    <!--      <properties>-->
+    <!--        <sonar.java.source>8</sonar.java.source>-->
+    <!--        <sonar.scm.disabled>true</sonar.scm.disabled>-->
+    <!--      </properties>-->
+    <!--      <build>-->
+    <!--        <plugins>-->
+    <!--          <plugin>-->
+    <!--            <groupId>org.sonarsource.scanner.maven</groupId>-->
+    <!--            <artifactId>sonar-maven-plugin</artifactId>-->
+    <!--          </plugin>-->
+    <!--        </plugins>-->
+    <!--      </build>-->
+    <!--    </profile>-->
+    <!--    <profile>-->
+    <!--      <id>s-spotbugs</id>-->
+    <!--      <properties>-->
+    <!--        <spotbugs.exclude-filter-file>scripts/spotbugs/spotbugs-security-exclude.xml</spotbugs.exclude-filter-file>-->
+    <!--      </properties>-->
+    <!--      <build>-->
+    <!--        <plugins>-->
+    <!--          <plugin>-->
+    <!--            <groupId>com.github.spotbugs</groupId>-->
+    <!--            <artifactId>spotbugs-maven-plugin</artifactId>-->
+    <!--            <dependencies>-->
+    <!--              &lt;!&ndash; 指定版本插件中依赖的版本 &ndash;&gt;-->
+    <!--              <dependency>-->
+    <!--                <groupId>com.github.spotbugs</groupId>-->
+    <!--                <artifactId>spotbugs</artifactId>-->
+    <!--                <version>4.7.2</version>-->
+    <!--              </dependency>-->
+    <!--            </dependencies>-->
+    <!--            <configuration>-->
+    <!--              <excludeFilterFile>${spotbugs.exclude-filter-file}</excludeFilterFile>-->
+    <!--            </configuration>-->
+    <!--            <executions>-->
+    <!--              <execution>-->
+    <!--                <phase>validate</phase>-->
+    <!--                <goals>-->
+    <!--                  <goal>check</goal>-->
+    <!--                </goals>-->
+    <!--              </execution>-->
+    <!--            </executions>-->
+    <!--          </plugin>-->
+    <!--        </plugins>-->
+    <!--      </build>-->
+    <!--    </profile>-->
+  </profiles>
+  <build>
+    <plugins>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven-skylink</id>
+      <name>skylink-release</name>
+      <url>http://asianlink.ph:6800/repository/skylink-release/</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven-skylink</id>
+      <name>skylink-snapshots</name>
+      <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>

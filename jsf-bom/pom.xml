@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.soil</groupId>
+  <artifactId>jsf-bom</artifactId>
+  <version>0.0.1</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>jsf-alibaba-dependencies</module>
+    <module>jsf-common-dependencies</module>
+    <module>jsf-components-dependencies</module>
+    <module>jsf-dependencies</module>
+    <module>jsf-jdbc-dependencies</module>
+    <module>jsf-parent</module>
+    <module>jsf-redis-dependencies</module>
+    <module>jsf-spring-dependencies</module>
+    <module>jsf-tools-dependencies</module>
+  </modules>
+
+
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven-skylink</id>
+      <name>skylink-release</name>
+      <url>http://asianlink.ph:6800/repository/skylink-release/</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven-skylink</id>
+      <name>skylink-snapshots</name>
+      <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>

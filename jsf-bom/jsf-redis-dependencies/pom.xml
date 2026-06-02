@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jsf-redis-dependencies</artifactId>
+    <groupId>io.soil</groupId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <jsf.version>0.0.1</jsf.version>
+        <redisson-spring-boot3.version>3.49.0</redisson-spring-boot3.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-spring-boot3.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>maven-skylink</id>
+            <name>skylink-release</name>
+            <url>http://asianlink.ph:6800/repository/skylink-release/</url>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>maven-skylink</id>
+            <name>skylink-snapshots</name>
+            <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
