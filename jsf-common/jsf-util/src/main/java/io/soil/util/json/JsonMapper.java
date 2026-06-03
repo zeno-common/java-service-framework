@@ -8,16 +8,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.OffsetDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import io.soil.common.constant.TimeFormatConstant;
+import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
 import io.soil.common.date.DateTimeUtil;
+import io.soil.common.date.TimeFormatConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -44,15 +46,18 @@ public final class JsonMapper {
 
     // 时间格式配置
     JavaTimeModule javaTimeModule = new JavaTimeModule();
-    DateTimeFormatter dateTimeFormatter = DateTimeUtil.DEFAULT_FORMATTER;
-    LocalDateTimeSerializer ldtSerializer = new LocalDateTimeSerializer(dateTimeFormatter);
-    javaTimeModule.addSerializer(ldtSerializer);
 
-    LocalDateTimeDeserializer ldtDeserializer = new LocalDateTimeDeserializer(dateTimeFormatter);
-    javaTimeModule.addDeserializer(LocalDateTime.class, ldtDeserializer);
+    // LocalDateTime 序列化（无时区）
+    DateTimeFormatter localDateTimeFormatter = DateTimeUtil.DEFAULT_FORMATTER;
+    javaTimeModule.addSerializer(new LocalDateTimeSerializer(localDateTimeFormatter));
+
+    // OffsetDateTime 序列化/反序列化（带时区）
+    DateTimeFormatter offsetDateTimeFormatter = DateTimeUtil.ISO_OFFSET_FORMATTER;
+    javaTimeModule.addSerializer(new OffsetDateTimeSerializer(offsetDateTimeFormatter));
+    javaTimeModule.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer(offsetDateTimeFormatter));
 
     objectMapper.registerModule(javaTimeModule);
-    objectMapper.setDateFormat(new SimpleDateFormat(TimeFormatConstant.DATE_TIME_FORMAT));
+    objectMapper.setDateFormat(new SimpleDateFormat(TimeFormatConstant.ISO_DATE_TIME_OFFSET_FORMAT));
 
     // 特性启用
     objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
