@@ -17,7 +17,7 @@ import java.util.Collections;
  * 2. 有助于构异异常类的构建，并提供多种场景下异常类构建函数的定义参考，
  * 方便快速定义异常类和易于实例化异常类对象。
  *
- * @author wangzezhou
+ * @author zeno.w
  */
 @Slf4j
 public abstract class BaseException extends RuntimeException {

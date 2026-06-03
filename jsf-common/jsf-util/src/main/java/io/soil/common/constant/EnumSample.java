@@ -7,7 +7,7 @@ import io.soil.common.exception.UnknownEnumException;
  * 枚举事件
  * 主要用于枚举定义的参考事例代码。
  *
- * @author wangzezhou
+ * @author zeno.w
  */
 public enum EnumSample {
 

@@ -4,6 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+/**
+ * 远程地址工具类，用于获取客户端真实 IP 地址。
+ * <p>
+ * 处理代理、负载均衡等场景下的 IP 获取，支持 X-Real-IP 和 X-Forwarded-For 头。
+ * </p>
+ *
+ * @author zeno
+ */
 public class RemoteAddrUtil {
 
     /**

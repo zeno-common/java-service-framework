@@ -22,7 +22,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
- * @author wangzezhou
+ * JSON 映射工具类，封装 Jackson {@link ObjectMapper} 提供对象与 JSON 之间的序列化/反序列化操作。
+ * <p>
+ * 内置配置了 Java 8 时间模块、枚举字符串序列化等特性。
+ * </p>
+ *
+ * @author zeno.w
  * @date 2021/12/9
  */
 @Slf4j

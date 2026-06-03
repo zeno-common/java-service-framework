@@ -1,18 +1,25 @@
 package io.soil.util.jdbc;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import io.soil.waf.util.JsfUrlParameter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+
+import lombok.Setter;
+
 /**
- * Create by koala on 2024-09-05
+ * 基于 URL 参数的 MyBatis-Plus 分页对象，实现 {@link IPage} 接口。
+ * <p>
+ * 从 HTTP 请求的 URL 参数中自动提取分页信息（页码、每页条数、排序等），
+ * 支持 pageNo/pageSize 和 offset/limit 两种分页模式。
+ * </p>
+ *
+ * @param <T> 分页数据类型
+ * @author koala
  */
 public class JsfUrlParamsPage<T> implements IPage<T>{
 
@@ -230,14 +237,34 @@ public class JsfUrlParamsPage<T> implements IPage<T>{
         return optimizeCountSql;
     }
 
+    /**
+     * 创建分页对象，指定当前页、每页条数、总数和是否查询总数
+     *
+     * @param current      当前页
+     * @param size         每页条数
+     * @param total        总数
+     * @param searchCount  是否查询总数
+     * @param <T>          分页数据类型
+     * @return 分页对象
+     */
     public static  <T> JsfUrlParamsPage<T> of(long current, long size, long total, boolean searchCount) {
         return new JsfUrlParamsPage<>(current, size, total, searchCount);
     }
 
+    /**
+     * 获取请求中的偏移 ID
+     *
+     * @return 偏移 ID
+     */
     public static Long getOffsetId(){
         return JsfUrlParameter.getOffsetId();
     }
 
+    /**
+     * 获取请求中的偏移时间
+     *
+     * @return 偏移时间字符串
+     */
     public static String getOffsetTime(){
         return JsfUrlParameter.getOffsetTime();
     }
@@ -263,24 +290,64 @@ public class JsfUrlParamsPage<T> implements IPage<T>{
     }
 
     /* --------------- 以下为静态构造方式 --------------- */
+
+    /**
+     * 创建分页对象，指定当前页和每页条数
+     *
+     * @param current 当前页
+     * @param size    每页条数
+     * @param <T>     分页数据类型
+     * @return 分页对象
+     */
     public static <T> JsfUrlParamsPage<T> of(long current, long size) {
         return of(current, size, 0);
     }
 
+    /**
+     * 创建分页对象，指定当前页、每页条数和总数
+     *
+     * @param current 当前页
+     * @param size    每页条数
+     * @param total   总数
+     * @param <T>     分页数据类型
+     * @return 分页对象
+     */
     public static <T> JsfUrlParamsPage<T> of(long current, long size, long total) {
         return of(current, size, total, true);
     }
 
+    /**
+     * 创建分页对象，指定当前页、每页条数和是否查询总数
+     *
+     * @param current      当前页
+     * @param size         每页条数
+     * @param searchCount  是否查询总数
+     * @param <T>          分页数据类型
+     * @return 分页对象
+     */
     public static <T> JsfUrlParamsPage<T> of(long current, long size, boolean searchCount) {
         return of(current, size, 0, searchCount);
     }
 
+    /**
+     * 从 URL 参数创建分页对象，指定是否查询总数
+     *
+     * @param searchCount 是否查询总数
+     * @param <T>         分页数据类型
+     * @return 分页对象
+     */
     public static <T> JsfUrlParamsPage<T> of(boolean searchCount){
         Integer size = JsfUrlParameter.pageSize();
         Integer pageNo = JsfUrlParameter.pageNo();
         return of(pageNo, size, searchCount);
     }
 
+    /**
+     * 从 URL 参数创建分页对象（默认查询总数）
+     *
+     * @param <T> 分页数据类型
+     * @return 分页对象
+     */
     public static <T> JsfUrlParamsPage<T> urlPage(){
         return of(true);
     }

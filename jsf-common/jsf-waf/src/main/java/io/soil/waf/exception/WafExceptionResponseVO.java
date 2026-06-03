@@ -4,19 +4,29 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 /**
- * 异常响应内容
+ * WAF 异常响应内容 VO，用于封装异常信息返回给客户端。
  *
  * @author zeno
  */
 @Data
 public class WafExceptionResponseVO {
 
+    /** 异常模块名称 */
     private String module;
+    /** 异常状态码 */
     private String code;
+    /** 异常消息 */
     private String msg;
+    /** 异常栈信息 */
     private String trace;
 
 
+    /**
+     * 根据异常对象创建异常响应 VO
+     *
+     * @param ex 异常对象
+     * @return 异常响应 VO
+     */
     public static WafExceptionResponseVO createFrom(Throwable ex){
 
         WafExceptionResponseVO responseVO = new WafExceptionResponseVO();

@@ -1,15 +1,30 @@
-package io.soil.waf.util;
-
-import io.micrometer.common.util.StringUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+package io.soil.util.jdbc;
 
 import java.util.regex.Pattern;
 
-import static io.soil.util.jdbc.JsfUrlParamConst.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import io.micrometer.common.util.StringUtils;
+import static io.soil.util.jdbc.JsfUrlParamConst.LIMIT;
+import static io.soil.util.jdbc.JsfUrlParamConst.OFFSET;
+import static io.soil.util.jdbc.JsfUrlParamConst.OFFSET_ID;
+import static io.soil.util.jdbc.JsfUrlParamConst.OFFSET_TIME;
+import static io.soil.util.jdbc.JsfUrlParamConst.ORDER;
+import static io.soil.util.jdbc.JsfUrlParamConst.PAGE_NO;
+import static io.soil.util.jdbc.JsfUrlParamConst.PAGE_SIZE;
+import jakarta.servlet.http.HttpServletRequest;
 
 
+/**
+ * JSF URL 参数工具类，从 HTTP 请求中提取分页、排序、偏移等 URL 参数。
+ * <p>
+ * 支持从当前请求上下文中自动获取分页页码、每页条数、偏移量、限制量、排序等参数，
+ * 并提供默认值和参数校验。
+ * </p>
+ *
+ * @author zeno.w
+ */
 public class JsfUrlParameter {
 
   /** 每页显示条数，默认 10 */
@@ -35,40 +50,49 @@ public class JsfUrlParameter {
 
 
   /**
-   * 获取请求中的分页大小
-   * 数据偏程量
-   * @return
+   * 获取请求中的偏移量
+   *
+   * @param defaultOffset 默认偏移量，当请求参数不存在时使用
+   * @return 偏移量
    */
   public static Integer offset(Integer defaultOffset) {
     return getInteger(OFFSET, defaultOffset);
   }
 
   /**
-   * 偏移量
-   * @return
+   * 获取请求中的偏移量，默认为 0
+   *
+   * @return 偏移量
    */
   public static Integer offset() {
     return getInteger(OFFSET, DEFAULT_OFFSET);
   }
 
   /**
-   * 获取请求中的当前页
+   * 获取请求中的限制条数
    *
-   * @return
+   * @param defaultLimit 默认限制条数，当请求参数不存在时使用
+   * @return 限制条数
    */
   public static Integer limit(Integer defaultLimit) {
     return getInteger(LIMIT, defaultLimit);
   }
 
+  /**
+   * 获取请求中的限制条数，默认为 10
+   *
+   * @return 限制条数
+   */
   public static Integer limit() {
     return getInteger(LIMIT, DEFAULT_LIMIT);
   }
 
 
   /**
-   * 获取请求中的分页大小
+   * 获取请求中的每页条数，超过最大值时自动截断为 500
    *
-   * @return
+   * @param defaultSize 默认每页条数，当请求参数不存在时使用
+   * @return 每页条数
    */
   public static Integer pageSize(Integer defaultSize) {
     Integer pageSize = getInteger(PAGE_SIZE, defaultSize);
@@ -79,35 +103,68 @@ public class JsfUrlParameter {
     return pageSize;
   }
 
+  /**
+   * 获取请求中的偏移 ID，用于轮询查询
+   *
+   * @return 偏移 ID，参数不存在时返回 null
+   */
   public static Long getOffsetId() {
     return getLong(OFFSET_ID);
   }
 
+  /**
+   * 获取请求中的偏移时间，用于轮询查询
+   *
+   * @return 偏移时间字符串，参数不存在时返回 null
+   */
   public static String getOffsetTime() {
     return getString(OFFSET_TIME);
   }
 
+  /**
+   * 获取请求中的每页条数，默认为 10
+   *
+   * @return 每页条数
+   */
   public static Integer pageSize() {
     return getInteger(PAGE_SIZE, DEFAULT_SIZE);
   }
 
   /**
-   * 获取请求中的当前页
+   * 获取请求中的当前页码
    *
-   * @return
+   * @param defaultPageNo 默认页码，当请求参数不存在时使用
+   * @return 当前页码
    */
   public static Integer pageNo(Integer defaultPageNo) {
     return getInteger(PAGE_NO,defaultPageNo);
   }
 
+  /**
+   * 获取请求中的当前页码，默认为 1
+   *
+   * @return 当前页码
+   */
   public static Integer pageNo() {
     return getInteger(PAGE_NO,DEFAULT_PAGE_NO);
   }
 
+  /**
+   * 获取请求中的排序参数
+   *
+   * @return 排序字符串，参数不存在时返回 null
+   */
   public static String order(){
     return getString(ORDER);
   }
 
+  /**
+   * 获取请求中指定参数名的整数值，带默认值
+   *
+   * @param paramName    参数名
+   * @param defaultValue 默认值
+   * @return 参数值的整数形式，参数不存在时返回默认值
+   */
   public static Integer getInteger(String paramName, Integer defaultValue) {
     Integer value = getInteger(paramName);
     if(value == null){
@@ -137,6 +194,12 @@ public class JsfUrlParameter {
     return Long.valueOf(valueStr);
   }
 
+  /**
+   * 获取请求中指定参数名的字符串值
+   *
+   * @param paramName 参数名
+   * @return 参数值字符串
+   */
   public static String getString(String paramName){
     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
       HttpServletRequest request = attributes.getRequest();

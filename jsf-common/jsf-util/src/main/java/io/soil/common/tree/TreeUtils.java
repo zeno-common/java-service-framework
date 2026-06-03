@@ -9,19 +9,20 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * tree 模型工具类
- * 支持 list、tree、map 等村节点在各种数据结构中的转换。
+ * 树模型工具类，支持 list、tree、map 等节点在各种数据结构中的转换。
  *
- * @author wangzezhou
+ * @author zeno.w
  */
 public class TreeUtils{
 
   /**
    * list 转换成 tree
    *
-   * @param nodes list 节点
-   *
-   * @return tree 结构模型
+   * @param nodes list 节点集合
+   * @param <ID>  节点标识类型
+   * @param <TYPE> 节点类型类型
+   * @param <R>   节点子类型
+   * @return tree 结构模型，根节点列表
    */
   public static <ID,TYPE,R extends Node<ID,TYPE>> List<R> toTree( List<R> nodes){
 
@@ -48,10 +49,11 @@ public class TreeUtils{
   /**
    * 将 tree 转换成 list
    *
-   * @param treeNodes
-   * @param <ID,TYPE>      节点 ID
-   *
-   * @return list 结构
+   * @param treeNodes tree 节点集合
+   * @param <ID>   节点标识类型
+   * @param <TYPE> 节点类型类型
+   * @param <R>    节点子类型
+   * @return list 结构，包含所有节点（含子节点）
    */
   public static <ID,TYPE,R extends Node<ID,TYPE>> List<R> toList( Collection<R> treeNodes ){
 
@@ -69,12 +71,13 @@ public class TreeUtils{
   }
 
   /**
-   * 将 list 或 tree 转换成 map
+   * 将 list 或 tree 转换成 map，以节点 ID 为键
    *
-   * @param nodes list 或 tree 节点
-   * @param <ID,TYPE>  节点ID
-   *
-   * @return ID map
+   * @param nodes list 或 tree 节点集合
+   * @param <ID>   节点标识类型
+   * @param <Type> 节点类型类型
+   * @param <R>    节点子类型
+   * @return 以节点 ID 为键的 Map
    */
   public static <ID,Type,R extends Node<ID,Type>> Map<ID,R> toMap( Collection<R> nodes ){
 
