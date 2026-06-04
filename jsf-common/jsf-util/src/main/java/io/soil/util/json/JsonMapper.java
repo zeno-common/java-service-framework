@@ -7,21 +7,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.OffsetDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
-import io.soil.common.date.DateTimeUtil;
-import io.soil.common.date.TimeFormatConstant;
+import io.soil.common.date.DateTimeConst;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+
+import static com.fasterxml.jackson.databind.util.StdDateFormat.DATE_FORMAT_STR_ISO8601;
 
 /**
  * JSON 映射工具类，封装 Jackson {@link ObjectMapper} 提供对象与 JSON 之间的序列化/反序列化操作。
@@ -39,49 +43,47 @@ public final class JsonMapper {
 
   static {
     OBJECT_MAPPER = new ObjectMapper();
-    config(OBJECT_MAPPER);
+    config();
   }
 
-  private static void config(ObjectMapper objectMapper) {
+  private static void config() {
 
     // 时间格式配置
     JavaTimeModule javaTimeModule = new JavaTimeModule();
 
-    // LocalDateTime 序列化（无时区）
-    DateTimeFormatter localDateTimeFormatter = DateTimeUtil.DEFAULT_FORMATTER;
-    javaTimeModule.addSerializer(new LocalDateTimeSerializer(localDateTimeFormatter));
+    // OffsetDateTime 序列化/反序列化（带时区，使用 ISO 8601 格式，保留原始偏移量）
+    javaTimeModule.addSerializer(new OffsetDateTimeIsoSerializer());
+    javaTimeModule.addDeserializer(OffsetDateTime.class, new OffsetDateTimeIsoDeserializer());
 
-    // OffsetDateTime 序列化/反序列化（带时区）
-    DateTimeFormatter offsetDateTimeFormatter = DateTimeUtil.ISO_OFFSET_FORMATTER;
-    javaTimeModule.addSerializer(new OffsetDateTimeSerializer(offsetDateTimeFormatter));
-    javaTimeModule.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer(offsetDateTimeFormatter));
+    OBJECT_MAPPER.registerModule(javaTimeModule);
 
-    objectMapper.registerModule(javaTimeModule);
-    objectMapper.setDateFormat(new SimpleDateFormat(TimeFormatConstant.ISO_DATE_TIME_OFFSET_FORMAT));
+    OBJECT_MAPPER.setDateFormat(DateTimeConst.ISO8601_FORMAT);
 
     // 特性启用
-    objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-    objectMapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
+    OBJECT_MAPPER.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+    OBJECT_MAPPER.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
 
     // 特性禁用
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
   }
 
-  private JsonMapper() {
-  }
+  private JsonMapper() {}
 
   /**
    * Java 对象转换成 json 字符串
    *
-   * @param object
+   * @param object 转换对象
    * @return json 字符串
    */
   public static String toJsonString(Object object) {
 
-    try {
-      return OBJECT_MAPPER.writeValueAsString(object);
-    } catch (JsonProcessingException e) {
-      log.error("java 对象转换成 json 字符串发生异常：" + object, e);
+    if (!Objects.isNull(object)) {
+      try {
+        return OBJECT_MAPPER.writeValueAsString(object);
+      } catch (JsonProcessingException e) {
+        log.error("java 对象转换成 json 字符串发生异常：" + object, e);
+      }
     }
 
     return "{}";
@@ -209,5 +211,35 @@ public final class JsonMapper {
       log.error("输入流对象转成 java 对象发生异常：" + typeRef.getType().getClass(), e);
     }
     return null;
+  }
+
+  /**
+   * OffsetDateTime ISO 8601 序列化器，保留原始时区偏移量
+   */
+  private static class OffsetDateTimeIsoSerializer extends StdSerializer<OffsetDateTime> {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+    OffsetDateTimeIsoSerializer() {
+      super(OffsetDateTime.class);
+    }
+
+    @Override
+    public void serialize(OffsetDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      gen.writeString(FORMATTER.format(value));
+    }
+  }
+
+  /**
+   * OffsetDateTime ISO 8601 反序列化器，保留原始时区偏移量
+   */
+  private static class OffsetDateTimeIsoDeserializer extends JsonDeserializer<OffsetDateTime> {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+    @Override
+    public OffsetDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+      return OffsetDateTime.parse(p.getText(), FORMATTER);
+    }
   }
 }

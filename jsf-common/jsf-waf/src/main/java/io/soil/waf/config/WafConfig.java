@@ -1,23 +1,26 @@
 package io.soil.waf.config;
 
+import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.deser.OffsetDateTimeDeserializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
 
-import io.soil.common.date.DateTimeUtil;
-import io.soil.common.date.TimeFormatConstant;
 import io.soil.waf.controller.ProbeController;
-
-import java.time.OffsetDateTime;
 
 /**
  * WAF（Web Application Framework）配置类，配置 Jackson 序列化/反序列化规则和组件扫描。
@@ -48,22 +51,47 @@ public class WafConfig {
     Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 
     // LocalDateTime 序列化（无时区）
-    DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern(TimeFormatConstant.DATE_TIME_FORMAT);
-    builder.serializers(new LocalDateTimeSerializer(localDateTimeFormatter));
+    builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
-    // OffsetDateTime 序列化/反序列化（带时区）
-    DateTimeFormatter offsetDateTimeFormatter = DateTimeUtil.ISO_OFFSET_FORMATTER;
-    builder.serializers(new OffsetDateTimeSerializer(offsetDateTimeFormatter));
-    builder.deserializers(new OffsetDateTimeDeserializer(offsetDateTimeFormatter));
-    builder.simpleDateFormat(TimeFormatConstant.ISO_DATE_TIME_OFFSET_FORMAT);
+    // OffsetDateTime 序列化/反序列化（带时区，使用 ISO 8601 格式，保留原始偏移量）
+    builder.serializers(new OffsetDateTimeIsoSerializer());
+    builder.deserializers(new OffsetDateTimeIsoDeserializer());
+    builder.simpleDateFormat(StdDateFormat.DATE_FORMAT_STR_ISO8601);
 
     // 特性启用
     builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING,
                              DeserializationFeature.READ_ENUMS_USING_TO_STRING);
 
     // 特性禁用
-    builder.featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    builder.featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+                              SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     return builder;
+  }
+
+  /**
+   * OffsetDateTime ISO 8601 序列化器，保留原始时区偏移量
+   */
+  private static class OffsetDateTimeIsoSerializer extends StdSerializer<OffsetDateTime> {
+
+    OffsetDateTimeIsoSerializer() {
+      super(OffsetDateTime.class);
+    }
+
+    @Override
+    public void serialize(OffsetDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      gen.writeString(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value));
+    }
+  }
+
+  /**
+   * OffsetDateTime ISO 8601 反序列化器，保留原始时区偏移量
+   */
+  private static class OffsetDateTimeIsoDeserializer extends JsonDeserializer<OffsetDateTime> {
+
+    @Override
+    public OffsetDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+      return OffsetDateTime.parse(p.getText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    }
   }
 }

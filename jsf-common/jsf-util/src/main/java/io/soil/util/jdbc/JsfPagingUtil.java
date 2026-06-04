@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 /**
+ * @javadoc 【必须加这个注解，smart-doc才扫描本类所有方法】
  * JSF 分页工具类，基于 REST API 规约的 URL 参数进行 PageHelper 分页处理。
  * <p>
  * 支持页码分页（pageNo/pageSize）和偏移量分页（offset/limit）两种模式。
