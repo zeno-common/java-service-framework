@@ -50,14 +50,6 @@ public class WafConfig {
 
     Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 
-    // LocalDateTime 序列化（无时区）
-    builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-
-    // OffsetDateTime 序列化/反序列化（带时区，使用 ISO 8601 格式，保留原始偏移量）
-    builder.serializers(new OffsetDateTimeIsoSerializer());
-    builder.deserializers(new OffsetDateTimeIsoDeserializer());
-    builder.simpleDateFormat(StdDateFormat.DATE_FORMAT_STR_ISO8601);
-
     // 特性启用
     builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING,
                              DeserializationFeature.READ_ENUMS_USING_TO_STRING);
