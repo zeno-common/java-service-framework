@@ -77,64 +77,20 @@
     </dependency>
 
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>1.18.36</version>
-            </path>
-          </annotationProcessorPaths>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.ly.smart-doc</groupId>
-        <artifactId>smart-doc-maven-plugin</artifactId>
-        <version>3.1.2</version>
-        <configuration>
-          <configFile>smart-doc.json</configFile>
-          <projectName>Java工具类文档</projectName>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <!-- 生成markdown文档 -->
-              <goal>markdown</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.jetbrains.dokka</groupId>
         <artifactId>dokka-maven-plugin</artifactId>
-        <version>2.2.0</version>
-
         <configuration>
-
           <sourceDirectories>
-            <dir>${project.basedir}/src/main/java/io/soil/doc</dir>
+            <dir>${project.basedir}/src/main/java/io/soil/util/config</dir>
+            <dir>${project.basedir}/src/main/java/io/soil/util/ip</dir>
           </sourceDirectories>
-          <documentedVisibilities>
-            <visibility>PUBLIC</visibility>
-            <visibility>INTERNAL</visibility>
-            <visibility>PROTECTED</visibility>
-            <visibility>PRIVATE</visibility>
-          </documentedVisibilities>
-          <dokkaPlugins>
-            <plugin>
-              <groupId>org.jetbrains.dokka</groupId>
-              <artifactId>gfm-plugin</artifactId>
-              <version>2.2.0</version>
-            </plugin>
-          </dokkaPlugins>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 </project>

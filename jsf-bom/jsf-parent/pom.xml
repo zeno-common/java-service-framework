@@ -25,28 +25,24 @@
       <id>d-local</id>
       <properties>
         <env>local</env>
-        <spring.active>local</spring.active>
       </properties>
     </profile>
     <profile>
       <id>d-backend</id>
       <properties>
         <env>backend</env>
-        <spring.active>backend</spring.active>
       </properties>
     </profile>
     <profile>
       <id>d-dev</id>
       <properties>
         <env>dev</env>
-        <spring.active>dev</spring.active>
       </properties>
     </profile>
     <profile>
       <id>d-uat</id>
       <properties>
         <env>uat</env>
-        <spring.active>uat</spring.active>
         <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
       </properties>
     </profile>
@@ -54,7 +50,6 @@
       <id>d-prod</id>
       <properties>
         <env>prod</env>
-        <spring.active>prod</spring.active>
         <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
       </properties>
     </profile>
@@ -62,7 +57,6 @@
       <id>d-live</id>
       <properties>
         <env>live</env>
-        <spring.active>live</spring.active>
         <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
       </properties>
     </profile>
@@ -70,7 +64,6 @@
     <profile>
       <id>pd-docker</id>
       <properties>
-        <docker.workdir>/programs</docker.workdir>
         <docker.from>eclipse-temurin:21.0.4_7-jre-alpine</docker.from>
       </properties>
       <build>
@@ -78,7 +71,6 @@
           <plugin>
             <groupId>io.fabric8</groupId>
             <artifactId>docker-maven-plugin</artifactId>
-            <version>0.46.0</version>
             <extensions>true</extensions>
             <configuration>
               <imagePullPolicy>IfNotPresent</imagePullPolicy>
@@ -91,31 +83,24 @@
                   <build>
                     <from>${docker.from}</from>
                     <tags>
-                      <!--<tag>${maven.build.timestamp}</tag>-->
                       <tag>${env}-${project.version}</tag>
                       <tag>${env}-latest</tag>
                     </tags>
-                    <workdir>${docker.workdir}</workdir>
+                    <workdir>/programs</workdir>
                     <assemblies>
                       <assembly>
                         <name>executable-jar</name>
                         <descriptorRef>artifact</descriptorRef>
-                        <targetDir>${docker.workdir}</targetDir>
+                        <targetDir>/programs</targetDir>
                       </assembly>
                     </assemblies>
-                    <!--                    <runCmds>-->
-                    <!--                      &lt;!&ndash; 设置镜像时区 &ndash;&gt;-->
-                    <!--                      <run>ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; echo Asia/Shanghai > \-->
-                    <!--                        /etc/timezone-->
-                    <!--                      </run>-->
-                    <!--                    </runCmds>-->
                     <buildOptions>
                       <forcerm>true</forcerm>
                     </buildOptions>
                     <entryPoint>
                       <exec>
                         <arg>java</arg>
-                        <arg>-Dspring.profiles.active=${spring.active}</arg>
+                        <arg>-Dspring.profiles.active=${env}</arg>
                         <arg>-jar</arg>
                         <arg>${project.build.finalName}.jar</arg>
                       </exec>

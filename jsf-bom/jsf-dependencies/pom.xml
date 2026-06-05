@@ -40,10 +40,13 @@
     <rocketmq.version>2.3.0</rocketmq.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <!-- 插件版本号 -->
+    <docker-plugin.version>0.48.1</docker-plugin.version>
     <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
     <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+    <dokka-plugin.version>2.2.0</dokka-plugin.version>
+    <smart-doc-plugin.version>3.1.2</smart-doc-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.8.6.2</spotbugs-maven-plugin.version>
     <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
@@ -108,7 +111,6 @@
         <version>${lombok.version}</version>
         <scope>provided</scope>
       </dependency>
-
 
 
       <!-- sa-token -->
@@ -297,13 +299,70 @@
           <artifactId>spotbugs-maven-plugin</artifactId>
           <version>${spotbugs-maven-plugin.version}</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jetbrains.dokka</groupId>
+          <artifactId>dokka-maven-plugin</artifactId>
+          <version>${dokka-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.ly.smart-doc</groupId>
+          <artifactId>smart-doc-maven-plugin</artifactId>
+          <version>${smart-doc-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>${docker-plugin.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
+
     <plugins>
+      <plugin>
+        <groupId>org.jetbrains.dokka</groupId>
+        <artifactId>dokka-maven-plugin</artifactId>
+        <configuration>
+          <sourceDirectories>
+            <dir>${project.basedir}/src/main/java</dir>
+          </sourceDirectories>
+          <outputDir>${project.basedir}/dokka</outputDir>
+          <documentedVisibilities>
+            <visibility>PUBLIC</visibility>
+            <visibility>INTERNAL</visibility>
+            <visibility>PROTECTED</visibility>
+            <visibility>PRIVATE</visibility>
+          </documentedVisibilities>
+          <dokkaPlugins>
+            <plugin>
+              <groupId>org.jetbrains.dokka</groupId>
+              <artifactId>gfm-plugin</artifactId>
+              <version>${dokka-plugin.version}</version>
+            </plugin>
+          </dokkaPlugins>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.ly.smart-doc</groupId>
+        <artifactId>smart-doc-maven-plugin</artifactId>
+        <configuration>
+          <configFile>./doc/smart-doc.json</configFile>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>markdown</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
         <configuration>
           <annotationProcessorPaths>
             <path>

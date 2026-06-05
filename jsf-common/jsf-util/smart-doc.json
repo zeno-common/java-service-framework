@@ -1,8 +1,0 @@
-{
-  "outPath": "./doc-md",
-  "allInOne": false,
-  "coverOld": true,
-  "framework": "javadoc",
-  "ignoreLombok": false,
-  "packageFilters": "io.soil.doc.*"
-}
