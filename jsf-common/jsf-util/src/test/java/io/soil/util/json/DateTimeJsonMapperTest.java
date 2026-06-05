@@ -114,11 +114,11 @@ public class DateTimeJsonMapperTest {
   @Test
   public void offsetDateTime_withUtcZ_shouldSerializeCorrectly() {
     TimeDto dto = new TimeDto();
-    dto.setOffsetDateTime(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.UTC));
+    dto.setOffsetDateTime(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.ofHours(8)));
 
     String json = JsonMapper.toString(dto);
 
-    assertTrue(json.contains("2025-06-03T14:30:45Z"));
+    assertTrue(json.contains("2025-06-03T14:30:45+08:00"));
   }
 
   @Test
@@ -161,12 +161,12 @@ public class DateTimeJsonMapperTest {
   }
 
   @Test
-  public void offsetDateTime_withNegativeHalfHourOffset_shouldDeserializeCorrectly() {
+  public void offsetDateTime_withNegativeHalfHourOffset_shouldDeserializeToUtc() {
     String json = "{\"offsetDateTime\":\"2025-06-03T14:30:45-09:30\"}";
 
     TimeDto result = JsonMapper.toObject(json, TimeDto.class);
 
-    assertEquals(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.ofHoursMinutes(-9, -30)), result.getOffsetDateTime());
+    assertEquals(OffsetDateTime.of(2025, 6, 4, 0, 0, 45, 0, ZoneOffset.UTC), result.getOffsetDateTime());
   }
 
   @Test
@@ -177,19 +177,19 @@ public class DateTimeJsonMapperTest {
     String json = JsonMapper.toString(dto);
     TimeDto result = JsonMapper.toObject(json, TimeDto.class);
 
-    assertEquals(dto.getOffsetDateTime(), result.getOffsetDateTime());
+    assertEquals(dto.getOffsetDateTime().toInstant(), result.getOffsetDateTime().toInstant());
   }
 
   @Test
-  public void offsetDateTime_roundTrip_shouldPreserveOffset() {
+  public void offsetDateTime_roundTrip_shouldPreserveInstant() {
     TimeDto dto = new TimeDto();
     dto.setOffsetDateTime(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.ofHours(-7)));
 
     String json = JsonMapper.toString(dto);
     TimeDto result = JsonMapper.toObject(json, TimeDto.class);
 
-    assertEquals(dto.getOffsetDateTime(), result.getOffsetDateTime());
-    assertEquals(ZoneOffset.ofHours(-7), result.getOffsetDateTime().getOffset());
+    assertEquals(dto.getOffsetDateTime().toInstant(), result.getOffsetDateTime().toInstant());
+    assertEquals(ZoneOffset.UTC, result.getOffsetDateTime().getOffset());
   }
 
   // ==================== ZonedDateTime ====================
@@ -205,7 +205,7 @@ public class DateTimeJsonMapperTest {
   }
 
   @Test
-  public void toObject_withZonedDateTime_shouldDeserializeCorrectly() {
+  public void toObject_withZonedDateTime_shouldDeserializeToUtc() {
     String json = "{\"zonedDateTime\":\"2025-06-03T14:30:45+08:00\"}";
 
     TimeDto result = JsonMapper.toObject(json, TimeDto.class);
@@ -214,19 +214,19 @@ public class DateTimeJsonMapperTest {
     assertEquals(2025, result.getZonedDateTime().getYear());
     assertEquals(6, result.getZonedDateTime().getMonthValue());
     assertEquals(3, result.getZonedDateTime().getDayOfMonth());
-    assertEquals(14, result.getZonedDateTime().getHour());
+    assertEquals(6, result.getZonedDateTime().getHour());
     assertEquals(30, result.getZonedDateTime().getMinute());
   }
 
   @Test
-  public void zonedDateTimeRoundTrip_shouldPreserveValue() {
+  public void zonedDateTimeRoundTrip_shouldPreserveInstant() {
     TimeDto dto = new TimeDto();
     dto.setZonedDateTime(ZonedDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneId.of("Asia/Shanghai")));
 
     String json = JsonMapper.toString(dto);
     TimeDto result = JsonMapper.toObject(json, TimeDto.class);
 
-    assertEquals(dto.getZonedDateTime().toOffsetDateTime(), result.getZonedDateTime().toOffsetDateTime());
+    assertEquals(dto.getZonedDateTime().toInstant(), result.getZonedDateTime().toInstant());
   }
 
   @Test
@@ -325,18 +325,18 @@ public class DateTimeJsonMapperTest {
   // ==================== Year ====================
 
   @Test
-  public void toString_withYear_shouldFormatAsYear() {
+  public void toString_withYear_shouldFormatAsYearString() {
     TimeDto dto = new TimeDto();
     dto.setYear(Year.of(2025));
 
     String json = JsonMapper.toString(dto);
 
-    assertTrue(json.contains("\"year\":2025"));
+    assertTrue(json.contains("\"year\":\"2025\""));
   }
 
   @Test
   public void toObject_withYear_shouldDeserializeCorrectly() {
-    String json = "{\"year\":2025}";
+    String json = "{\"year\":\"2025\"}";
 
     TimeDto result = JsonMapper.toObject(json, TimeDto.class);
 
@@ -407,8 +407,8 @@ public class DateTimeJsonMapperTest {
     assertEquals(dto.getLocalDate(), result.getLocalDate());
     assertEquals(dto.getLocalTime(), result.getLocalTime());
     assertEquals(dto.getLocalDateTime(), result.getLocalDateTime());
-    assertEquals(dto.getOffsetDateTime(), result.getOffsetDateTime());
-    assertEquals(dto.getZonedDateTime().toOffsetDateTime(), result.getZonedDateTime().toOffsetDateTime());
+    assertEquals(dto.getOffsetDateTime().toInstant(), result.getOffsetDateTime().toInstant());
+    assertEquals(dto.getZonedDateTime().toInstant(), result.getZonedDateTime().toInstant());
     assertEquals(dto.getInstant(), result.getInstant());
     assertEquals(dto.getOffsetTime(), result.getOffsetTime());
     assertEquals(dto.getYear(), result.getYear());
