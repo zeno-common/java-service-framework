@@ -48,12 +48,12 @@ public class OffsetDateTimeUtil {
   }
 
   /**
-   * 将带时区偏移的日期时间格式化为 ISO 8601 字符串（yyyy-MM-dd'T'HH:mm:ssXXX）
+   * 将 ISO 8601 字符串解析为 OffsetDateTime
    *
-   * @param time 带时区偏移的日期时间对象
-   * @return ISO 8601 带时区格式字符串
+   * @param time ISO 8601 格式日期时间字符串
+   * @return OffsetDateTime 对象
    */
-  public static String toString(Temporal time) {
+  public static OffsetDateTime from(Temporal time) {
 
     OffsetDateTime odt;
     if (time instanceof OffsetDateTime existing) {
@@ -73,6 +73,16 @@ public class OffsetDateTimeUtil {
         "不支持的 Temporal 类型: " + time.getClass().getName());
     }
 
-    return odt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    return odt;
+  }
+
+  /**
+   * 将带时区偏移的日期时间格式化为 ISO 8601 字符串（yyyy-MM-dd'T'HH:mm:ssXXX）
+   *
+   * @param time 带时区偏移的日期时间对象
+   * @return ISO 8601 带时区格式字符串
+   */
+  public static String toString(Temporal time) {
+    return from(time).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
   }
 }

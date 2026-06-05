@@ -7,22 +7,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.NullNode;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.soil.common.date.DateTimeConst;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static com.fasterxml.jackson.databind.util.StdDateFormat.DATE_FORMAT_STR_ISO8601;
@@ -51,13 +41,9 @@ public final class JsonMapper {
     // 时间格式配置
     JavaTimeModule javaTimeModule = new JavaTimeModule();
 
-    // OffsetDateTime 序列化/反序列化（带时区，使用 ISO 8601 格式，保留原始偏移量）
-    javaTimeModule.addSerializer(new OffsetDateTimeIsoSerializer());
-    javaTimeModule.addDeserializer(OffsetDateTime.class, new OffsetDateTimeIsoDeserializer());
-
     OBJECT_MAPPER.registerModule(javaTimeModule);
 
-    OBJECT_MAPPER.setDateFormat(DateTimeConst.ISO8601_FORMAT);
+    OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATE_FORMAT_STR_ISO8601));
 
     // 特性启用
     OBJECT_MAPPER.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
@@ -76,7 +62,7 @@ public final class JsonMapper {
    * @param object 转换对象
    * @return json 字符串
    */
-  public static String toJsonString(Object object) {
+  public static String toString(Object object) {
 
     if (!Objects.isNull(object)) {
       try {
@@ -162,20 +148,19 @@ public final class JsonMapper {
   /**
    * 字符输入流对象转成 java 对象
    *
-   * @param jsonContent 字符输入流对象
-   * @param typeRef     java 类引用
+   * @param jsonString 字符输入流对象
    * @return java 对象
    */
-  public static <T> T toObject(String jsonContent, TypeReference<T> typeRef) {
+  public static <T> T toObject(String jsonString,TypeReference<T> typeRef) {
 
-    if (Objects.isNull(jsonContent)) {
+    if (Objects.isNull(jsonString)) {
       return null;
     }
 
     try {
-      return OBJECT_MAPPER.readValue(jsonContent, typeRef);
+      return OBJECT_MAPPER.readValue(jsonString,typeRef);
     } catch (IOException e) {
-      log.error("输入流对象转成 java 对象发生异常：" + typeRef.getType().getClass(), e);
+      log.error("输入流对象转成 java 对象发生异常：{}", typeRef.getType().getTypeName(), e);
     }
     return null;
   }
@@ -196,10 +181,9 @@ public final class JsonMapper {
    * 字符输入流对象转成 java 对象
    *
    * @param in      字符输入流对象
-   * @param typeRef java 类引用
    * @return java 对象
    */
-  public static <T> T toObject(InputStream in, TypeReference<T> typeRef) {
+  public static <T> T toObject(InputStream in,TypeReference<T> typeRef) {
 
     if (Objects.isNull(in)) {
       return null;
@@ -208,38 +192,8 @@ public final class JsonMapper {
     try {
       return OBJECT_MAPPER.readValue(in, typeRef);
     } catch (IOException e) {
-      log.error("输入流对象转成 java 对象发生异常：" + typeRef.getType().getClass(), e);
+      log.error("输入流对象转成 java 对象发生异常：{}", typeRef.getType().getTypeName(), e);
     }
     return null;
-  }
-
-  /**
-   * OffsetDateTime ISO 8601 序列化器，保留原始时区偏移量
-   */
-  private static class OffsetDateTimeIsoSerializer extends StdSerializer<OffsetDateTime> {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-
-    OffsetDateTimeIsoSerializer() {
-      super(OffsetDateTime.class);
-    }
-
-    @Override
-    public void serialize(OffsetDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-      gen.writeString(FORMATTER.format(value));
-    }
-  }
-
-  /**
-   * OffsetDateTime ISO 8601 反序列化器，保留原始时区偏移量
-   */
-  private static class OffsetDateTimeIsoDeserializer extends JsonDeserializer<OffsetDateTime> {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-
-    @Override
-    public OffsetDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-      return OffsetDateTime.parse(p.getText(), FORMATTER);
-    }
   }
 }

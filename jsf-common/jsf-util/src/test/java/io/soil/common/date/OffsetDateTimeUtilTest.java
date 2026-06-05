@@ -14,7 +14,7 @@ public class OffsetDateTimeUtilTest {
 
     @Test
     public void toDayStartString_shouldReturnStartOfDay() {
-        OffsetDateTime time = OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, DateTimeConst.SYSTEM_OFFSET);
+        OffsetDateTime time = OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, DateTimeConst.SYSTEM_ZONE_OFFSET);
         String result = OffsetDateTimeUtil.toDayStartString(time);
 
         assertTrue(result.startsWith("2025-06-03T00:00:00"));
@@ -22,7 +22,7 @@ public class OffsetDateTimeUtilTest {
 
     @Test
     public void toDayStartString_withMidnight_shouldReturnSame() {
-        OffsetDateTime time = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, DateTimeConst.SYSTEM_OFFSET);
+        OffsetDateTime time = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, DateTimeConst.SYSTEM_ZONE_OFFSET);
         String result = OffsetDateTimeUtil.toDayStartString(time);
 
         assertTrue(result.startsWith("2025-01-01T00:00:00"));
@@ -32,7 +32,7 @@ public class OffsetDateTimeUtilTest {
 
     @Test
     public void toDayEndString_shouldReturnEndOfDay() {
-        OffsetDateTime time = OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, DateTimeConst.SYSTEM_OFFSET);
+        OffsetDateTime time = OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, DateTimeConst.SYSTEM_ZONE_OFFSET);
         String result = OffsetDateTimeUtil.toDayEndString(time);
 
         assertTrue(result.startsWith("2025-06-03T23:59:59"));
@@ -40,7 +40,7 @@ public class OffsetDateTimeUtilTest {
 
     @Test
     public void toDayEndString_withLastSecond_shouldReturnSame() {
-        OffsetDateTime time = OffsetDateTime.of(2025, 12, 31, 23, 59, 59, 0, DateTimeConst.SYSTEM_OFFSET);
+        OffsetDateTime time = OffsetDateTime.of(2025, 12, 31, 23, 59, 59, 0, DateTimeConst.SYSTEM_ZONE_OFFSET);
         String result = OffsetDateTimeUtil.toDayEndString(time);
 
         assertTrue(result.startsWith("2025-12-31T23:59:59"));
@@ -58,7 +58,7 @@ public class OffsetDateTimeUtilTest {
 
     @Test
     public void toMillis_shouldReturnPositiveForFutureDate() {
-        OffsetDateTime time = OffsetDateTime.of(2025, 6, 3, 12, 0, 0, 0, DateTimeConst.SYSTEM_OFFSET);
+        OffsetDateTime time = OffsetDateTime.of(2025, 6, 3, 12, 0, 0, 0, DateTimeConst.SYSTEM_ZONE_OFFSET);
         Long millis = OffsetDateTimeUtil.toMillis(time);
 
         assertTrue(millis > 0);

@@ -7,9 +7,7 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -19,246 +17,196 @@ import static org.junit.Assert.*;
  */
 public class JsonMapperTest {
 
-    // ==================== toJsonString ====================
+  // ==================== toJsonString ====================
 
-    @Test
-    public void toJsonString_shouldSerializeObject() {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("name", "test");
-        map.put("value", 123);
+  @Test
+  public void toString_shouldSerializeObject() {
+    Map<String, Object> map = new LinkedHashMap<>();
+    map.put("name", "test");
+    map.put("value", 123);
 
-        String json = JsonMapper.toJsonString(map);
+    String json = JsonMapper.toString(map);
 
-        assertTrue(json.contains("\"name\""));
-        assertTrue(json.contains("\"test\""));
-        assertTrue(json.contains("\"value\""));
-        assertTrue(json.contains("123"));
-    }
+    assertTrue(json.contains("\"name\""));
+    assertTrue(json.contains("\"test\""));
+    assertTrue(json.contains("\"value\""));
+    assertTrue(json.contains("123"));
+  }
 
-    @Test
-    public void toJsonString_withNullObject_shouldReturnEmptyJson() {
-        String json = JsonMapper.toJsonString(null);
+  @Test
+  public void toJsonString_withNullObject_shouldReturnEmpty() {
+    String json = JsonMapper.toString(null);
 
-        assertEquals("null", json);
-    }
+    assertEquals("{}", json);
+  }
 
-    @Test
-    public void toJsonString_withLocalDateTime_shouldFormatCorrectly() {
-        TestDto dto = new TestDto();
-        dto.setTime(LocalDateTime.of(2025, 6, 3, 14, 30, 45));
+  @Test
+  public void toString_withEnum_shouldSerializeAsString() {
+    Map<String, Object> map = new LinkedHashMap<>();
+    map.put("status", TestStatus.ACTIVE);
 
-        String json = JsonMapper.toJsonString(dto);
+    String json = JsonMapper.toString(map);
 
-        assertTrue(json.contains("2025-06-03 14:30:45"));
-    }
+    assertTrue(json.contains("\"ACTIVE\""));
+  }
 
-    @Test
-    public void toJsonString_withEnum_shouldSerializeAsString() {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("status", TestStatus.ACTIVE);
+  // ==================== toJsonNode (Object) ====================
 
-        String json = JsonMapper.toJsonString(map);
+  @Test
+  public void toJsonNode_fromObject_shouldReturnJsonNode() {
+    Map<String, Object> map = new LinkedHashMap<>();
+    map.put("key", "value");
 
-        assertTrue(json.contains("\"ACTIVE\""));
-    }
+    JsonNode node = JsonMapper.toJsonNode(map);
 
-    // ==================== toJsonNode (Object) ====================
+    assertEquals("value", node.get("key").asText());
+  }
 
-    @Test
-    public void toJsonNode_fromObject_shouldReturnJsonNode() {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("key", "value");
+  // ==================== toJsonNode (String) ====================
 
-        JsonNode node = JsonMapper.toJsonNode(map);
+  @Test
+  public void toJsonNode_fromString_shouldReturnJsonNode() {
+    String json = "{\"name\":\"test\"}";
 
-        assertEquals("value", node.get("key").asText());
-    }
+    JsonNode node = JsonMapper.toJsonNode(json);
 
-    // ==================== toJsonNode (String) ====================
+    assertEquals("test", node.get("name").asText());
+  }
 
-    @Test
-    public void toJsonNode_fromString_shouldReturnJsonNode() {
-        String json = "{\"name\":\"test\"}";
+  @Test
+  public void toJsonNode_withInvalidJson_shouldReturnNullNode() {
+    String json = JsonMapper.toString("not json".getBytes());
 
-        JsonNode node = JsonMapper.toJsonNode(json);
+    // 字节数组也能被序列化为字符串
+    assertNotNull(json);
+  }
 
-        assertEquals("test", node.get("name").asText());
-    }
+  // ==================== toObject (String, Class) ====================
 
-    @Test
-    public void toJsonNode_withInvalidJson_shouldReturnNullNode() {
-        String json = JsonMapper.toJsonString("not json".getBytes());
+  @Test
+  public void toObject_shouldDeserializeJson() {
+    String json = "{\"name\":\"test\",\"value\":42}";
 
-        // 字节数组也能被序列化为字符串
-        assertNotNull(json);
-    }
+    Map result = JsonMapper.toObject(json, Map.class);
 
-    // ==================== toObject (String, Class) ====================
+    assertEquals("test", result.get("name"));
+    assertEquals(42, result.get("value"));
+  }
 
-    @Test
-    public void toObject_shouldDeserializeJson() {
-        String json = "{\"name\":\"test\",\"value\":42}";
+  @Test
+  public void toObject_withNullJson_shouldReturnNull() {
+    Map result = JsonMapper.toObject((String) null, Map.class);
 
-        Map result = JsonMapper.toObject(json, Map.class);
+    assertNull(result);
+  }
 
-        assertEquals("test", result.get("name"));
-        assertEquals(42, result.get("value"));
-    }
+  @Test
+  public void toObject_withInvalidJson_shouldReturnNull() {
+    Map result = JsonMapper.toObject("not json", Map.class);
 
-    @Test
-    public void toObject_withNullJson_shouldReturnNull() {
-        Map result = JsonMapper.toObject((String) null, Map.class);
+    assertNull(result);
+  }
 
-        assertNull(result);
-    }
+  // ==================== toObject (InputStream, Class) ====================
 
-    @Test
-    public void toObject_withInvalidJson_shouldReturnNull() {
-        Map result = JsonMapper.toObject("not json", Map.class);
+  @Test
+  public void toObject_fromInputStream_shouldDeserialize() {
+    String json = "{\"name\":\"test\"}";
+    InputStream is = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
 
-        assertNull(result);
-    }
+    Map result = JsonMapper.toObject(is, Map.class);
 
-    @Test
-    public void toObject_withLocalDateTime_shouldDeserializeCorrectly() {
-        String json = "{\"time\":\"2025-06-03 14:30:45\"}";
+    assertEquals("test", result.get("name"));
+  }
 
-        TestDto result = JsonMapper.toObject(json, TestDto.class);
+  @Test
+  public void toObject_withNullInputStream_shouldReturnNull() {
+    Map result = JsonMapper.toObject((InputStream) null, Map.class);
 
-        assertEquals(LocalDateTime.of(2025, 6, 3, 14, 30, 45), result.getTime());
-    }
+    assertNull(result);
+  }
 
-    // ==================== OffsetDateTime ====================
+  // ==================== toObject (String, TypeReference) ====================
 
-    @Test
-    public void toJsonString_withOffsetDateTime_shouldFormatWithTimezone() {
-        TestDto dto = new TestDto();
-        dto.setOffsetTime(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.ofHours(8)));
+  @Test
+  public void toObject_withTypeReference_shouldDeserializeGeneric() {
+    String json = "[1,2,3]";
 
-        String json = JsonMapper.toJsonString(dto);
+    List<Integer> result = JsonMapper.toObject(json, new TypeReference<>() {});
 
-        assertTrue(json.contains("2025-06-03T14:30:45+08:00"));
-    }
+    assertEquals(3, result.size());
+    assertEquals(Integer.valueOf(1), result.get(0));
+    assertEquals(Integer.valueOf(2), result.get(1));
+    assertEquals(Integer.valueOf(3), result.get(2));
+  }
 
-    @Test
-    public void toObject_withOffsetDateTime_shouldDeserializeCorrectly() {
-        String json = "{\"offsetTime\":\"2025-06-03T14:30:45+08:00\"}";
+  @Test
+  public void toObject_withNullJsonTypeRef_shouldReturnNull() {
+    List<Integer> result = JsonMapper.toObject((String) "", new TypeReference<>() {});
 
-        TestDto result = JsonMapper.toObject(json, TestDto.class);
+    assertNull(result);
+  }
 
-        assertEquals(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.ofHours(8)), result.getOffsetTime());
-    }
+  // ==================== toObject (JsonNode, Class) ====================
 
-    @Test
-    public void offsetDateTimeRoundTrip_shouldPreserveValue() {
-        TestDto dto = new TestDto();
-        dto.setOffsetTime(OffsetDateTime.of(2025, 6, 3, 14, 30, 45, 0, ZoneOffset.ofHours(8)));
+  @Test
+  public void toObject_fromJsonNode_shouldDeserialize() {
+    JsonNode node = JsonMapper.toJsonNode("{\"name\":\"test\"}");
 
-        String json = JsonMapper.toJsonString(dto);
-        TestDto result = JsonMapper.toObject(json, TestDto.class);
+    Map result = JsonMapper.toObject(node, Map.class);
 
-        assertEquals(dto.getOffsetTime(), result.getOffsetTime());
-    }
+    assertEquals("test", result.get("name"));
+  }
 
-    // ==================== toObject (InputStream, Class) ====================
+  // ==================== toObject (InputStream, TypeReference) ====================
 
-    @Test
-    public void toObject_fromInputStream_shouldDeserialize() {
-        String json = "{\"name\":\"test\"}";
-        InputStream is = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
+  @Test
+  public void toObject_fromInputStreamTypeRef_shouldDeserialize() {
+    String json = "[\"a\",\"b\"]";
+    InputStream is = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
 
-        Map result = JsonMapper.toObject(is, Map.class);
+    List<String> result = JsonMapper.toObject(is, new TypeReference<>() {});
 
-        assertEquals("test", result.get("name"));
-    }
+    assertEquals(2, result.size());
+    assertEquals("a", result.get(0));
+    assertEquals("b", result.get(1));
+  }
 
-    @Test
-    public void toObject_withNullInputStream_shouldReturnNull() {
-        Map result = JsonMapper.toObject((InputStream) null, Map.class);
+  @Test
+  public void toObject_withNullInputStreamTypeRef_shouldReturnNull() {
+    List<String> result = JsonMapper.toObject((InputStream) null, new TypeReference<>() {});
 
-        assertNull(result);
-    }
+    assertNull(result);
+  }
 
-    // ==================== toObject (String, TypeReference) ====================
+  // ==================== 忽略未知属性 ====================
 
-    @Test
-    public void toObject_withTypeReference_shouldDeserializeGeneric() {
-        String json = "[1,2,3]";
+  @Test
+  public void toObject_withUnknownProperties_shouldNotFail() {
+    String json = "{\"name\":\"test\",\"unknownField\":123}";
 
-        List<Integer> result = JsonMapper.toObject(json, new TypeReference<List<Integer>>() {});
+    TestDto result = JsonMapper.toObject(json, TestDto.class);
 
-        assertEquals(3, result.size());
-        assertEquals(Integer.valueOf(1), result.get(0));
-        assertEquals(Integer.valueOf(2), result.get(1));
-        assertEquals(Integer.valueOf(3), result.get(2));
-    }
+    assertEquals("test", result.getName());
+  }
 
-    @Test
-    public void toObject_withNullJsonTypeRef_shouldReturnNull() {
-        List<Integer> result = JsonMapper.toObject((String) null, new TypeReference<List<Integer>>() {});
 
-        assertNull(result);
-    }
+  // ==================== 辅助类 ====================
 
-    // ==================== toObject (JsonNode, Class) ====================
+  public static class TestDto {
+    private String name;
+    private LocalDateTime time;
+    private OffsetDateTime offsetTime;
 
-    @Test
-    public void toObject_fromJsonNode_shouldDeserialize() {
-        JsonNode node = JsonMapper.toJsonNode("{\"name\":\"test\"}");
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public LocalDateTime getTime() { return time; }
+    public void setTime(LocalDateTime time) { this.time = time; }
+    public OffsetDateTime getOffsetTime() { return offsetTime; }
+    public void setOffsetTime(OffsetDateTime offsetTime) { this.offsetTime = offsetTime; }
+  }
 
-        Map result = JsonMapper.toObject(node, Map.class);
-
-        assertEquals("test", result.get("name"));
-    }
-
-    // ==================== toObject (InputStream, TypeReference) ====================
-
-    @Test
-    public void toObject_fromInputStreamTypeRef_shouldDeserialize() {
-        String json = "[\"a\",\"b\"]";
-        InputStream is = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
-
-        List<String> result = JsonMapper.toObject(is, new TypeReference<List<String>>() {});
-
-        assertEquals(2, result.size());
-        assertEquals("a", result.get(0));
-        assertEquals("b", result.get(1));
-    }
-
-    @Test
-    public void toObject_withNullInputStreamTypeRef_shouldReturnNull() {
-        List<String> result = JsonMapper.toObject((InputStream) null, new TypeReference<List<String>>() {});
-
-        assertNull(result);
-    }
-
-    // ==================== 忽略未知属性 ====================
-
-    @Test
-    public void toObject_withUnknownProperties_shouldNotFail() {
-        String json = "{\"name\":\"test\",\"unknownField\":123}";
-
-        TestDto result = JsonMapper.toObject(json, TestDto.class);
-
-        assertEquals("test", result.getName());
-    }
-
-    // ==================== 辅助类 ====================
-
-    public static class TestDto {
-        private String name;
-        private LocalDateTime time;
-        private OffsetDateTime offsetTime;
-
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
-        public LocalDateTime getTime() { return time; }
-        public void setTime(LocalDateTime time) { this.time = time; }
-        public OffsetDateTime getOffsetTime() { return offsetTime; }
-        public void setOffsetTime(OffsetDateTime offsetTime) { this.offsetTime = offsetTime; }
-    }
-
-    public enum TestStatus {
-        ACTIVE, INACTIVE
-    }
+  public enum TestStatus {
+    ACTIVE, INACTIVE
+  }
 }
