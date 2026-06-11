@@ -330,7 +330,7 @@
           <sourceDirectories>
             <dir>${project.basedir}/src/main/java</dir>
           </sourceDirectories>
-          <outputDir>${project.basedir}/dokka</outputDir>
+          <outputDir>${project.basedir}/${artifactId}-${version}</outputDir>
           <documentedVisibilities>
             <visibility>PUBLIC</visibility>
             <visibility>INTERNAL</visibility>
