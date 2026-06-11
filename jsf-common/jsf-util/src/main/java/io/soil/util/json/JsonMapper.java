@@ -29,7 +29,7 @@ import static com.fasterxml.jackson.databind.util.StdDateFormat.DATE_FORMAT_STR_
 @Slf4j
 public final class JsonMapper {
 
-  public static final ObjectMapper OBJECT_MAPPER;
+  private static final ObjectMapper OBJECT_MAPPER;
 
   static {
     OBJECT_MAPPER = new ObjectMapper();

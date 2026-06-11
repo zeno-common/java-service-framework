@@ -60,30 +60,4 @@ public class WafConfig {
 
     return builder;
   }
-
-  /**
-   * OffsetDateTime ISO 8601 序列化器，保留原始时区偏移量
-   */
-  private static class OffsetDateTimeIsoSerializer extends StdSerializer<OffsetDateTime> {
-
-    OffsetDateTimeIsoSerializer() {
-      super(OffsetDateTime.class);
-    }
-
-    @Override
-    public void serialize(OffsetDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-      gen.writeString(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value));
-    }
-  }
-
-  /**
-   * OffsetDateTime ISO 8601 反序列化器，保留原始时区偏移量
-   */
-  private static class OffsetDateTimeIsoDeserializer extends JsonDeserializer<OffsetDateTime> {
-
-    @Override
-    public OffsetDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-      return OffsetDateTime.parse(p.getText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-    }
-  }
 }
