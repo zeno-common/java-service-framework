@@ -98,18 +98,18 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
-        <repository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>maven-skylink</id>
-            <name>skylink-release</name>
-            <url>http://asianlink.ph:6800/repository/skylink-release/</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>maven-skylink</id>
-            <name>skylink-snapshots</name>
-            <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <uniqueVersion>true</uniqueVersion>-->
+<!--            <id>maven-skylink</id>-->
+<!--            <name>skylink-release</name>-->
+<!--            <url>http://asianlink.ph:6800/repository/skylink-release/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <uniqueVersion>true</uniqueVersion>-->
+<!--            <id>maven-skylink</id>-->
+<!--            <name>skylink-snapshots</name>-->
+<!--            <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
 </project>

@@ -27,7 +27,6 @@
     <module>ruoyi-common-mail</module>
     <module>ruoyi-common-sms</module>
     <module>ruoyi-common-logstash</module>
-    <module>ruoyi-common-elasticsearch</module>
     <module>ruoyi-common-sentinel</module>
     <module>ruoyi-common-skylog</module>
     <module>ruoyi-common-prometheus</module>
@@ -36,6 +35,7 @@
     <module>ruoyi-common-encrypt</module>
     <module>ruoyi-common-social</module>
     <module>ruoyi-common-nacos</module>
+    <module>jsf-waf</module>
   </modules>
 
 

@@ -19,240 +19,240 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- 核心模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-core</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 核心模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-core</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 接口模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-doc</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 接口模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-doc</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 安全模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-security</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 安全模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-security</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 日志记录 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-log</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 日志记录 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-log</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 通用service实现模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-service-impl</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 通用service实现模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-service-impl</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- excel -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-excel</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; excel &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-excel</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 缓存服务 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-redis</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 缓存服务 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-redis</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- web服务 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-web</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; web服务 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-web</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- RPC服务 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-dubbo</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; RPC服务 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-dubbo</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 分布式事务 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-seata</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 分布式事务 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-seata</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 自定义负载均衡 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-loadbalancer</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 自定义负载均衡 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-loadbalancer</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- oss服务 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-oss</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; oss服务 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-oss</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 限流功能 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-ratelimiter</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 限流功能 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-ratelimiter</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 幂等功能 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-idempotent</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 幂等功能 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-idempotent</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 邮件模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-mail</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 邮件模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-mail</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 短信模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-sms</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 短信模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-sms</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- logstash日志推送模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-logstash</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; logstash日志推送模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-logstash</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- ES搜索引擎服务 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-elasticsearch</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; ES搜索引擎服务 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-elasticsearch</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 限流模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-sentinel</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 限流模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-sentinel</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- skywalking日志收集模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-skylog</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; skywalking日志收集模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-skylog</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- prometheus监控 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-prometheus</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; prometheus监控 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-prometheus</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 通用翻译功能 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-translation</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 通用翻译功能 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-translation</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 脱敏模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-sensitive</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 脱敏模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-sensitive</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 序列化模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-json</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 序列化模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-json</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 数据加解密模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-encrypt</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 数据加解密模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-encrypt</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 租户模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-tenant</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 租户模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-tenant</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- websocket模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-websocket</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; websocket模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-websocket</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 授权认证 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-social</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 授权认证 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-social</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 配置中心 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-nacos</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 配置中心 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-nacos</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- 消息总线模块 -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-bus</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; 消息总线模块 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-bus</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
-            <!-- sse -->
-            <dependency>
-                <groupId>io.soil</groupId>
-                <artifactId>ruoyi-common-sse</artifactId>
-                <version>${jsf.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; sse &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.soil</groupId>-->
+<!--                <artifactId>ruoyi-common-sse</artifactId>-->
+<!--                <version>${jsf.version}</version>-->
+<!--            </dependency>-->
 
         </dependencies>
     </dependencyManagement>
 
 
 
-    <distributionManagement>
-        <repository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>maven-skylink</id>
-            <name>skylink-release</name>
-            <url>http://asianlink.ph:6800/repository/skylink-release/</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>maven-skylink</id>
-            <name>skylink-snapshots</name>
-            <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <uniqueVersion>true</uniqueVersion>-->
+<!--            <id>maven-skylink</id>-->
+<!--            <name>skylink-release</name>-->
+<!--            <url>http://asianlink.ph:6800/repository/skylink-release/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <uniqueVersion>true</uniqueVersion>-->
+<!--            <id>maven-skylink</id>-->
+<!--            <name>skylink-snapshots</name>-->
+<!--            <url>http://asianlink.ph:6800/repository/skylink-snapshots/</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
 </project>

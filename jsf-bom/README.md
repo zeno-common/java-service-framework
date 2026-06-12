@@ -15,7 +15,6 @@ Java Service Framework (JSF) 的 BOM（Bill of Materials）模块，负责统一
 | [jsf-spring-dependencies](./jsf-spring-dependencies) | Spring Boot & Spring Cloud 依赖管理 |
 | [jsf-alibaba-dependencies](./jsf-alibaba-dependencies) | Spring Cloud Alibaba 依赖管理 |
 | [jsf-common-dependencies](./jsf-common-dependencies) | JSF 通用模块依赖管理 |
-| [jsf-components-dependencies](./jsf-components-dependencies) | JSF 业务组件依赖管理 |
 | [jsf-jdbc-dependencies](./jsf-jdbc-dependencies) | 数据库 & ORM 依赖管理 |
 | [jsf-redis-dependencies](./jsf-redis-dependencies) | Redis 依赖管理 |
 | [jsf-tools-dependencies](./jsf-tools-dependencies) | 工具库依赖管理 |
@@ -27,7 +26,6 @@ jsf-dependencies (聚合入口)
 ├── jsf-spring-dependencies      (Spring Boot / Spring Cloud)
 ├── jsf-alibaba-dependencies     (Spring Cloud Alibaba / Dubbo / Sentinel / Seata)
 ├── jsf-common-dependencies      (jsf-pojo / jsf-util / jsf-waf)
-├── jsf-components-dependencies  (ruoyi-common-* 组件)
 ├── jsf-jdbc-dependencies        (MyBatis-Plus / PageHelper / Dynamic-DS)
 ├── jsf-redis-dependencies       (Redisson)
 └── jsf-tools-dependencies       (Hutool / Jackson / Lombok / Caffeine / MapStruct-Plus)
