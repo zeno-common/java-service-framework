@@ -41,36 +41,57 @@ docs/agent-rules/
 | 新增/修改 | 覆盖对应 `.md` |
 | 删除 | 删除对应 `.md`（若存在） |
 
-每次生成后更新 `docs/sdk/README.md` 索引。README.md 是 AI Agent 的入口文件，必须包含以下三个核心段落，确保 AI Agent 能通过此文件完成「引入依赖 → 定位类 → 查阅详情」的完整流程：
+每次生成后在 `docs/agent-rules/README.md` 更新索引。README.md 是 AI Agent 的入口文件，必须包含以下三个核心段落，确保 AI Agent 能通过此文件完成「引入依赖 → 定位类 → 查阅详情」的完整流程：
 
 ### README.md 模板
 
 ```markdown
-# SDK Documentation Index
-
+# Introduction
+> 本文档供 AI Agent 在代码生成时查阅，了解项目和模块及其用途。
 > <项目描述>。
-> 本文档供 AI Agent 在代码生成时查阅，快速了解可用的类及其用途。
 
+版本：${project.version}
+
+Last Updated: ${project.last.updated}
 ---
 
 ## Maven 依赖引入
 
-在项目 `pom.xml` 中添加以下依赖即可使用对应模块：
-
-### <module-path>
+通过 `jsf-bom` 统一管理版本，支持以下两种方式：
+### 方式一：启动项目的 POM 继承 jsf-parent
 
 ```xml
-<dependency>
-  <groupId>${groupId}</groupId>
-  <artifactId>${artifactId}</artifactId>
-  <version>${version}</version>
-</dependency>
+<parent>
+  <groupId>io.soil</groupId>
+  <artifactId>jsf-parent</artifactId>
+  <version>${project.version}</version>
+</parent>
 ```
 
-（每个可发布的子模块一个 dependency 段落，groupId/artifactId/version 从 pom.xml 提取）
+---
+### 方式二：导入 jsf-dependencies BOM
+
+非启动项目中，若已有父 POM，在 `dependencyManagement` 中导入 BOM, 否则将 BOM 设置父 POM ;
+
+```xml
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>io.soil</groupId>
+      <artifactId>jsf-dependencies</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
+
+同样在 `<dependencies>` 中声明子模块即可，版本由 BOM 统一管理。
 
 ---
 
+# SDK Documentation Index
 ## 模块概览
 
 | Module | ArtifactId | Description |
@@ -104,7 +125,6 @@ AI Agent 在代码生成时遵循以下流程：
 
 ---
 
-*Last Updated: YYYY-MM-DD*
 ```
 
 ### README.md 生成规则
