@@ -51,8 +51,7 @@ docs/agent-rules/
 > <项目描述>。
 
 版本：${project.version}
-
-Last Updated: ${project.last.updated}
+Updated: ${project.last.updated}
 ---
 
 ## Maven 依赖引入

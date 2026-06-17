@@ -45,8 +45,8 @@ TAG="v${VERSION}-${TIMESTAMP}"
 
 echo -e "${YELLOW}[2/5] 检查 submodule 变更状态...${NC}"
 
-# 检查 submodule 是否已初始化
-if [ ! -d "$SUBMODULE_DIR/.git" ]; then
+# 检查 submodule 是否已初始化（.git 可能是目录或文件）
+if [ ! -e "$SUBMODULE_DIR/.git" ]; then
   echo -e "${RED}错误: submodule 未初始化: $SUBMODULE_DIR${NC}"
   echo -e "${YELLOW}请先执行 sync-agent-rules.sh 完成初始化${NC}"
   exit 1
@@ -85,11 +85,13 @@ echo -e "${YELLOW}[5/5] 推送到远程...${NC}"
 BRANCH=$(git branch --show-current 2>/dev/null || echo "")
 if [ -z "$BRANCH" ]; then
   echo -e "${YELLOW}    当前处于 detached HEAD 状态，检测远程默认分支...${NC}"
+  # 优先用 symbolic-ref（本地缓存，快），但需验证分支确实存在
   REMOTE_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
-  if [ -z "$REMOTE_BRANCH" ]; then
+  if [ -z "$REMOTE_BRANCH" ] || ! git rev-parse --verify "origin/$REMOTE_BRANCH" >/dev/null 2>&1; then
+    # 缓存失效或为空，回退到查询远程
     REMOTE_BRANCH=$(git remote show origin 2>/dev/null | grep "HEAD branch" | sed 's/.*: //')
   fi
-  if [ -z "$REMOTE_BRANCH" ]; then
+  if [ -z "$REMOTE_BRANCH" ] || ! git rev-parse --verify "origin/$REMOTE_BRANCH" >/dev/null 2>&1; then
     echo -e "${RED}错误: 无法获取远程默认分支，请手动指定后重试${NC}"
     exit 1
   fi

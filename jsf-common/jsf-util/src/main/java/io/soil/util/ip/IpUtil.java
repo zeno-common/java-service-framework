@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * 本地连接IP工具类，用于获取与指定远程IP端口连接的本地IP地址
+ * 本地 IP工具类，用于获取与指定远程IP端口连接的本地IP地址
  */
 public class IpUtil {
     /**

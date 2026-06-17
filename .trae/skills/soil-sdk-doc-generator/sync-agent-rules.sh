@@ -37,8 +37,8 @@ if [ ! -f "$PROJECT_ROOT/.gitmodules" ] || \
   exit 1
 fi
 
-# 检查 submodule 工作目录是否已初始化
-if [ ! -d "$SUBMODULE_DIR/.git" ]; then
+# 检查 submodule 工作目录是否已初始化（.git 可能是目录或文件）
+if [ ! -e "$SUBMODULE_DIR/.git" ]; then
   echo -e "${YELLOW}    submodule 未初始化，正在初始化并拉取...${NC}"
   cd "$PROJECT_ROOT"
   git submodule update --init --recursive "$SUBMODULE_PATH"
@@ -50,13 +50,24 @@ fi
 echo -e "${YELLOW}[2/3] 检测远程更新...${NC}"
 cd "$SUBMODULE_DIR"
 
-# 获取当前分支
+# 获取当前分支（submodule 常处于 detached HEAD 状态）
 BRANCH=$(git branch --show-current 2>/dev/null || echo "")
 if [ -z "$BRANCH" ]; then
-  echo -e "${RED}错误: 无法获取 submodule 当前分支${NC}"
-  exit 1
+  echo -e "${YELLOW}    当前处于 detached HEAD 状态，检测远程默认分支...${NC}"
+  # 优先用 symbolic-ref（本地缓存，快），但需验证分支确实存在
+  BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+  if [ -z "$BRANCH" ] || ! git rev-parse --verify "origin/$BRANCH" >/dev/null 2>&1; then
+    # 缓存失效或为空，回退到查询远程
+    BRANCH=$(git remote show origin 2>/dev/null | grep "HEAD branch" | sed 's/.*: //')
+  fi
+  if [ -z "$BRANCH" ] || ! git rev-parse --verify "origin/$BRANCH" >/dev/null 2>&1; then
+    echo -e "${RED}错误: 无法获取远程默认分支${NC}"
+    exit 1
+  fi
+  echo -e "${GREEN}    远程默认分支: $BRANCH (detached HEAD)${NC}"
+else
+  echo -e "${GREEN}    当前分支: $BRANCH${NC}"
 fi
-echo -e "${GREEN}    当前分支: $BRANCH${NC}"
 
 # 拉取远程引用
 git fetch origin "$BRANCH" --quiet
@@ -82,7 +93,12 @@ echo -e "${YELLOW}[3/3] 检测到远程有更新，正在拉取...${NC}"
 echo -e "    本地: ${LOCAL_HEAD:0:8}"
 echo -e "    远程: ${REMOTE_HEAD:0:8}"
 
-git pull origin "$BRANCH" --ff-only
+# detached HEAD 时用 merge --ff-only，否则用 pull
+if [ -z "$(git branch --show-current 2>/dev/null || echo '')" ]; then
+  git merge --ff-only "origin/$BRANCH"
+else
+  git pull origin "$BRANCH" --ff-only
+fi
 echo -e "${GREEN}    已更新到最新 (commit: $(git rev-parse HEAD | cut -c1-8))${NC}"
 
 echo ""
