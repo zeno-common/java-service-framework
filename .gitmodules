@@ -1,0 +1,3 @@
+[submodule "docs/agent-rules"]
+	path = docs/agent-rules
+	url = https://gitee.com/zeno-common/java-service-framework-rules.git

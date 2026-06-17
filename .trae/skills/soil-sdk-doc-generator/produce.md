@@ -27,7 +27,7 @@
 目录结构：
 
 ```
-docs/sdk/
+docs/agent-rules/
 ├── README.md
 ├── <module-name>/
 │   └── <package-path>/
