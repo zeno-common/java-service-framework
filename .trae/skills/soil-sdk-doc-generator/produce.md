@@ -41,15 +41,80 @@ docs/sdk/
 | 新增/修改 | 覆盖对应 `.md` |
 | 删除 | 删除对应 `.md`（若存在） |
 
-每次生成后更新 `docs/sdk/README.md` 索引：
+每次生成后更新 `docs/sdk/README.md` 索引。README.md 是 AI Agent 的入口文件，必须包含以下三个核心段落，确保 AI Agent 能通过此文件完成「引入依赖 → 定位类 → 查阅详情」的完整流程：
+
+### README.md 模板
 
 ```markdown
 # SDK Documentation Index
 
-| Module | Package | Classes | Last Updated |
-|--------|---------|---------|--------------|
-| `ruoyi-common-core` | `com.ruoyi.common.core` | 15 | 2026-06-17 |
+> <项目描述>。
+> 本文档供 AI Agent 在代码生成时查阅，快速了解可用的类及其用途。
+
+---
+
+## Maven 依赖引入
+
+在项目 `pom.xml` 中添加以下依赖即可使用对应模块：
+
+### <module-path>
+
+```xml
+<dependency>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+</dependency>
 ```
+
+（每个可发布的子模块一个 dependency 段落，groupId/artifactId/version 从 pom.xml 提取）
+
+---
+
+## 模块概览
+
+| Module | ArtifactId | Description |
+|--------|-----------|-------------|
+| <module-path> | `<artifactId>` | <一句话描述模块用途> |
+
+---
+
+## 类索引
+
+> 按模块 → 包分组，每个类附一行功能描述和文档链接。
+
+### <module-name> — <模块简述>
+
+#### <package> — <包简述>
+
+| Class | Package | Description | Doc |
+|-------|---------|-------------|-----|
+| `ClassName` | `com.example.package` | <从类 Javadoc 第一句提取> | [ClassName](relative-path/to/ClassName.md) |
+
+---
+
+## 使用指南
+
+AI Agent 在代码生成时遵循以下流程：
+
+1. **需求匹配** — 根据功能需求从上方「类索引」中查找对应类
+2. **查阅详情** — 点击 Doc 链接进入类的完整 API 文档，了解方法签名、参数和返回值
+3. **引入依赖** — 从「Maven 依赖引入」复制对应 `artifactId` 的依赖坐标到 `pom.xml`
+4. **编写代码** — 根据文档中的方法签名和参数说明生成正确的调用代码
+
+---
+
+*Last Updated: YYYY-MM-DD*
+```
+
+### README.md 生成规则
+
+| 段落 | 数据来源 | 规则 |
+|------|----------|------|
+| Maven 依赖引入 | 模块 `pom.xml` 的 `<groupId>`、`<artifactId>`、`<version>` | 跳过纯聚合模块（packaging=pom 且无 Java 源码） |
+| 模块概览 | 模块目录名 + pom.xml | 从模块 README 或模块名推断描述 |
+| 类索引 | Java 类 Javadoc 第一句 | 按模块 → 包路径分组，Doc 列为相对路径链接 |
+| 使用指南 | 固定文本 | 直接使用模板中的固定内容 |
 
 ## 6. 关键规则
 
