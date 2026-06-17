@@ -1,19 +1,13 @@
 package io.soil.util.jdbc;
 
-import java.util.regex.Pattern;
-
+import io.micrometer.common.util.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import io.micrometer.common.util.StringUtils;
-import static io.soil.util.jdbc.JsfUrlParamConst.LIMIT;
-import static io.soil.util.jdbc.JsfUrlParamConst.OFFSET;
-import static io.soil.util.jdbc.JsfUrlParamConst.OFFSET_ID;
-import static io.soil.util.jdbc.JsfUrlParamConst.OFFSET_TIME;
-import static io.soil.util.jdbc.JsfUrlParamConst.ORDER;
-import static io.soil.util.jdbc.JsfUrlParamConst.PAGE_NO;
-import static io.soil.util.jdbc.JsfUrlParamConst.PAGE_SIZE;
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.regex.Pattern;
+
+import static io.soil.util.jdbc.JsfUrlParamConst.*;
 
 
 /**
@@ -25,7 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  * @author zeno.w
  */
-public class JsfUrlParameter {
+public class JsfUrlParams {
 
   /** 每页显示条数，默认 10 */
   private static final int DEFAULT_SIZE = 10;

@@ -48,8 +48,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-core</artifactId>
+      <groupId>com.mybatis-flex</groupId>
+      <artifactId>mybatis-flex-core</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>

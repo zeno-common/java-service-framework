@@ -2,14 +2,45 @@
 
 `package io.soil.util.jdbc`
 
-implements `IPage<T>`
+extends `com.mybatisflex.core.paginate.Page<T>`
 
-基于 URL 参数的 MyBatis-Plus 分页对象，实现 IPage 接口。
+基于 URL 参数的 MyBatis-Flex 分页对象，继承 Page。
 
-从 HTTP 请求的 URL 参数中自动提取分页信息（页码、每页条数、排序等），支持 pageNo/pageSize 和 offset/limit 两种分页模式。
+从 HTTP 请求的 URL 参数中自动提取分页信息（页码、每页条数），支持 pageNo/pageSize 和 offset/limit 两种分页模式。排序参数通过 JsfUrlParameter.order() 获取，由调用方应用于 QueryWrapper。
 
 - **Type Parameters:** `<T>` — 分页数据类型
 - **Author:** koala
+
+---
+
+## Constructors
+
+### `JsfUrlParamsPage()`
+
+无参构造函数。
+
+---
+
+### `JsfUrlParamsPage(int pageNumber, int pageSize)`
+
+分页构造函数。
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `pageNumber` | `int` | 当前页 |
+| `pageSize` | `int` | 每页显示条数 |
+
+---
+
+### `JsfUrlParamsPage(int pageNumber, int pageSize, long totalRow)`
+
+分页构造函数。
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `pageNumber` | `int` | 当前页 |
+| `pageSize` | `int` | 每页显示条数 |
+| `totalRow` | `long` | 总数 |
 
 ---
 
@@ -31,154 +62,65 @@ implements `IPage<T>`
 
 ---
 
-### `List<T> getRecords()`
+### `String order()`
 
-→ **List\<T\>** — 查询数据列表
+→ **String** — 排序字符串，参数不存在时返回 null
 
-*(No description provided)*
-
----
-
-### `IPage<T> setRecords(List<T> records)`
-
-→ **IPage\<T\>** — 分页对象
-
-*(No description provided)*
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `records` | `List<T>` | 查询数据列表 |
+获取请求中的排序参数
 
 ---
 
-### `long getTotal()`
+## Static Methods
 
-→ **long** — 总数
-
-*(No description provided)*
-
----
-
-### `IPage<T> setTotal(long total)`
-
-→ **IPage\<T\>** — 分页对象
-
-*(No description provided)*
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `total` | `long` | 总数 |
-
----
-
-### `long getSize()`
-
-→ **long** — 每页显示条数
-
-*(No description provided)*
-
----
-
-### `IPage<T> setSize(long size)`
-
-→ **IPage\<T\>** — 分页对象
-
-*(No description provided)*
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `size` | `long` | 每页显示条数 |
-
----
-
-### `long getCurrent()`
-
-→ **long** — 当前页
-
-*(No description provided)*
-
----
-
-### `IPage<T> setCurrent(long current)`
-
-→ **IPage\<T\>** — 分页对象
-
-*(No description provided)*
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `current` | `long` | 当前页 |
-
----
-
-### `String countId()`
-
-→ **String** — countId
-
-*(No description provided)*
-
----
-
-### `Long maxLimit()`
-
-→ **Long** — 单页分页条数限制
-
-*(No description provided)*
-
----
-
-### `JsfUrlParamsPage<T> addOrder(OrderItem... items)`
-
-→ **JsfUrlParamsPage\<T\>** — 返回分页参数本身
-
-添加新的排序条件，构造条件可以使用工厂：OrderItem#descs(String...)、OrderItem#ascs(String...)
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `items` | `OrderItem...` | 条件 |
-
----
-
-### `JsfUrlParamsPage<T> addOrder(List<OrderItem> items)`
-
-→ **JsfUrlParamsPage\<T\>** — 返回分页参数本身
-
-添加新的排序条件，构造条件可以使用工厂：OrderItem#descs(String...)、OrderItem#ascs(String...)
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `items` | `List<OrderItem>` | 条件 |
-
----
-
-### `List<OrderItem> orders()`
-
-→ **List\<OrderItem\>** — 排序字段信息
-
-*(No description provided)*
-
----
-
-### `boolean optimizeCountSql()`
-
-→ **boolean** — 是否自动优化 COUNT SQL
-
-*(No description provided)*
-
----
-
-### `static <T> JsfUrlParamsPage<T> of(long current, long size, long total, boolean searchCount)`
+### `static <T> JsfUrlParamsPage<T> of(long pageNumber, long pageSize)`
 
 → **JsfUrlParamsPage\<T\>** — 分页对象
 
-创建分页对象，指定当前页、每页条数、总数和是否查询总数
+创建分页对象，指定当前页和每页条数
 
 | Param | Type | Description |
 |-------|------|-------------|
-| `current` | `long` | 当前页 |
-| `size` | `long` | 每页条数 |
-| `total` | `long` | 总数 |
-| `searchCount` | `boolean` | 是否查询总数 |
+| `pageNumber` | `long` | 当前页 |
+| `pageSize` | `long` | 每页显示条数 |
+| `<T>` | | 分页数据类型 |
+
+---
+
+### `static <T> JsfUrlParamsPage<T> of(long pageNumber, long pageSize, long totalRow)`
+
+→ **JsfUrlParamsPage\<T\>** — 分页对象
+
+创建分页对象，指定当前页、每页条数和总数
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `pageNumber` | `long` | 当前页 |
+| `pageSize` | `long` | 每页显示条数 |
+| `totalRow` | `long` | 总数 |
+| `<T>` | | 分页数据类型 |
+
+---
+
+### `static <T> JsfUrlParamsPage<T> of()`
+
+→ **JsfUrlParamsPage\<T\>** — 分页对象
+
+从 URL 参数创建分页对象
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `<T>` | | 分页数据类型 |
+
+---
+
+### `static <T> JsfUrlParamsPage<T> urlPage()`
+
+→ **JsfUrlParamsPage\<T\>** — 分页对象
+
+从 URL 参数创建分页对象（默认查询总数）
+
+| Param | Type | Description |
+|-------|------|-------------|
 | `<T>` | | 分页数据类型 |
 
 ---
@@ -199,117 +141,18 @@ implements `IPage<T>`
 
 ---
 
-### `boolean optimizeJoinOfCountSql()`
+## Inherited from `Page<T>`
 
-→ **boolean** — *(No description provided)*
+以下方法继承自 MyBatis-Flex 的 `com.mybatisflex.core.paginate.Page<T>`，可直接使用：
 
-*(No description provided)*
-
----
-
-### `JsfUrlParamsPage<T> setSearchCount(boolean searchCount)`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-*(No description provided)*
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `searchCount` | `boolean` | 是否进行 count 查询 |
-
----
-
-### `JsfUrlParamsPage<T> setOptimizeCountSql(boolean optimizeCountSql)`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-*(No description provided)*
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `optimizeCountSql` | `boolean` | 是否自动优化 COUNT SQL |
-
----
-
-### `long getPages()`
-
-→ **long** — 总页数
-
-*(No description provided)*
-
----
-
-### `static <T> JsfUrlParamsPage<T> of(long current, long size)`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-创建分页对象，指定当前页和每页条数
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `current` | `long` | 当前页 |
-| `size` | `long` | 每页条数 |
-| `<T>` | | 分页数据类型 |
-
----
-
-### `static <T> JsfUrlParamsPage<T> of(long current, long size, long total)`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-创建分页对象，指定当前页、每页条数和总数
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `current` | `long` | 当前页 |
-| `size` | `long` | 每页条数 |
-| `total` | `long` | 总数 |
-| `<T>` | | 分页数据类型 |
-
----
-
-### `static <T> JsfUrlParamsPage<T> of(long current, long size, boolean searchCount)`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-创建分页对象，指定当前页、每页条数和是否查询总数
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `current` | `long` | 当前页 |
-| `size` | `long` | 每页条数 |
-| `searchCount` | `boolean` | 是否查询总数 |
-| `<T>` | | 分页数据类型 |
-
----
-
-### `static <T> JsfUrlParamsPage<T> of(boolean searchCount)`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-从 URL 参数创建分页对象，指定是否查询总数
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `searchCount` | `boolean` | 是否查询总数 |
-| `<T>` | | 分页数据类型 |
-
----
-
-### `static <T> JsfUrlParamsPage<T> urlPage()`
-
-→ **JsfUrlParamsPage\<T\>** — 分页对象
-
-从 URL 参数创建分页对象（默认查询总数）
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `<T>` | | 分页数据类型 |
-
----
-
-### `boolean searchCount()`
-
-→ **boolean** — 是否进行 count 查询
-
-*(No description provided)*
+| Method | Return Type | Description |
+|--------|-------------|-------------|
+| `getPageNumber()` | `int` | 当前页码 |
+| `setPageNumber(int)` | `void` | 设置当前页码 |
+| `getPageSize()` | `int` | 每页条数 |
+| `setPageSize(int)` | `void` | 设置每页条数 |
+| `getTotalRow()` | `long` | 总记录数 |
+| `setTotalRow(long)` | `void` | 设置总记录数 |
+| `getTotalPage()` | `int` | 总页数 |
+| `getList()` | `List<T>` | 查询数据列表 |
+| `setList(List<T>)` | `void` | 设置查询数据列表 |

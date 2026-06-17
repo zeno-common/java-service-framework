@@ -26,7 +26,7 @@ jsf-dependencies (聚合入口)
 ├── jsf-spring-dependencies      (Spring Boot / Spring Cloud)
 ├── jsf-alibaba-dependencies     (Spring Cloud Alibaba / Dubbo / Sentinel / Seata)
 ├── jsf-common-dependencies      (jsf-pojo / jsf-util / jsf-waf)
-├── jsf-jdbc-dependencies        (MyBatis-Plus / PageHelper / Dynamic-DS)
+├── jsf-jdbc-dependencies        (MyBatis-Flex / PageHelper)
 ├── jsf-redis-dependencies       (Redisson)
 └── jsf-tools-dependencies       (Hutool / Jackson / Lombok / Caffeine / MapStruct-Plus)
 ```

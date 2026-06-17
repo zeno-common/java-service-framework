@@ -10,12 +10,10 @@
 
 | 依赖 | 版本 | 说明 |
 |------|------|------|
-| mybatis-plus-spring-boot3-starter | 3.5.16 | MyBatis-Plus Spring Boot 3 Starter（排除 HikariCP 和 mybatis-spring） |
-| mybatis-plus-core | 3.5.16 | MyBatis-Plus 核心 |
-| mybatis-plus-jsqlparser | 3.5.16 | MyBatis-Plus SQL 解析器 |
+| mybatis-flex-spring-boot3-starter | 1.11.7 | MyBatis-Flex Spring Boot 3 Starter（排除 HikariCP） |
+| mybatis-flex-core | 1.11.7 | MyBatis-Flex 核心 |
 | mybatis-spring-boot-starter | 3.0.4 | MyBatis Spring Boot Starter |
 | mybatis | 3.5.19 | MyBatis 核心 |
-| dynamic-datasource-spring-boot3-starter | 4.3.1 | 动态数据源 |
 | pagehelper | 6.1.1 | MyBatis 分页插件 |
 
 ## 使用方式

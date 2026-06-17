@@ -132,7 +132,7 @@
 | `JsfUrlParamConst` | `io.soil.util.jdbc` | REST API 分页/排序 URL 参数常量 | [JsfUrlParamConst](jsf-common/jsf-util/io.soil.util.jdbc/JsfUrlParamConst.md) |
 | `JsfUrlParameter` | `io.soil.util.jdbc` | 从 HTTP 请求提取分页、排序参数 | [JsfUrlParameter](jsf-common/jsf-util/io.soil.util.jdbc/JsfUrlParameter.md) |
 | `JsfPagingUtil` | `io.soil.util.jdbc` | 基于 URL 参数的 PageHelper 分页工具 | [JsfPagingUtil](jsf-common/jsf-util/io.soil.util.jdbc/JsfPagingUtil.md) |
-| `JsfUrlParamsPage<T>` | `io.soil.util.jdbc` | MyBatis-Plus 分页对象，实现 IPage 接口 | [JsfUrlParamsPage](jsf-common/jsf-util/io.soil.util.jdbc/JsfUrlParamsPage.md) |
+| `JsfUrlParamsPage<T>` | `io.soil.util.jdbc` | MyBatis-Flex 分页对象，继承 Page | [JsfUrlParamsPage](jsf-common/jsf-util/io.soil.util.jdbc/JsfUrlParamsPage.md) |
 
 #### io.soil.util.json — JSON 工具
 

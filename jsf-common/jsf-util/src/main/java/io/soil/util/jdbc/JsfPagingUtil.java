@@ -1,9 +1,9 @@
 package io.soil.util.jdbc;
 
-import java.util.Objects;
-
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+
+import java.util.Objects;
 
 /**
  * @javadoc 【必须加这个注解，smart-doc才扫描本类所有方法】
@@ -63,14 +63,14 @@ public class JsfPagingUtil {
   public static <T> Page<T> pageByUrlParam(String order, boolean count){
 
     // 需要设置 defaultValue 为 null 走到 pageNo 参数逻辑
-    Integer offset = JsfUrlParameter.offset(null);
-    Integer limit = JsfUrlParameter.limit(null);
+    Integer offset = JsfUrlParams.offset(null);
+    Integer limit = JsfUrlParams.limit(null);
     if(offset != null && limit != null){
       return offsetByUrlParams(offset, limit, order);
     }
 
-    Integer pageNo = JsfUrlParameter.pageNo();
-    Integer pageSize = JsfUrlParameter.pageSize();
+    Integer pageNo = JsfUrlParams.pageNo();
+    Integer pageSize = JsfUrlParams.pageSize();
     return pageByUrlParam(pageNo, pageSize, order,count);
   }
 
@@ -102,7 +102,7 @@ public class JsfPagingUtil {
 
     Page<T> page = PageHelper.startPage(pageNo, pageSize, count, true, false);
     if (order == null){
-      order = JsfUrlParameter.order();
+      order = JsfUrlParams.order();
     }
 
     if(!Objects.isNull(order)){
@@ -139,7 +139,7 @@ public class JsfPagingUtil {
 
     Page<T> page = PageHelper.offsetPage(offset, limit, count);
     if (order == null){
-      order = JsfUrlParameter.order();
+      order = JsfUrlParams.order();
     }
 
     if(!Objects.isNull(order)){
