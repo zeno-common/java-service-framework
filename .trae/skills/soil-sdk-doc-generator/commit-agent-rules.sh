@@ -109,5 +109,4 @@ echo -e "${GREEN}    已推送提交和标签 ${TAG}${NC}"
 
 echo ""
 echo -e "${GREEN}===== 提交发布完成 =====${NC}"
-echo -e "${YELLOW}提示: submodule 已推送，如需在父仓库记录新引用，请执行:${NC}"
-echo -e "  cd \"$PROJECT_ROOT\" && git add $SUBMODULE_PATH && git commit -m \"chore: 更新 agent-rules submodule 引用\""
+
