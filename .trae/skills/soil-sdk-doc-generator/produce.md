@@ -47,46 +47,7 @@ docs/agent-rules/
 
 ```markdown
 # Introduction
-> 本文档供 AI Agent 在代码生成时查阅，了解项目和模块及其用途。
-> <项目描述>。
-
-版本：${project.version}
-Updated: ${project.last.updated}
----
-
-## Maven 依赖引入
-
-通过 `jsf-bom` 统一管理版本，支持以下两种方式：
-### 方式一：启动项目的 POM 继承 jsf-parent
-
-```xml
-<parent>
-  <groupId>io.soil</groupId>
-  <artifactId>jsf-parent</artifactId>
-  <version>${project.version}</version>
-</parent>
-```
-
----
-### 方式二：导入 jsf-dependencies BOM
-
-非启动项目中，若已有父 POM，在 `dependencyManagement` 中导入 BOM, 否则将 BOM 设置父 POM ;
-
-```xml
-<dependencyManagement>
-  <dependencies>
-    <dependency>
-      <groupId>io.soil</groupId>
-      <artifactId>jsf-dependencies</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
-  </dependencies>
-</dependencyManagement>
-```
-
-同样在 `<dependencies>` 中声明子模块即可，版本由 BOM 统一管理。
+依赖引入参考： '[jsf-bom/README.md](jsf-bom/README.md)'
 
 ---
 
