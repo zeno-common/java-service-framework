@@ -46,6 +46,7 @@ nbdist/
 !*/build/*.html
 !*/build/*.xml
 
+skills-lock.json
 .flattened-pom.xml
 .trae
 .agents
