@@ -13,7 +13,7 @@
   </description>
 
   <properties>
-    <revision>2.4.0</revision>
+    <jsf.version>0.0.1</jsf.version>
   </properties>
 
   <modules>

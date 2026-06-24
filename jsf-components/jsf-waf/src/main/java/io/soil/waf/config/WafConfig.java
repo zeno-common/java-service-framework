@@ -23,7 +23,7 @@ import static io.soil.common.date.OffsetDateTimeUtil.OFFSET_DATE_TIME_FORMATTER;
  * <p>
  * 主要配置：
  * <ul>
- *   <li>Java 8 时间格式的序列化/反序列化</li>
+ *   <li>时间格式的序列化/反序列化</li>
  *   <li>枚举使用字符串序列化</li>
  *   <li>忽略未知属性</li>
  * </ul>
