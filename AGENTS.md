@@ -1,1 +1,2 @@
-# 生成 java 模块的 README.md 文件时，引入依赖都使用 jsf-bom 模块下 README.md 描述的统一方式
+# 生成 doc skill 的引入说明，使用 jsf-bom-doc 的**引入方式**
+# docs\jsf-skills 目录下的文件操作不需要手动干预操作
