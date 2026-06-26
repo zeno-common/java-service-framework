@@ -1,0 +1,3 @@
+[submodule "docs/jsf-skills"]
+	path = docs/jsf-skills
+	url = https://github.com/zeno-common/java-service-framework-doc.git
