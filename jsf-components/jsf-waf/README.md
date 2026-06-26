@@ -1,6 +1,6 @@
 # jsf-waf
 
-基于 Spring Boot 封装的 Web Application Framework (WAF) 通用模块，提供全局异常处理、Jackson 序列化配置、健康探针和常用工具类。引入即生效，零配置。
+基于 Spring Boot 封装的 Web 应用通用的依赖模块，提供 Spring web 应用启动的基本配置、全局异常处理、Restful API Jackson 序列化配置、健康探针和常用工具类。 引入即生效，零配置。
 
 ## 功能特性
 
