@@ -53,13 +53,6 @@
         <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
       </properties>
     </profile>
-    <profile>
-      <id>d-live</id>
-      <properties>
-        <env>live</env>
-        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
-      </properties>
-    </profile>
 
     <profile>
       <id>pd-docker</id>

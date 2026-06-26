@@ -19,20 +19,12 @@
         <apache.commons.lang3.version>3.17.0</apache.commons.lang3.version>
         <apache.commons.collections4.version>4.5.0</apache.commons.collections4.version>
         <caffeine.version>3.2.0</caffeine.version>
-        <hutool.version>5.8.35</hutool.version>
         <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
         <ip2region.version>2.7.0</ip2region.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-bom</artifactId>
-                <version>${hutool.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>

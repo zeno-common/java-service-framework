@@ -144,7 +144,7 @@ public class WafException extends BaseException {
    */
   @Override
   public String module(){
-    return "GAEA-WAF";
+    return "JSF-WAF";
   }
 
   /**

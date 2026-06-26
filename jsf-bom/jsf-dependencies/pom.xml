@@ -64,6 +64,13 @@
     <dependencies>
       <dependency>
         <groupId>io.soil</groupId>
+        <artifactId>jsf-alibaba-dependencies</artifactId>
+        <version>${jsf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.soil</groupId>
         <artifactId>jsf-common-dependencies</artifactId>
         <version>${jsf.version}</version>
         <type>pom</type>
@@ -71,14 +78,14 @@
       </dependency>
       <dependency>
         <groupId>io.soil</groupId>
-        <artifactId>jsf-spring-dependencies</artifactId>
+        <artifactId>jsf-components-dependencies</artifactId>
         <version>${jsf.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.soil</groupId>
-        <artifactId>jsf-alibaba-dependencies</artifactId>
+        <artifactId>jsf-spring-dependencies</artifactId>
         <version>${jsf.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -196,12 +203,6 @@
       </dependency>
 
       <!-- dubbo 专用 -->
-      <dependency>
-        <groupId>redis.clients</groupId>
-        <artifactId>jedis</artifactId>
-        <version>5.1.0</version>
-      </dependency>
-
       <dependency>
         <groupId>io.github.linpeilie</groupId>
         <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
