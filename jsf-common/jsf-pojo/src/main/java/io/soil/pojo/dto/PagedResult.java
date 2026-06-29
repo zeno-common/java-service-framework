@@ -1,4 +1,4 @@
-package com.skylink.pojo.dto;
+package io.soil.pojo.dto;
 
 import lombok.Data;
 
