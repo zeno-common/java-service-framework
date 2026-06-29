@@ -1,13 +1,6 @@
 {
   "version": 1,
   "skills": {
-    "java-sdk-doc-generator": {
-      "source": "zeno-w/agentic-skills",
-      "ref": "main",
-      "sourceType": "github",
-      "skillPath": "java-sdk-doc-generator/SKILL.md",
-      "computedHash": "ae9b9c680e77d855d088b13060cdaf57c3ee5d5a853066460aba09c27937a4f6"
-    },
     "readme-reviewer": {
       "source": "espennilsen/pi",
       "sourceType": "github",

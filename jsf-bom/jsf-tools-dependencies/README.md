@@ -10,7 +10,6 @@
 
 | 依赖 | 版本 | 说明 |
 |------|------|------|
-| hutool-bom | 5.8.35 | Hutool 工具库 BOM |
 | jackson-core | 2.18.4 | Jackson JSON 核心 |
 | jackson-annotations | 2.18.4 | Jackson 注解 |
 | jackson-databind | 2.18.4 | Jackson 数据绑定 |

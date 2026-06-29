@@ -1,4 +1,4 @@
-﻿package io.soil.waf.exception;
+package io.soil.waf.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

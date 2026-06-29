@@ -1,4 +1,4 @@
-﻿# jsf-bom
+﻿﻿﻿# jsf-bom
 
 JSF 框架的 Maven BOM（Bill of Materials）模块，统一管理所有依赖版本、构建配置和多环境 Profile。
 
@@ -28,7 +28,7 @@ jsf-parent
     ├── jsf-jdbc-dependencies         (MyBatis-Flex 1.11.7 / PageHelper 6.1.1)
     ├── jsf-redis-dependencies        (Redisson 3.49.0)
     ├── jsf-tools-dependencies        (Jackson 2.18.4 / Caffeine 3.2.0 / MapStruct-Plus 1.4.8 / Commons)
-    └── [直接管理]                    (Sa-Token / AWS SDK / RocketMQ / Lombok / ...)
+    └── [直接管理]                    (Sa-Token Dubbo3 / RocketMQ / Lombok / FastJSON / SkyWalking / ...)
 ```
 
 ## 使用方式
@@ -122,10 +122,9 @@ jsf-parent
 | MyBatis | 3.5.19 | jsf-jdbc-dependencies |
 | MyBatis-Flex | 1.11.7 | jsf-jdbc-dependencies |
 | MyBatis-Spring Boot | 3.0.4 | jsf-jdbc-dependencies |
-| MySQL Connector | 8.0.33 | jsf-jdbc-dependencies |
-| Druid | 1.2.25 | jsf-jdbc-dependencies |
+| MySQL Connector | 8.0.33 | jsf-jdbc-dependencies（版本预留） |
+| Druid | 1.2.25 | jsf-jdbc-dependencies（版本预留） |
 | PageHelper | 6.1.1 | jsf-jdbc-dependencies |
-| Anyline | 8.7.2 | jsf-dependencies 直接管理 |
 
 ### 工具库
 
@@ -143,21 +142,6 @@ jsf-parent
 | Jakarta Validation | 3.1.1 | jsf-tools-dependencies |
 | ip2region | 2.7.0 | jsf-tools-dependencies / jsf-dependencies |
 
-### 认证 & 安全
-
-| 依赖 | 版本 | 来源 |
-|------|------|------|
-| Sa-Token | 1.44.0 | jsf-dependencies 直接管理 |
-| BouncyCastle | 1.80 | jsf-dependencies 直接管理 |
-| JustAuth | 1.16.7 | jsf-dependencies 直接管理 |
-
-### 存储 & 通知
-
-| 依赖 | 版本 | 来源 |
-|------|------|------|
-| AWS SDK (S3) | 2.28.22 | jsf-dependencies 直接管理 |
-| SMS4J | 3.3.4 | jsf-dependencies 直接管理 |
-
 ### 其他
 
 | 依赖 | 版本 | 来源 |
@@ -165,7 +149,6 @@ jsf-parent
 | FastJSON | 1.2.83 | jsf-dependencies 直接管理 |
 | SkyWalking Toolkit | 9.3.0 | jsf-dependencies 直接管理 |
 | Logstash Logback Encoder | 7.2 | jsf-dependencies 直接管理 |
-| Warm-Flow | 1.7.3 | jsf-dependencies 直接管理 |
 
 ## 多环境 Profile
 

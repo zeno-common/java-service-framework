@@ -6,12 +6,7 @@
 
 本模块通过 `dependencyManagement` 将所有子依赖 BOM 以 `import` 方式聚合，同时额外管理以下依赖的版本：
 
-- **Sa-Token** - 权限认证框架
-- **Bouncy Castle** - 加密库
-- **JustAuth** - 第三方登录
 - **SkyWalking** - 链路追踪与日志整合
-- **AWS SDK** - 对象存储（S3）
-- **SMS4J** - 短信服务
 - **IP2Region** - 离线 IP 地址定位
 - **FastJSON** - JSON 解析
 - **RocketMQ** - 消息队列

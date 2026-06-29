@@ -12,16 +12,10 @@
 
   <properties>
     <jsf.version>0.0.1</jsf.version>
-    <satoken.version>1.44.0</satoken.version>
-    <bouncycastle.version>1.80</bouncycastle.version>
-    <justauth.version>1.16.7</justauth.version>
     <skywalking-toolkit.version>9.3.0</skywalking-toolkit.version>
-
-    <bouncycastle.version>1.80</bouncycastle.version>
     <lombok.version>1.18.46</lombok.version>
     <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
     <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
-    <justauth.version>1.16.7</justauth.version>
     <!-- 离线IP地址定位库 -->
     <ip2region.version>2.7.0</ip2region.version>
     <!-- 临时修复 fastjson 漏洞 -->
@@ -32,10 +26,6 @@
 
     <!-- SMS 配置 -->
     <sms4j.version>3.3.4</sms4j.version>
-    <!-- 面向运行时的D-ORM依赖 -->
-    <anyline.version>8.7.2-20250101</anyline.version>
-    <!-- 工作流配置 -->
-    <warm-flow.version>1.7.3</warm-flow.version>
     <!-- mq配置 -->
     <rocketmq.version>2.3.0</rocketmq.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
@@ -119,38 +109,6 @@
         <scope>provided</scope>
       </dependency>
 
-
-      <!-- sa-token -->
-      <dependency>
-        <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-core</artifactId>
-        <version>${satoken.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-spring-boot3-starter</artifactId>
-        <version>${satoken.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-jwt</artifactId>
-        <version>${satoken.version}</version>
-      </dependency>
-
-      <!-- 加密包引入 -->
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk15to18</artifactId>
-        <version>${bouncycastle.version}</version>
-      </dependency>
-
-      <!-- JustAuth 的依赖配置-->
-      <dependency>
-        <groupId>me.zhyd.oauth</groupId>
-        <artifactId>JustAuth</artifactId>
-        <version>${justauth.version}</version>
-      </dependency>
-
       <!-- skywalking 整合 logback -->
       <dependency>
         <groupId>org.apache.skywalking</groupId>
@@ -163,31 +121,31 @@
         <version>${skywalking-toolkit.version}</version>
       </dependency>
 
-      <!--  AWS SDK for Java 2.x  -->
-      <dependency>
-        <groupId>software.amazon.awssdk</groupId>
-        <artifactId>s3</artifactId>
-        <version>${aws.sdk.version}</version>
-      </dependency>
-      <!-- 基于 AWS CRT 的 S3 客户端的性能增强的 S3 传输管理器 -->
-      <dependency>
-        <groupId>software.amazon.awssdk</groupId>
-        <artifactId>s3-transfer-manager</artifactId>
-        <version>${aws.sdk.version}</version>
-      </dependency>
-      <!-- 将基于 Netty 的 HTTP 客户端从类路径中移除 -->
-      <dependency>
-        <groupId>software.amazon.awssdk</groupId>
-        <artifactId>netty-nio-client</artifactId>
-        <version>${aws.sdk.version}</version>
-      </dependency>
+<!--      &lt;!&ndash;  AWS SDK for Java 2.x  &ndash;&gt;-->
+<!--      <dependency>-->
+<!--        <groupId>software.amazon.awssdk</groupId>-->
+<!--        <artifactId>s3</artifactId>-->
+<!--        <version>${aws.sdk.version}</version>-->
+<!--      </dependency>-->
+<!--      &lt;!&ndash; 基于 AWS CRT 的 S3 客户端的性能增强的 S3 传输管理器 &ndash;&gt;-->
+<!--      <dependency>-->
+<!--        <groupId>software.amazon.awssdk</groupId>-->
+<!--        <artifactId>s3-transfer-manager</artifactId>-->
+<!--        <version>${aws.sdk.version}</version>-->
+<!--      </dependency>-->
+<!--      &lt;!&ndash; 将基于 Netty 的 HTTP 客户端从类路径中移除 &ndash;&gt;-->
+<!--      <dependency>-->
+<!--        <groupId>software.amazon.awssdk</groupId>-->
+<!--        <artifactId>netty-nio-client</artifactId>-->
+<!--        <version>${aws.sdk.version}</version>-->
+<!--      </dependency>-->
 
-      <!--短信sms4j-->
-      <dependency>
-        <groupId>org.dromara.sms4j</groupId>
-        <artifactId>sms4j-spring-boot-starter</artifactId>
-        <version>${sms4j.version}</version>
-      </dependency>
+<!--      &lt;!&ndash;短信sms4j&ndash;&gt;-->
+<!--      <dependency>-->
+<!--        <groupId>org.dromara.sms4j</groupId>-->
+<!--        <artifactId>sms4j-spring-boot-starter</artifactId>-->
+<!--        <version>${sms4j.version}</version>-->
+<!--      </dependency>-->
 
       <!-- 离线IP地址定位库 ip2region -->
       <dependency>
@@ -207,12 +165,6 @@
         <groupId>io.github.linpeilie</groupId>
         <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
         <version>${mapstruct-plus.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-dubbo3</artifactId>
-        <version>${satoken.version}</version>
       </dependency>
 
       <!--消息队列-->
