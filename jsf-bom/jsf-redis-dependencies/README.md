@@ -18,7 +18,7 @@ Redis 依赖管理模块，统一管理 Redis 相关中间件的版本。
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.soil</groupId>
+            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-redis-dependencies</artifactId>
             <version>0.0.1</version>
             <type>pom</type>

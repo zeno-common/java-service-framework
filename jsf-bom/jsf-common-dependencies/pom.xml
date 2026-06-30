@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.soil</groupId>
+  <groupId>io.soil.jsf</groupId>
   <artifactId>jsf-common-dependencies</artifactId>
   <version>0.0.1</version>
   <packaging>pom</packaging>
@@ -16,18 +16,18 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.soil</groupId>
+        <groupId>io.soil.jsf</groupId>
         <artifactId>jsf-pojo</artifactId>
         <version>${jsf.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.soil</groupId>
+        <groupId>io.soil.jsf</groupId>
         <artifactId>jsf-util</artifactId>
         <version>${jsf.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.soil</groupId>
-        <artifactId>jsf-waf</artifactId>
+        <groupId>io.soil.jsf</groupId>
+        <artifactId>jsf-wsf</artifactId>
         <version>${jsf.version}</version>
       </dependency>
     </dependencies>

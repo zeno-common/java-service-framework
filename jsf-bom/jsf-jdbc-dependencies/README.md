@@ -22,7 +22,7 @@
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.soil</groupId>
+            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-jdbc-dependencies</artifactId>
             <version>0.0.1</version>
             <type>pom</type>

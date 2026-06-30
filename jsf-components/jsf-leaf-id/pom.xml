@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
     <version>0.0.1</version>
     <relativePath/>
@@ -22,11 +22,11 @@
       <artifactId>commons-io</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.soil</groupId>
+      <groupId>io.soil.jsf</groupId>
       <artifactId>jsf-util</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.soil</groupId>
+      <groupId>io.soil.jsf</groupId>
       <artifactId>jsf-unit-test</artifactId>
       <scope>test</scope>
     </dependency>

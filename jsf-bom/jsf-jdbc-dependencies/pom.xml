@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jsf-jdbc-dependencies</artifactId>
-  <groupId>io.soil</groupId>
+  <groupId>io.soil.jsf</groupId>
   <version>0.0.1</version>
   <packaging>pom</packaging>
 

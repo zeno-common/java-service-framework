@@ -37,7 +37,7 @@ jsf-parent
 
 ```xml
 <parent>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
     <version>0.0.1</version>
 </parent>
@@ -49,7 +49,7 @@ jsf-parent
 
 ```xml
 <parent>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
     <version>0.0.1</version>
 </parent>
@@ -61,7 +61,7 @@ jsf-parent
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.soil</groupId>
+            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-dependencies</artifactId>
             <version>0.0.1</version>
             <type>pom</type>
@@ -78,7 +78,7 @@ jsf-parent
 ✅ 正确写法：
 ```xml
 <dependency>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-util</artifactId>
     <!-- 无 <version>，由 BOM 管理 -->
 </dependency>
@@ -87,7 +87,7 @@ jsf-parent
 ❌ 错误写法：
 ```xml
 <dependency>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-util</artifactId>
     <version>0.0.1</version>  <!-- 不要写！ -->
 </dependency>
@@ -211,7 +211,7 @@ Docker 配置：
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
     <version>0.0.1</version>
   </parent>
@@ -222,11 +222,11 @@ Docker 配置：
   <dependencies>
     <!-- 版本由 jsf-dependencies BOM 管理，无需写 version -->
     <dependency>
-      <groupId>io.soil</groupId>
+      <groupId>io.soil.jsf</groupId>
       <artifactId>jsf-util</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.soil</groupId>
+      <groupId>io.soil.jsf</groupId>
       <artifactId>jsf-waf</artifactId>
     </dependency>
   </dependencies>

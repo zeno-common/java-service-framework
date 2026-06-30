@@ -4,13 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-components-dependencies</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
 
     <description>
-        ruoyi-common-bom common依赖项
     </description>
 
     <properties>
@@ -20,17 +19,22 @@
     <dependencyManagement>
         <dependencies>
           <dependency>
-            <groupId>io.soil</groupId>
-            <artifactId>jsf-waf</artifactId>
+            <groupId>io.soil.jsf</groupId>
+            <artifactId>jsf-wsf</artifactId>
             <version>${jsf.version}</version>
           </dependency>
           <dependency>
-            <groupId>io.soil</groupId>
+            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-leaf-id</artifactId>
             <version>${jsf.version}</version>
           </dependency>
           <dependency>
-            <groupId>io.soil</groupId>
+            <groupId>io.soil.jsf</groupId>
+            <artifactId>jsf-mongodb</artifactId>
+            <version>${jsf.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-unit-test</artifactId>
             <version>${jsf.version}</version>
           </dependency>

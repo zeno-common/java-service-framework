@@ -27,7 +27,7 @@
 
 ```xml
 <dependency>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-leaf-id</artifactId>
 </dependency>
 ```

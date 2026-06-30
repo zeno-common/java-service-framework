@@ -39,7 +39,7 @@ Docker 构建配置：
 
 ```xml
 <parent>
-    <groupId>io.soil</groupId>
+    <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
     <version>0.0.1</version>
 </parent>

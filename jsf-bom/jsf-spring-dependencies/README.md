@@ -19,7 +19,7 @@ Spring Boot & Spring Cloud 依赖管理模块。
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.soil</groupId>
+            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-spring-dependencies</artifactId>
             <version>0.0.1</version>
             <type>pom</type>
