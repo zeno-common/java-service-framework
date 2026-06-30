@@ -22,11 +22,11 @@
 
 
   <dependencies>
-    <dependency>
-      <groupId>com.github.therapi</groupId>
-      <artifactId>therapi-runtime-javadoc</artifactId>
-      <version>${therapi-runtime-javadoc.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.github.therapi</groupId>-->
+<!--      <artifactId>therapi-runtime-javadoc</artifactId>-->
+<!--      <version>${therapi-runtime-javadoc.version}</version>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>

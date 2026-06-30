@@ -89,7 +89,7 @@ try {
   "module": "JSF-WAF",
   "errCode": "USER_NOT_FOUND",
   "errDesc": "用户 123 不存在",
-  "trace": "io.soil.waf.exception.WafException: ..."
+  "trace": "exception.waf.io.soil.jsf.WafException: ..."
 }
 ```
 

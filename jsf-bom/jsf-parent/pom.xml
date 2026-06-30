@@ -9,6 +9,7 @@
     <groupId>io.soil</groupId>
     <artifactId>jsf-dependencies</artifactId>
     <version>0.0.1</version>
+    <relativePath/>
   </parent>
 
   <artifactId>jsf-parent</artifactId>
@@ -26,6 +27,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS jsf_leaf_holder
+(
+    id             BIGINT PRIMARY KEY,
+    node_key       VARCHAR(100) NOT NULL,
+    last_heartbeat BIGINT       NOT NULL,
+    create_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE INDEX idx_node_key (node_key)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO jsf_leaf_holder (id, node_key, last_heartbeat)
+VALUES (0, '0', 0),
+       (1, '1', 0),
+       (2, '2', 0),
+       (3, '3', 0),
+       (4, '4', 0),
+       (5, '5', 0),
+       (6, '6', 0),
+       (7, '7', 0),
+       (8, '8', 0),
+       (9, '9', 0),
+       (10, '10', 0),
+       (11, '11', 0),
+       (12, '12', 0),
+       (13, '13', 0),
+       (14, '14', 0),
+       (15, '15', 0),
+       (16, '16', 0),
+       (17, '17', 0),
+       (18, '18', 0),
+       (19, '19', 0),
+       (20, '20', 0),
+       (21, '21', 0),
+       (22, '22', 0),
+       (23, '23', 0),
+       (24, '24', 0),
+       (25, '25', 0),
+       (26, '26', 0),
+       (27, '27', 0),
+       (28, '28', 0),
+       (29, '29', 0),
+       (30, '30', 0),
+       (31, '31', 0);

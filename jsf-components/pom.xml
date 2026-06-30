@@ -3,17 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>io.soil</groupId>
-    <artifactId>java-service-framework</artifactId>
-    <version>0.0.1</version>
-  </parent>
-
+<!--  <parent>-->
+<!--    <groupId>io.soil</groupId>-->
+<!--    <artifactId>java-service-framework</artifactId>-->
+<!--    <version>0.0.1</version>-->
+<!--  </parent>-->
+  <groupId>io.soil</groupId>-->
   <artifactId>jsf-components</artifactId>
+  <version>0.0.1</version>-->
   <packaging>pom</packaging>
 
   <modules>
     <module>jsf-waf</module>
+    <module>jsf-leaf-id</module>
+    <module>jsf-unit-test</module>
+
   </modules>
 
 

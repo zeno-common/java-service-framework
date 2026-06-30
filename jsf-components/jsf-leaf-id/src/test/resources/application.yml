@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: gaea-leaf-unit-test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://asianlink.ph:3306/asianlink-dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: asianlink
+    password: asianlink@sl@FEIFSLhwoiejlsdljsdf
+    druid:
+      initial-size: 10
+      maxActive: 500
+      min-idle: 10
+      maxWait: 10000
+      timeBetweenEvictionRunsMillis: 30000
+      minEvictableIdleTimeMillis: 35000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,slf4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=2000
+
+server:
+  port: 12300
+
+jsf:
+  leaf:
+    holder-type: jdbc
+    jdbc-holder:
+      ip: 192.168.1.20
+      port: 8800
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
