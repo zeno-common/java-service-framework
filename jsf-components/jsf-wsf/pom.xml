@@ -54,6 +54,11 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.soil.jsf</groupId>
+      <artifactId>jsf-unit-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>

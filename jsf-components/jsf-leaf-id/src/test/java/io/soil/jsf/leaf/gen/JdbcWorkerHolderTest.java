@@ -1,21 +1,18 @@
 package io.soil.jsf.leaf.gen;
 
-import io.soil.jsf.test.YamlPropertySourceFactory;
 import io.soil.jsf.leaf.LeafAutoConfig;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@EnableAutoConfiguration
 @SpringBootTest(classes = {LeafAutoConfig.class})
-@PropertySource(value = "classpath:application.yml",factory = YamlPropertySourceFactory.class)
-public class JdbcWorkerHolderTest {
+@EnableAutoConfiguration
+@MapperScan("io.soil.jsf.leaf.mapper")
+class JdbcWorkerHolderTest {
 
     @Autowired
     private ILeafGenerator workerHolder;
@@ -24,13 +21,13 @@ public class JdbcWorkerHolderTest {
     private LeafId leafId;
 
     @Test
-    public void testLeafWorkerHolder() {
+    void testLeafWorkerHolder() {
         workerHolder.workerId();
     }
 
     @Test
-    public void testGaeaLeafId() {
+    void testLeafId() {
         Long id = leafId.nextId();
-        id = id;
+        assertNotNull(id);
     }
 }
