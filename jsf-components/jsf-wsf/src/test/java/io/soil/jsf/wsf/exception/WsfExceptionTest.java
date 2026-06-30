@@ -108,7 +108,7 @@ public class WsfExceptionTest {
     // ==================== module ====================
 
     @Test
-    public void module_shouldReturnGaeaWaf() {
+    public void module_shouldReturnJsfWsf() {
         WsfException ex = new WsfException("test");
 
         assertEquals("JSF-WSF", ex.module());

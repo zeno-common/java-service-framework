@@ -11,14 +11,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * </p>
  * <p>
  * 注意：{@code @ConfigurationProperties} 绑定前缀为 {@code jsf.leaf}，
- * 而 {@link io.soil.jsf.leaf.LeafAutoConfig} 中的条件注解使用 {@code gaea.leaf} 前缀，
+ * 而 {@link io.soil.jsf.leaf.LeafAutoConfig} 中的条件注解使用 {@code jsf.leaf} 前缀，
  * 两者分别控制属性绑定和 Bean 激活条件。
  * </p>
  * <p>
  * 配置示例：
  * <pre>
- * # Bean 激活条件（gaea.leaf 前缀）
- * gaea.leaf.holder-type=jdbc
+ * # Bean 激活条件（jsf.leaf 前缀）
+ * jsf.leaf.holder-type=jdbc
  *
  * # 属性绑定（jsf.leaf 前缀，Spring Boot 自动转换驼峰为 kebab-case）
  * jsf.leaf.data-center-id=1

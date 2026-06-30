@@ -58,12 +58,9 @@ long id = LeafId.nextId();
 无需任何配置，默认 dataCenterId = 0、workerId = 0。适用于单机部署。
 
 ```yaml
-gaea:
-  leaf:
-    holder-type: default    # 可省略，默认值
-
 jsf:
   leaf:
+    holder-type: default    # 可省略，默认值
     data-center-id: 1       # 可选，默认 0，范围 0 ~ 31
     worker-id: 1            # 可选，默认 0，范围 0 ~ 255
 ```
@@ -81,13 +78,10 @@ jsf:
 **2. 配置**
 
 ```yaml
-gaea:
-  leaf:
-    holder-type: jdbc
-
 jsf:
   leaf:
-    data-center-id: 1       # 可选，默认 0，范围 0 ~ 31
+    data-center-id: 1
+    holder-type: jdbc    # 可选，默认 0，范围 0 ~ 31
     ip-coordinator:
       ip: 192.168.1.20      # 远程目标 IP，用于探测本机出口 IP
       port: 3306             # 远程目标端口
@@ -104,7 +98,7 @@ jsf:
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `gaea.leaf.holder-type` | `default` | 协调器类型：`default`（静态）/ `jdbc`（数据库） |
+| `jsf.leaf.holder-type` | `default` | 协调器类型：`default`（静态）/ `jdbc`（数据库） |
 | `jsf.leaf.data-center-id` | `0` | 数据中心 ID，范围 0 ~ 31（5 bit） |
 | `jsf.leaf.worker-id` | `0` | 静态模式的 workerId，范围 0 ~ 255，仅 `default` 模式生效 |
 | `jsf.leaf.ip-coordinator.ip` | - | JDBC 模式：远程目标 IP，用于探测本机出口 IP |

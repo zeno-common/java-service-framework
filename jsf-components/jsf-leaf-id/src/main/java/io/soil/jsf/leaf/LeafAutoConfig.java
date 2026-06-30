@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Leaf ID 自动配置类
  * <p>
- * 根据 {@code gaea.leaf.holder-type} 配置项决定使用哪种工作节点协调器：
+ * 根据 {@code jsf.leaf.holder-type} 配置项决定使用哪种工作节点协调器：
  * <ul>
  *   <li>{@code default}（默认）— 使用静态配置的 workerId</li>
  *   <li>{@code jdbc} — 使用数据库协调自动分配 workerId</li>
@@ -36,7 +36,7 @@ public class LeafAutoConfig {
   /**
    * 静态配置的工作节点协调器
    * <p>
-   * 当 {@code gaea.leaf.holder-type} 为 {@code default} 或未配置时激活。
+   * 当 {@code jsf.leaf.holder-type} 为 {@code default} 或未配置时激活。
    * workerId 通过 {@code jsf.leaf.worker-id} 指定，默认为 0。
    * dataCenterId 通过 {@code jsf.leaf.data-center-id} 指定，默认为 0。
    * </p>
@@ -47,7 +47,7 @@ public class LeafAutoConfig {
    */
   @Bean
   @ConditionalOnMissingBean
-  @ConditionalOnProperty(prefix = "gaea.leaf", name = "holder-type", havingValue = "default", matchIfMissing = true)
+  @ConditionalOnProperty(prefix = "jsf.leaf", name = "holder-type", havingValue = "default", matchIfMissing = true)
   public ILeafGenerator defaultHolder(
     @Value("${jsf.leaf.data-center-id:0}") Integer dataCenterId,
     @Value("${jsf.leaf.worker-id:0}") Integer workerId) {
@@ -57,7 +57,7 @@ public class LeafAutoConfig {
   /**
    * 基于 JDBC 的工作节点协调器
    * <p>
-   * 当 {@code gaea.leaf.holder-type} 为 {@code jdbc} 时激活。
+   * 当 {@code jsf.leaf.holder-type} 为 {@code jdbc} 时激活。
    * 通过数据库表 {@code jsf_leaf_holder} 自动分配和心跳维护 workerId。
    * </p>
    * <p>
@@ -70,7 +70,7 @@ public class LeafAutoConfig {
    * @return JDBC 工作节点协调器（已初始化）
    */
   @Bean
-  @ConditionalOnProperty(prefix = "gaea.leaf", name = "holder-type", havingValue = "jdbc")
+  @ConditionalOnProperty(prefix = "jsf.leaf", name = "holder-type", havingValue = "jdbc")
   public ILeafGenerator leafWorkerJdbcHolder(
     @Value("${jsf.leaf.data-center-id:0}") Integer dataCenterId,
     LeafProperties properties,

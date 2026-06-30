@@ -8,8 +8,8 @@ package io.soil.jsf.leaf.gen;
  * 适用于单机部署或节点数量固定、可手动分配 workerId 的场景。
  * </p>
  * <p>
- * 使用方式：在配置文件中设置 {@code gaea.leaf.holder-type=default}（默认值），
- * 并通过 {@code gaea.leaf.worker-id} 指定 workerId，
+ * 使用方式：在配置文件中设置 {@code jsf.leaf.holder-type=default}（默认值），
+ * 并通过 {@code jsf.leaf.worker-id} 指定 workerId，
  * 通过 {@code jsf.leaf.data-center-id} 指定 dataCenterId。
  * </p>
  *

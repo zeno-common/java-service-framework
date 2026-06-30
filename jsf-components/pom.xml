@@ -11,8 +11,8 @@
 
   <modules>
     <module>jsf-wsf</module>
-    <module>jsf-leaf-id</module><module>jsf-mongodb</module>
-    <module>jsf-unit-test</module>
+    <module>jsf-leaf-id</module>
+    <module>jsf-mongodb</module>
   </modules>
 
 

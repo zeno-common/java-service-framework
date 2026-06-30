@@ -161,7 +161,7 @@ public class LeafJdbcGenerator implements ILeafGenerator {
      */
     private void startHeartbeat() {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r -> {
-            return new Thread(r, "gaea-leaf-uid-heartbeat");
+            return new Thread(r, "jsf-leaf-uid-heartbeat");
         });
         executor.scheduleWithFixedDelay(this::updateHeartbeat, 20L, 20L, TimeUnit.MINUTES);
     }

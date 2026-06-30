@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gaea-leaf-unit-test
+    name: jsf-leaf-unit-test
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://asianlink.ph:3306/asianlink-dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
