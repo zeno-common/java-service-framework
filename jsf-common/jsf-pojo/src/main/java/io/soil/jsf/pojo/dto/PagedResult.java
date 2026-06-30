@@ -1,4 +1,4 @@
-package io.soil.jsf.jsf.pojo.dto;
+package io.soil.jsf.pojo.dto;
 
 import lombok.Data;
 

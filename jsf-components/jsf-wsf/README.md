@@ -56,7 +56,7 @@
 | 枚举字符串序列化 | `WRITE_ENUMS_USING_TO_STRING` / `READ_ENUMS_USING_TO_STRING` |
 | 忽略未知属性 | `FAIL_ON_UNKNOWN_PROPERTIES = false` |
 | 禁用时间戳格式 | `WRITE_DATES_AS_TIMESTAMPS = false` |
-| 组件扫描 | 自动扫描 `io.soil.wsf.controller` 包 |
+| 组件扫描 | 自动扫描 `io.soil.jsf.wsf.controller` 包 |
 
 ## 使用示例
 
@@ -86,7 +86,7 @@ try {
 
 ```json
 {
-  "module": "JSF-WAF",
+  "module": "JSF-WSF",
   "errCode": "USER_NOT_FOUND",
   "errDesc": "用户 123 不存在",
   "trace": "exception.wsf.io.soil.jsf.WsfException: ..."
@@ -121,13 +121,13 @@ GET /v1/probes/activeness → "active"
 ## 项目结构
 
 ```
-io.soil.wsf/
+io.soil.jsf.wsf/
 ├── config/
 │   └── WsfConfig.java                 # Jackson + 组件扫描配置
 ├── controller/
 │   └── ProbeController.java           # 健康探针
 ├── exception/
-│   ├── WsfException.java              # WAF 异常类
+│   ├── WsfException.java              # WSF 异常类
 │   ├── WsfHttpExceptionResolver.java  # 全局异常处理器
 │   └── WsfHttpExceptionResponse.java  # 异常响应 VO
 ├── handler/

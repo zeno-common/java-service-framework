@@ -140,12 +140,14 @@ public class WsfException extends BaseException {
   /**
    * 获取异常所属模块名称
    *
-   * @return 模块名 "GAEA-WAF"
+   * @return 模块名 "JSF-WSF"
    */
   @Override
   public String module(){
-    return "JSF-WAF";
+    return "JSF-WSF";
   }
+
+
 
   /**
    * 获取 HTTP 状态码
