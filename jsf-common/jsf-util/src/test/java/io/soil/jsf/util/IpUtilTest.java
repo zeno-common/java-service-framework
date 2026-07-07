@@ -1,7 +1,7 @@
 package io.soil.jsf.util;
 
 import io.soil.jsf.util.ip.IpUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class IpUtilTest {
 

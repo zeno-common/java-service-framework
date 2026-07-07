@@ -1,11 +1,11 @@
 package io.soil.jsf.common.collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Function;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * {@link CollectionUtil} 单元测试
@@ -25,16 +25,16 @@ public class CollectionUtilTest {
         assertEquals("cherry", result.get('c'));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void toMap_withDuplicateKeys_shouldThrowException() {
         List<String> values = Arrays.asList("banana", "cherry");
         // "banana".length() == 6, "cherry".length() == 6, duplicate key
-        CollectionUtil.toMap(values, String::length);
+        assertThrows(IllegalStateException.class, () -> CollectionUtil.toMap(values, String::length));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void toMap_withNullCollection_shouldThrowNPE() {
-        CollectionUtil.toMap(null, Function.identity());
+        assertThrows(NullPointerException.class, () -> CollectionUtil.toMap(null, Function.identity()));
     }
 
     // ==================== mapList (Function) ====================

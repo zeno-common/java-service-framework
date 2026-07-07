@@ -1,10 +1,10 @@
 package io.soil.jsf.util.json;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * {@link JsonMapper} 单元测试

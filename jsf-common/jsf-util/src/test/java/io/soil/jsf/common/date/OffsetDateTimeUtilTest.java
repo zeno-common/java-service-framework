@@ -1,10 +1,10 @@
 package io.soil.jsf.common.date;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * {@link OffsetDateTimeUtil} 单元测试
@@ -122,10 +122,10 @@ public class OffsetDateTimeUtilTest {
         assertTrue(result.contains("T14:30:45"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void toString_withUnsupportedTemporal_shouldThrowException() {
         // 使用一个不支持的 Temporal 类型
         java.time.YearMonth ym = java.time.YearMonth.of(2025, 6);
-        OffsetDateTimeUtil.toString(ym);
+        assertThrows(UnsupportedOperationException.class, () -> OffsetDateTimeUtil.toString(ym));
     }
 }

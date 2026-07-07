@@ -1,8 +1,8 @@
 package io.soil.jsf.common.tree;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * {@link Node} 单元测试

@@ -12,12 +12,12 @@
     <module>jsf-alibaba-dependencies</module>
     <module>jsf-common-dependencies</module>
     <module>jsf-components-dependencies</module>
-    <module>jsf-dependencies</module>
     <module>jsf-jdbc-dependencies</module>
-    <module>jsf-parent</module>
     <module>jsf-redis-dependencies</module>
     <module>jsf-spring-dependencies</module>
     <module>jsf-tools-dependencies</module>
+    <module>jsf-dependencies</module>
+    <module>jsf-parent</module>
   </modules>
 
 
