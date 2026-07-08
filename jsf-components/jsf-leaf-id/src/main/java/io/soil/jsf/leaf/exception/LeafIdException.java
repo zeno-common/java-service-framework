@@ -2,6 +2,7 @@ package io.soil.jsf.leaf.exception;
 
 
 import io.soil.jsf.common.exception.BaseException;
+import io.soil.jsf.common.exception.ExceptionType;
 
 /**
  * Leaf ID 生成器异常
@@ -48,16 +49,11 @@ public class LeafIdException extends BaseException {
    * @param msg       异常描述
    */
   public LeafIdException(Throwable throwable, String msg) {
-    super(throwable, msg);
+    super("GENERATE-ID", throwable, msg);
   }
 
-  /**
-   * 获取异常模块名称
-   *
-   * @return 模块名 {@code "GAEA-LEAF-UID"}
-   */
   @Override
-  protected String type(){
-    return "GAEA-LEAF-UID";
+  public ExceptionType type() {
+    return ExceptionType.SYS;
   }
 }

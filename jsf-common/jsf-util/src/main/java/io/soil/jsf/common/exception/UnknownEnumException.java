@@ -17,13 +17,8 @@ public class UnknownEnumException extends BaseException{
     super("未知的 {0} 枚举状态:{1}",enumClazz.getName(),status);
   }
 
-  /**
-   * 获取异常模块名称
-   *
-   * @return 模块名
-   */
   @Override
-  protected String type(){
-    return "JSF";
+  public ExceptionType type(){
+    return ExceptionType.UNKNOWN;
   }
 }

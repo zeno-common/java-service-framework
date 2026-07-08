@@ -5,7 +5,7 @@ import io.soil.jsf.common.exception.UnknownEnumException;
 
 /**
  * 枚举事件
- * 主要用于枚举定义的参考事例代码。
+ * 服务中的枚举参考本类的进行定义。
  *
  * @author zeno.w
  */

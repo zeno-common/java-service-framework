@@ -1,12 +1,14 @@
 package io.soil.jsf.wsf.exception;
 
 import io.soil.jsf.common.exception.BaseException;
+import io.soil.jsf.common.exception.ExceptionType;
 import org.springframework.http.HttpStatus;
 
 import java.util.Collections;
 
 /**
- * WAF 异常类，继承自 {@link BaseException}，用于 Web 应用框架层的异常处理。
+ * Web 业务服务异常基类， Web 服务的业逻辑异常定义从此类派生定义并抛出异常，给全局异常类进行处理 （{@link RestGlobalExceptionResolver}），
+ * Web 业务异常类，继承自 {@link BaseException}，用于 Web 服务业务异常抛出。
  * <p>
  * 支持 HTTP 状态码、自定义异常状态码、消息模板等多种构造方式，
  * 适用于 REST API 的异常响应场景。
@@ -14,21 +16,17 @@ import java.util.Collections;
  *
  * @author zeno
  */
-public class WsfException extends BaseException {
+public class WebBizException extends BaseException {
 
   /** http 状态码 */
   private HttpStatus status;
-
-  /** 异常状态码 */
-  private String code;
-
 
   /**
    * 使用消息构造 WAF 异常，默认 HTTP 状态码 500
    *
    * @param msg 异常消息
    */
-  public WsfException(String msg){
+  public WebBizException(String msg){
     this(HttpStatus.INTERNAL_SERVER_ERROR, msg);
   }
 
@@ -38,7 +36,7 @@ public class WsfException extends BaseException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WsfException(String msgPattern, Object... msgArgs){
+  public WebBizException(String msgPattern, Object... msgArgs){
     this(HttpStatus.INTERNAL_SERVER_ERROR, msgPattern, msgArgs);
   }
 
@@ -48,7 +46,7 @@ public class WsfException extends BaseException {
    * @param status HTTP 状态码
    * @param msg    异常消息
    */
-  public WsfException(HttpStatus status, String msg){
+  public WebBizException(HttpStatus status, String msg){
     this(status.name(), status,  msg);
   }
 
@@ -59,7 +57,7 @@ public class WsfException extends BaseException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WsfException(HttpStatus status, String msgPattern, Object... msgArgs){
+  public WebBizException(HttpStatus status, String msgPattern, Object... msgArgs){
     this(status.name(), status, msgPattern, msgArgs);
   }
 
@@ -70,7 +68,7 @@ public class WsfException extends BaseException {
    * @param status HTTP 状态码
    * @param msg    异常消息
    */
-  public WsfException(String code, HttpStatus status, String msg){
+  public WebBizException(String code, HttpStatus status, String msg){
     this(code, status, msg, Collections.emptyList());
   }
 
@@ -82,7 +80,7 @@ public class WsfException extends BaseException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WsfException(String code, HttpStatus status, String msgPattern, Object... msgArgs){
+  public WebBizException(String code, HttpStatus status, String msgPattern, Object... msgArgs){
     this(code, status,  null, msgPattern, msgArgs);
   }
 
@@ -91,7 +89,7 @@ public class WsfException extends BaseException {
    *
    * @param throwable 原始异常
    */
-  public WsfException(Throwable throwable){
+  public WebBizException(Throwable throwable){
     this(
       HttpStatus.INTERNAL_SERVER_ERROR.name(),
       HttpStatus.INTERNAL_SERVER_ERROR,
@@ -106,7 +104,7 @@ public class WsfException extends BaseException {
    * @param code      自定义异常状态码
    * @param throwable 原始异常
    */
-  public WsfException(String code, Throwable throwable){
+  public WebBizException(String code, Throwable throwable){
     this(code, throwable, throwable.getMessage(), Collections.emptyList());
   }
 
@@ -118,8 +116,13 @@ public class WsfException extends BaseException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WsfException(String code, Throwable throwable, String msgPattern, Object... msgArgs){
+  public WebBizException(String code, Throwable throwable, String msgPattern, Object... msgArgs){
     this(HttpStatus.INTERNAL_SERVER_ERROR, code, throwable, msgPattern, msgArgs);
+  }
+
+  @Override
+  public ExceptionType type() {
+    return ExceptionType.BIZ;
   }
 
   /**
@@ -131,22 +134,10 @@ public class WsfException extends BaseException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WsfException(String code, HttpStatus status, Throwable throwable, String msgPattern, Object... msgArgs){
-    super(throwable, msgPattern, msgArgs);
+  public WebBizException(String code, HttpStatus status, Throwable throwable, String msgPattern, Object... msgArgs){
+    super(code, throwable, msgPattern, msgArgs);
     this.status = status;
-    this.code = code;
   }
-
-  /**
-   * 获取异常所属模块名称
-   *
-   * @return 模块名 "JSF-WSF"
-   */
-  @Override
-  public String type(){
-    return "JSF-WSF";
-  }
-
 
 
   /**
@@ -156,14 +147,5 @@ public class WsfException extends BaseException {
    */
   public HttpStatus status(){
     return status;
-  }
-
-  /**
-   * 获取自定义异常状态码
-   *
-   * @return 异常状态码
-   */
-  public String code(){
-    return code;
   }
 }
