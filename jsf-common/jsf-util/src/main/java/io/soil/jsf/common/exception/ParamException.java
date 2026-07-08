@@ -13,35 +13,35 @@ import java.util.Collections;
  */
 public class ParamException extends BaseException {
 
-  protected ParamException(String msg) {
+  public ParamException(String msg) {
     this( msg, Collections.emptyList());
   }
 
-  protected ParamException(String msgPattern, Object... msgArgs) {
+  public ParamException(String msgPattern, Object... msgArgs) {
     this(null, msgPattern, msgArgs);
   }
 
-  protected ParamException(Throwable throwable, String msg) {
+  public ParamException(Throwable throwable, String msg) {
     this(throwable, msg, Collections.emptyList());
   }
 
-  protected ParamException(Throwable throwable) {
+  public ParamException(Throwable throwable) {
     this(throwable, throwable.getMessage(), Collections.emptyList());
   }
 
-  protected ParamException(Throwable throwable, String msgPattern, Object... msgArgs) {
+  public ParamException(Throwable throwable, String msgPattern, Object... msgArgs) {
     this("UNDEFINED", throwable, msgPattern, msgArgs);
   }
 
-  protected ParamException(String code, String msg) {
+  public ParamException(String code, String msg) {
     this( code, (String)null, msg, Collections.emptyList());
   }
 
-  protected ParamException(String code, Throwable throwable, String msg) {
+  public ParamException(String code, Throwable throwable, String msg) {
     this(code, throwable, msg, Collections.emptyList());
   }
 
-  protected ParamException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
+  public ParamException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
     super(code, throwable, MessageFormat.format(msgPattern, msgArgs));
   }
 
