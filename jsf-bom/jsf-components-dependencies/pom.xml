@@ -20,16 +20,6 @@
         <dependencies>
           <dependency>
             <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-wsf</artifactId>
-            <version>${jsf.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-leaf-id</artifactId>
-            <version>${jsf.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-mongodb</artifactId>
             <version>${jsf.version}</version>
           </dependency>

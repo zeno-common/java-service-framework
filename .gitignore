@@ -52,4 +52,4 @@ skills-lock.json
 .flattened-pom.xml
 .trae
 .agents
-/jsf-components/jsf-leaf-id/jsf-leaf/
+/jsf-common/jsf-leaf-id/jsf-leaf/

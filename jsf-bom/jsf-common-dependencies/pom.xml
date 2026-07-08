@@ -27,6 +27,16 @@
       </dependency>
       <dependency>
         <groupId>io.soil.jsf</groupId>
+        <artifactId>jsf-wsf</artifactId>
+        <version>${jsf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.soil.jsf</groupId>
+        <artifactId>jsf-leaf-id</artifactId>
+        <version>${jsf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.soil.jsf</groupId>
         <artifactId>jsf-unit-test</artifactId>
         <version>${jsf.version}</version>
       </dependency>
