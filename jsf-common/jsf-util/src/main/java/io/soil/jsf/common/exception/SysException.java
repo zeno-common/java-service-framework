@@ -13,36 +13,36 @@ import java.util.Collections;
  */
 public class SysException extends BaseException {
 
-  public SysException(String msg) {
-    this( msg, Collections.emptyList());
+  protected SysException(String msg) {
+    super( msg);
   }
 
-  public SysException(String msgPattern, Object... msgArgs) {
-    this(null, msgPattern, msgArgs);
+  protected SysException(String msgPattern, Object... msgArgs) {
+    super(msgPattern, msgArgs);
   }
 
-  public SysException(Throwable throwable, String msg) {
-    this(throwable, msg, Collections.emptyList());
+  protected SysException(Throwable throwable) {
+    super(throwable);
   }
 
-  public SysException(Throwable throwable) {
-    this(throwable, throwable.getMessage(), Collections.emptyList());
+  protected SysException(Throwable throwable, String msg) {
+    super(throwable, msg);
   }
 
-  public SysException(Throwable throwable, String msgPattern, Object... msgArgs) {
-    this("UNDEFINED", throwable, msgPattern, msgArgs);
+  protected SysException(Throwable throwable, String msgPattern, Object... msgArgs) {
+    super(throwable, msgPattern, msgArgs);
   }
 
-  public SysException(String code, String msg) {
-    this( code, (String)null, msg, Collections.emptyList());
+  protected SysException(String code, Throwable throwable) {
+    super(code, throwable);
   }
 
-  public SysException(String code, Throwable throwable, String msg) {
-    this(code, throwable, msg, Collections.emptyList());
+  protected SysException(String code, Throwable throwable, String msg) {
+    super(code, throwable, msg);
   }
 
-  public SysException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
-    super(code, throwable, MessageFormat.format(msgPattern, msgArgs));
+  protected SysException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
+    super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
   }
 
   @Override

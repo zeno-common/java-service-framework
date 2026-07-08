@@ -36,26 +36,6 @@ public class WebBizException extends BizException {
       throw new WebBizException(e.code(),status,e,e.getMessage());
     }
 
-
-  /**
-   * 使用消息构造 Web 业务 异常，默认 HTTP 状态码 500
-   *
-   * @param msg 异常消息
-   */
-  public WebBizException(String msg){
-    this(HttpStatus.INTERNAL_SERVER_ERROR, msg);
-  }
-
-  /**
-   * 使用消息模板构造 Web 业务 异常，默认 HTTP 状态码 500
-   *
-   * @param msgPattern java.text.MessageFormat 消息模板
-   * @param msgArgs    消息模板参数
-   */
-  public WebBizException(String msgPattern, Object... msgArgs){
-    this(HttpStatus.INTERNAL_SERVER_ERROR, msgPattern, msgArgs);
-  }
-
   /**
    * 使用 HTTP 状态码和消息构造 Web 业务 异常
    *

@@ -43,21 +43,21 @@ public abstract class BaseException extends RuntimeException {
 		this(null, msgPattern, msgArgs);
 	}
 
-	protected BaseException(Throwable throwable, String msg) {
-		this(throwable, msg, Collections.emptyList());
-	}
-
 	protected BaseException(Throwable throwable) {
 		this(throwable, throwable.getMessage(), Collections.emptyList());
 	}
+
+  protected BaseException(Throwable throwable, String msg) {
+    this(throwable, msg, Collections.emptyList());
+  }
 
 	protected BaseException(Throwable throwable, String msgPattern, Object... msgArgs) {
 		this("UNDEFINED", throwable, msgPattern, msgArgs);
 	}
 
-	protected BaseException(String code, String msg) {
-		this( code, (String)null, msg, Collections.emptyList());
-	}
+  protected BaseException(String code, Throwable throwable) {
+    this(code, throwable, throwable.getMessage(), Collections.emptyList());
+  }
 
 	protected BaseException(String code, Throwable throwable, String msg) {
 		this(code, throwable, msg, Collections.emptyList());
