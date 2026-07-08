@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import java.util.Collections;
 
 /**
- * Web 业务异常，WSF 框架提供的可指定 HTTP 状态码的业务异常。
+ * Web 业务异常，可指定 HTTP 状态码的业务异常,用于支持 REST API 异常响应场景。
  * <p>
  * 继承自通用业务异常 {@link BizException}（{@link #type()} 固定返回 {@link ExceptionType#BIZ}），
  * 在业务异常基础上额外持有 {@link HttpStatus} 状态码，由全局异常处理器（{@link RestGlobalExceptionResolver}）
@@ -24,7 +24,18 @@ import java.util.Collections;
 public class WebBizException extends BizException {
 
   /** http 状态码 */
-  private HttpStatus status;
+  private final HttpStatus status;
+
+    /**
+     * 将业务异常重新包装为 Web 业务异常并抛出，保留原始异常码和消息，同时指定 HTTP 状态码。
+     *
+     * @param status HTTP 状态码
+     * @param e      原始业务异常
+     */
+    public static void rethrow(HttpStatus status,BizException e){
+      throw new WebBizException(e.code(),status,e,e.getMessage());
+    }
+
 
   /**
    * 使用消息构造 Web 业务 异常，默认 HTTP 状态码 500

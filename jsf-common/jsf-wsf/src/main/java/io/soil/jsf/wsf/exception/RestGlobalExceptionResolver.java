@@ -73,7 +73,7 @@ public class RestGlobalExceptionResolver {
    * @return 包含异常信息的 HTTP 响应，状态码由异常对象决定
    */
   @ExceptionHandler(WebBizException.class)
-  public ResponseEntity<RestExceptionResponse> handleWebException(WebBizException e ){
+  public ResponseEntity<RestExceptionResponse> handleBaseException(WebBizException e ){
     return new ResponseEntity<>(RestExceptionResponse.createFrom(e),e.status());
   }
 
@@ -84,7 +84,7 @@ public class RestGlobalExceptionResolver {
    * @return 包含异常信息的 HTTP 响应，状态码由异常对象决定
    */
   @ExceptionHandler(BaseException.class)
-  public ResponseEntity<RestExceptionResponse> handleWebException(BaseException e ){
+  public ResponseEntity<RestExceptionResponse> handleBaseException(BaseException e ){
     return new ResponseEntity<>(RestExceptionResponse.createFrom(e),HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
@@ -95,7 +95,7 @@ public class RestGlobalExceptionResolver {
    * @return 包含异常信息的 HTTP 响应，状态码固定为 500
    */
   @ExceptionHandler(Throwable.class)
-  public ResponseEntity<RestExceptionResponse> handleWebException(Throwable throwable){
+  public ResponseEntity<RestExceptionResponse> handleBaseException(Throwable throwable){
     return new ResponseEntity<>(RestExceptionResponse.createFrom(throwable), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
