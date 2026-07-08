@@ -27,13 +27,13 @@ public class WebBizException extends BizException {
   private final HttpStatus status;
 
     /**
-     * 将业务异常重新包装为 Web 业务异常并抛出，保留原始异常码和消息，同时指定 HTTP 状态码。
+     * 将 BizException 重新包装为 WebBizException 对象，保留原始异常码和消息，同时指定 HTTP 状态码。
      *
-     * @param status HTTP 状态码
      * @param e      原始业务异常
+     * @param status HTTP 状态码
      */
-    public static void rethrow(HttpStatus status,BizException e){
-      throw new WebBizException(e.code(),status,e,e.getMessage());
+    public static WebBizException of(BizException e,HttpStatus status){
+      return new WebBizException(e.code(),status,e,e.getMessage());
     }
 
   /**
