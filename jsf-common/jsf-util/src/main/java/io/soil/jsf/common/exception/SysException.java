@@ -16,7 +16,8 @@ public class SysException extends BaseException {
   /**
    * 根据错误定义创建系统异常
    *
-   * @param errorDefine 错误定义，提供异常码和消息
+   * @param errorDefine 错误定义，提供异常码和消息模板
+   * @param msgArgs     消息模板参数，用于 {@link MessageFormat#format} 格式化
    * @return 系统异常对象
    */
   public static SysException of(ErrorDefine errorDefine, Object... msgArgs) {
@@ -26,8 +27,9 @@ public class SysException extends BaseException {
   /**
    * 根据错误定义创建系统异常，可附带原始异常
    *
-   * @param errorDefine 错误定义，提供异常码和消息
    * @param throwable   原始异常，可为 null
+   * @param errorDefine 错误定义，提供异常码和消息模板
+   * @param msgArgs     消息模板参数，用于 {@link MessageFormat#format} 格式化
    * @return 系统异常对象
    */
   public  static SysException of(Throwable throwable, ErrorDefine errorDefine, Object... msgArgs) {
