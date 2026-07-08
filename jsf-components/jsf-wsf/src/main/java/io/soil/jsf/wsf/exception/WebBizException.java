@@ -1,28 +1,33 @@
 package io.soil.jsf.wsf.exception;
 
 import io.soil.jsf.common.exception.BaseException;
+import io.soil.jsf.common.exception.BizException;
 import io.soil.jsf.common.exception.ExceptionType;
 import org.springframework.http.HttpStatus;
 
 import java.util.Collections;
 
 /**
- * Web 业务服务异常基类， Web 服务的业逻辑异常定义从此类派生定义并抛出异常，给全局异常类进行处理 （{@link RestGlobalExceptionResolver}），
- * Web 业务异常类，继承自 {@link BaseException}，用于 Web 服务业务异常抛出。
+ * Web 业务异常，WSF 框架提供的可指定 HTTP 状态码的业务异常。
  * <p>
- * 支持 HTTP 状态码、自定义异常状态码、消息模板等多种构造方式，
- * 适用于 REST API 的异常响应场景。
+ * 继承自通用业务异常 {@link BizException}（{@link #type()} 固定返回 {@link ExceptionType#BIZ}），
+ * 在业务异常基础上额外持有 {@link HttpStatus} 状态码，由全局异常处理器（{@link RestGlobalExceptionResolver}）
+ * 按异常对象自带的状态码返回对应的 HTTP 响应。
+ * </p>
+ * <p>
+ * 支持 HTTP 状态码、自定义异常码、消息模板（MessageFormat）等多种构造方式，
+ * 适用于 REST API 的异常响应场景。默认 HTTP 状态码为 500（INTERNAL_SERVER_ERROR）。
  * </p>
  *
  * @author zeno
  */
-public class WebBizException extends BaseException {
+public class WebBizException extends BizException {
 
   /** http 状态码 */
   private HttpStatus status;
 
   /**
-   * 使用消息构造 WAF 异常，默认 HTTP 状态码 500
+   * 使用消息构造 Web 业务 异常，默认 HTTP 状态码 500
    *
    * @param msg 异常消息
    */
@@ -31,7 +36,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用消息模板构造 WAF 异常，默认 HTTP 状态码 500
+   * 使用消息模板构造 Web 业务 异常，默认 HTTP 状态码 500
    *
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
@@ -41,7 +46,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用 HTTP 状态码和消息构造 WAF 异常
+   * 使用 HTTP 状态码和消息构造 Web 业务 异常
    *
    * @param status HTTP 状态码
    * @param msg    异常消息
@@ -51,7 +56,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用 HTTP 状态码和消息模板构造 WAF 异常
+   * 使用 HTTP 状态码和消息模板构造 Web 业务 异常
    *
    * @param status     HTTP 状态码
    * @param msgPattern java.text.MessageFormat 消息模板
@@ -62,7 +67,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用自定义异常状态码和 HTTP 状态码构造 WAF 异常
+   * 使用自定义异常状态码和 HTTP 状态码构造 Web 业务 异常
    *
    * @param code   自定义异常状态码
    * @param status HTTP 状态码
@@ -73,7 +78,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用自定义异常状态码、HTTP 状态码和消息模板构造 WAF 异常
+   * 使用自定义异常状态码、HTTP 状态码和消息模板构造 Web 业务 异常
    *
    * @param code       自定义异常状态码
    * @param status     HTTP 状态码
@@ -85,7 +90,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用异常栈构造 WAF 异常，默认 HTTP 状态码 500
+   * 使用异常栈构造 Web 业务 异常，默认 HTTP 状态码 500
    *
    * @param throwable 原始异常
    */
@@ -99,7 +104,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用自定义异常状态码和异常栈构造 WAF 异常
+   * 使用自定义异常状态码和异常栈构造 Web 业务 异常
    *
    * @param code      自定义异常状态码
    * @param throwable 原始异常
@@ -109,7 +114,7 @@ public class WebBizException extends BaseException {
   }
 
   /**
-   * 使用自定义异常状态码、异常栈和消息模板构造 WAF 异常
+   * 使用自定义异常状态码、异常栈和消息模板构造 Web 业务 异常
    *
    * @param code       自定义异常状态码
    * @param throwable  原始异常
@@ -120,13 +125,8 @@ public class WebBizException extends BaseException {
     this(HttpStatus.INTERNAL_SERVER_ERROR, code, throwable, msgPattern, msgArgs);
   }
 
-  @Override
-  public ExceptionType type() {
-    return ExceptionType.BIZ;
-  }
-
   /**
-   * 全参数构造 WAF 异常
+   * 全参数构造 Web 业务 异常
    *
    * @param code       自定义异常状态码
    * @param status     HTTP 状态码

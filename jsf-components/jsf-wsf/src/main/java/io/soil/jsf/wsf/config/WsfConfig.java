@@ -19,7 +19,7 @@ import java.util.TimeZone;
 import static io.soil.jsf.common.date.OffsetDateTimeUtil.OFFSET_DATE_TIME_FORMATTER;
 
 /**
- * WAF（Web Application Framework）配置类，配置 Jackson 序列化/反序列化规则和组件扫描。
+ * WSF（Web Service Framework）配置类，配置 Jackson 序列化/反序列化规则和组件扫描。
  * <p>
  * 主要配置：
  * <ul>

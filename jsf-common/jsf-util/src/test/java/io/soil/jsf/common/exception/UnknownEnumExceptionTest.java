@@ -25,7 +25,7 @@ public class UnknownEnumExceptionTest {
     public void type_shouldReturnJSF() {
         UnknownEnumException ex = new UnknownEnumException(999, TestStatus.class);
 
-        assertEquals(ExceptionType.UNKNOWN, ex.type());
+        assertEquals(ExceptionType.UNDEFINED, ex.type());
     }
 
     @Test

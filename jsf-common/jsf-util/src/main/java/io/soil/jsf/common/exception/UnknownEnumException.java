@@ -19,6 +19,6 @@ public class UnknownEnumException extends BaseException{
 
   @Override
   public ExceptionType type(){
-    return ExceptionType.UNKNOWN;
+    return ExceptionType.UNDEFINED;
   }
 }

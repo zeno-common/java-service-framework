@@ -5,18 +5,18 @@ package io.soil.jsf.common.exception;
  * <p>
  * 对应 COLA 5 分层架构中的异常分类规则：
  * <ul>
- *   <li>{@link #UNKNOWN} — 未知异常, 用于表示未分类的异常类型</li>
+ *   <li>{@link #UNDEFINED} — 未定义异常, 用于表示未分类的异常类型</li>
  *   <li>{@link #BIZ} — 业务异常，Domain/App 层违反业务规则时抛出</li>
  *   <li>{@link #SYS} — 系统异常，Infrastructure 层捕获技术异常后包装抛出</li>
- *   <li>{@link #CLIENT} — 移动端导至的异常，比如 Adapter 层入参校验失败时抛出</li>
+ *   <li>{@link #PARAM} — 参数校验异常，比如 Adapter 层入参校验失败时抛出</li>
  * </ul>
  *
  * @author zeno.w
  */
 public enum ExceptionType {
 
-  /** 未知异常 */
-  UNKNOWN,
+  /** 未定义异常 */
+  UNDEFINED,
 
 	/** 业务异常 */
 	BIZ,
@@ -24,6 +24,6 @@ public enum ExceptionType {
 	/** 系统异常 */
 	SYS,
 
-	/** 移动端导至的异常 */
-  CLIENT
+	/** Adapter 层的参数校验异常 */
+  PARAM
 }
