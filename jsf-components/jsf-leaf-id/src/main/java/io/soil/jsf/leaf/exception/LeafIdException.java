@@ -57,7 +57,7 @@ public class LeafIdException extends BaseException {
    * @return 模块名 {@code "GAEA-LEAF-UID"}
    */
   @Override
-  protected String module(){
+  protected String type(){
     return "GAEA-LEAF-UID";
   }
 }

@@ -98,10 +98,10 @@ class WsfExceptionTest {
     }
 
     @Test
-    void module_shouldReturnJsfWsf() {
+    void type_shouldReturnJsfWsf() {
         WsfException ex = new WsfException("test");
 
-        assertEquals("JSF-WSF", ex.module());
+        assertEquals("JSF-WSF", ex.type());
     }
 
     @Test

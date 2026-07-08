@@ -22,10 +22,10 @@ public class UnknownEnumExceptionTest {
     }
 
     @Test
-    public void module_shouldReturnJSF() {
+    public void type_shouldReturnJSF() {
         UnknownEnumException ex = new UnknownEnumException(999, TestStatus.class);
 
-        assertEquals("JSF", ex.module());
+        assertEquals("JSF", ex.type());
     }
 
     @Test

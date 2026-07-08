@@ -10,9 +10,9 @@ import java.text.MessageFormat;
 import java.util.Collections;
 
 /**
- * 业务异常基类，所有模块级异常的统一抽象父类。
+ * 业务异常基类，所有业务、系统、其他级异常的统一抽象父类。
  * <p>
- * 制定异常规约：每个业务模块从本类派生并实现 {@link #module()} 方法，返回业务模块名称，
+ * 制定异常规约：每个业务从本类派生并实现 {@link #type()} 方法，返回异常类型名称，
  * 以便在日志和监控中快速定位异常来源。
  * <p>
  * 消息格式化：异常消息支持 {@link MessageFormat} 模板语法，
@@ -52,11 +52,11 @@ public abstract class BaseException extends RuntimeException {
 	}
 
 	/**
-	 * 获取异常模块名称
+	 * 获取异常类型名称， 类常类型可以是业务类型、系统类型、其他类型等。
 	 *
-	 * @return 模块名
+	 * @return 异常类型
 	 */
-	protected abstract String module();
+	protected abstract String type();
 
 	/**
 	 * 获取异常栈字符串

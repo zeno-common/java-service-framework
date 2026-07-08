@@ -143,7 +143,7 @@ public class WsfException extends BaseException {
    * @return 模块名 "JSF-WSF"
    */
   @Override
-  public String module(){
+  public String type(){
     return "JSF-WSF";
   }
 

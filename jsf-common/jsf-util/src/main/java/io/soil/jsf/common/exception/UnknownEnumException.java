@@ -23,7 +23,7 @@ public class UnknownEnumException extends BaseException{
    * @return 模块名
    */
   @Override
-  protected String module(){
+  protected String type(){
     return "JSF";
   }
 }
