@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @author wangzehou
  */
 @Configuration
-@ComponentScan({"io.soil.util"})
+@ComponentScan({"io.soil.jsf.util"})
 public class JsfCommonAutoConfig {
 }

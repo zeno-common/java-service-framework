@@ -1,11 +1,11 @@
-# jsf-wsf
+﻿# jsf-wsf
 
 基于 Spring Boot 封装的 Web Service Framework 通用的依赖模块，提供 Spring web 应用启动的基本配置、全局异常处理、Restful API Jackson 序列化配置、健康探针和常用工具类。 引入即生效，零配置。
 
 ## 功能特性
 
-- **全局异常处理** — `WsfHttpExceptionResolver` 自动捕获异常，统一返回 JSON 响应
-- **业务异常封装** — `WsfException` 支持 HTTP 状态码 + 自定义异常码 + 消息模板
+- **全局异常处理** — `RestGlobalExceptionResolver` 自动捕获异常，统一返回 JSON 响应
+- **业务异常封装** — `WebBizException` 支持 HTTP 状态码 + 自定义异常码 + 消息模板
 - **Jackson 序列化配置** — Long/BigInteger 转字符串防 JS 精度丢失、枚举字符串化、时间格式统一
 - **健康探针** — `GET /v1/probes/activeness` 活跃检测接口
 - **客户端 IP 获取** — `RemoteAddrUtil` 处理代理/负载均衡场景下的真实 IP 解析
@@ -64,40 +64,62 @@
 
 ```java
 // 简单消息，HTTP 500
-throw new WsfException("用户不存在");
+throw new WebBizException("用户不存在");
 
 // 指定 HTTP 状态码
-throw new WsfException(HttpStatus.NOT_FOUND, "资源未找到");
+throw new WebBizException(HttpStatus.NOT_FOUND, "资源未找到");
 
 // 自定义异常码 + 消息模板
-throw new WsfException("USER_NOT_FOUND", HttpStatus.NOT_FOUND, "用户 {0} 不存在", userId);
+throw new WebBizException("USER_NOT_FOUND", HttpStatus.NOT_FOUND, "用户 {0} 不存在", userId);
 
 // 包装原始异常
 try {
     // ...
 } catch (IOException e) {
-    throw new WsfException("IO_ERROR", e);
+    throw new WebBizException("IO_ERROR", e);
 }
 ```
 
 ### 异常响应格式
 
-**WsfException 响应**（HTTP 状态码由异常决定）：
+**WebBizException 响应**（HTTP 状态码由异常决定）：
 
 ```json
 {
-  "module": "JSF-WSF",
+  "errType": "BIZ",
   "errCode": "USER_NOT_FOUND",
   "errDesc": "用户 123 不存在",
-  "trace": "exception.wsf.io.soil.jsf.WsfException: ..."
+  "trace": "exception.wsf.io.soil.jsf.WebBizException: ..."
 }
 ```
 
-**非 WsfException 响应**（HTTP 500）：
+**BaseException 响应**（HTTP 500）：
 
 ```json
 {
-  "module": "UNDEFINED",
+  "errType": "BIZ",
+  "errCode": "ORDER-EXSITED",
+  "errDesc": "订单已存在",
+  "trace": "..."
+}
+```
+
+**参数校验异常响应**（HTTP 400）：
+
+```json
+{
+  "errType": "CLIENT",
+  "errCode": "BAD_REQUEST",
+  "errDesc": "名称不能为空; 年龄不能为负数",
+  "trace": "..."
+}
+```
+
+**非业务异常响应**（HTTP 500）：
+
+```json
+{
+  "errType": "SYS",
   "errCode": "INTERNAL_SERVER_ERROR",
   "errDesc": "原始异常消息",
   "trace": "java.lang.NullPointerException: ..."
@@ -123,15 +145,13 @@ GET /v1/probes/activeness → "active"
 ```
 io.soil.jsf.wsf/
 ├── config/
-│   └── WsfConfig.java                 # Jackson + 组件扫描配置
+│   └── WsfConfig.java                    # Jackson + 组件扫描配置
 ├── controller/
-│   └── ProbeController.java           # 健康探针
+│   └── ProbeController.java              # 健康探针
 ├── exception/
-│   ├── WsfException.java              # WSF 异常类
-│   ├── WsfHttpExceptionResolver.java  # 全局异常处理器
-│   └── WsfHttpExceptionResponse.java  # 异常响应 VO
-├── handler/
-│   └── BigNumSerializer.java          # 大数字序列化器
+│   ├── WebBizException.java              # Web 业务异常类
+│   ├── RestGlobalExceptionResolver.java  # 全局异常处理器
+│   └── RestExceptionResponse.java        # 异常响应 VO
 └── util/
-    └── RemoteAddrUtil.java            # 客户端 IP 工具
+    └── RemoteAddrUtil.java               # 客户端 IP 工具
 ```
