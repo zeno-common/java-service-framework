@@ -13,6 +13,27 @@ import java.util.Collections;
  */
 public class BizException extends BaseException {
 
+  /**
+   * 根据错误定义创建业务异常
+   *
+   * @param errorDefine 错误定义，提供异常码和消息
+   * @return 业务异常对象
+   */
+  public static BizException of(ErrorDefine errorDefine, Object... msgArgs) {
+    return of(null, errorDefine, msgArgs);
+  }
+
+  /**
+   * 根据错误定义创建业务异常，可附带原始异常
+   *
+   * @param throwable   原始异常，可为 null
+   * @param errorDefine 错误定义，提供异常码和消息
+   * @return 业务异常对象
+   */
+  public  static BizException of(Throwable throwable, ErrorDefine errorDefine, Object... msgArgs) {
+    return new BizException(errorDefine.code(),throwable, errorDefine.msg(), msgArgs);
+  }
+
   protected BizException(String msg) {
     super( msg);
   }

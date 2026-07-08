@@ -2,6 +2,7 @@ package io.soil.jsf.wsf.exception;
 
 import io.soil.jsf.common.exception.BaseException;
 import io.soil.jsf.common.exception.BizException;
+import io.soil.jsf.common.exception.ErrorDefine;
 import io.soil.jsf.common.exception.ExceptionType;
 import org.springframework.http.HttpStatus;
 
@@ -23,18 +24,29 @@ import java.util.Collections;
  */
 public class WebBizException extends BizException {
 
-  /** http 状态码 */
+  /**
+   * http 状态码
+   */
   private final HttpStatus status;
 
-    /**
-     * 将 BizException 重新包装为 WebBizException 对象，保留原始异常码和消息，同时指定 HTTP 状态码。
-     *
-     * @param e      原始业务异常
-     * @param status HTTP 状态码
-     */
-    public static WebBizException of(BizException e,HttpStatus status){
-      return new WebBizException(e.code(),status,e,e.getMessage());
-    }
+
+  public static WebBizException of(HttpStatus status, ErrorDefine errorDefine, Object... msgArgs) {
+    return of(status, null, errorDefine, msgArgs);
+  }
+
+  public  static WebBizException of(HttpStatus status, Throwable throwable, ErrorDefine errorDefine, Object... msgArgs) {
+    return new WebBizException(errorDefine.code(),status, throwable, errorDefine.msg(), msgArgs);
+  }
+
+  /**
+   * 将 BizException 重新包装为 WebBizException 对象，保留原始异常码和消息，同时指定 HTTP 状态码。
+   *
+   * @param e      原始业务异常
+   * @param status HTTP 状态码
+   */
+  public static WebBizException of(BizException e, HttpStatus status) {
+    return new WebBizException(e.code(), status, e, e.getMessage());
+  }
 
   /**
    * 使用 HTTP 状态码和消息构造 Web 业务 异常
@@ -42,8 +54,8 @@ public class WebBizException extends BizException {
    * @param status HTTP 状态码
    * @param msg    异常消息
    */
-  public WebBizException(HttpStatus status, String msg){
-    this(status.name(), status,  msg);
+  public WebBizException(HttpStatus status, String msg) {
+    this(status.name(), status, msg);
   }
 
   /**
@@ -53,7 +65,7 @@ public class WebBizException extends BizException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WebBizException(HttpStatus status, String msgPattern, Object... msgArgs){
+  public WebBizException(HttpStatus status, String msgPattern, Object... msgArgs) {
     this(status.name(), status, msgPattern, msgArgs);
   }
 
@@ -64,7 +76,7 @@ public class WebBizException extends BizException {
    * @param status HTTP 状态码
    * @param msg    异常消息
    */
-  public WebBizException(String code, HttpStatus status, String msg){
+  public WebBizException(String code, HttpStatus status, String msg) {
     this(code, status, msg, Collections.emptyList());
   }
 
@@ -76,8 +88,8 @@ public class WebBizException extends BizException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WebBizException(String code, HttpStatus status, String msgPattern, Object... msgArgs){
-    this(code, status,  null, msgPattern, msgArgs);
+  public WebBizException(String code, HttpStatus status, String msgPattern, Object... msgArgs) {
+    this(code, status, null, msgPattern, msgArgs);
   }
 
   /**
@@ -85,13 +97,13 @@ public class WebBizException extends BizException {
    *
    * @param throwable 原始异常
    */
-  public WebBizException(Throwable throwable){
+  public WebBizException(Throwable throwable) {
     this(
       HttpStatus.INTERNAL_SERVER_ERROR.name(),
       HttpStatus.INTERNAL_SERVER_ERROR,
-         throwable,
-         throwable.getMessage(),
-         Collections.emptyList());
+      throwable,
+      throwable.getMessage(),
+      Collections.emptyList());
   }
 
   /**
@@ -100,7 +112,7 @@ public class WebBizException extends BizException {
    * @param code      自定义异常状态码
    * @param throwable 原始异常
    */
-  public WebBizException(String code, Throwable throwable){
+  public WebBizException(String code, Throwable throwable) {
     this(code, throwable, throwable.getMessage(), Collections.emptyList());
   }
 
@@ -112,7 +124,7 @@ public class WebBizException extends BizException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WebBizException(String code, Throwable throwable, String msgPattern, Object... msgArgs){
+  public WebBizException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
     this(HttpStatus.INTERNAL_SERVER_ERROR, code, throwable, msgPattern, msgArgs);
   }
 
@@ -125,7 +137,7 @@ public class WebBizException extends BizException {
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WebBizException(String code, HttpStatus status, Throwable throwable, String msgPattern, Object... msgArgs){
+  public WebBizException(String code, HttpStatus status, Throwable throwable, String msgPattern, Object... msgArgs) {
     super(code, throwable, msgPattern, msgArgs);
     this.status = status;
   }
@@ -136,7 +148,7 @@ public class WebBizException extends BizException {
    *
    * @return HTTP 状态码
    */
-  public HttpStatus status(){
+  public HttpStatus status() {
     return status;
   }
 }

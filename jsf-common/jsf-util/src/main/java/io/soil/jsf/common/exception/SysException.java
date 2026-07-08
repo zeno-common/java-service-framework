@@ -13,6 +13,27 @@ import java.util.Collections;
  */
 public class SysException extends BaseException {
 
+  /**
+   * 根据错误定义创建系统异常
+   *
+   * @param errorDefine 错误定义，提供异常码和消息
+   * @return 系统异常对象
+   */
+  public static SysException of(ErrorDefine errorDefine, Object... msgArgs) {
+    return of(null, errorDefine, msgArgs);
+  }
+
+  /**
+   * 根据错误定义创建系统异常，可附带原始异常
+   *
+   * @param errorDefine 错误定义，提供异常码和消息
+   * @param throwable   原始异常，可为 null
+   * @return 系统异常对象
+   */
+  public  static SysException of(Throwable throwable, ErrorDefine errorDefine, Object... msgArgs) {
+    return new SysException(errorDefine.code(),throwable, errorDefine.msg(), msgArgs);
+  }
+
   protected SysException(String msg) {
     super( msg);
   }

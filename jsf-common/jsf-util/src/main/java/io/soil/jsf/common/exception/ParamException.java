@@ -13,6 +13,28 @@ import java.util.Collections;
  */
 public class ParamException extends BaseException {
 
+  /**
+   * 根据错误定义创建参数校验异常
+   *
+   * @param errorDefine 错误定义，提供异常码和消息
+   * @return 参数校验异常对象
+   */
+  public static ParamException of(ErrorDefine errorDefine, Object... msgArgs) {
+    return of(null, errorDefine, msgArgs);
+  }
+
+  /**
+   * 根据错误定义创建参数校验异常，可附带原始异常
+   *
+   * @param errorDefine 错误定义，提供异常码和消息
+   * @param throwable   原始异常，可为 null
+   * @return 参数校验异常对象
+   */
+  public  static ParamException of(Throwable throwable, ErrorDefine errorDefine, Object... msgArgs) {
+    return new ParamException(errorDefine.code(),throwable, errorDefine.msg(), msgArgs);
+  }
+
+
   protected ParamException(String msg) {
     super( msg);
   }

@@ -15,6 +15,7 @@ import com.mybatisflex.core.paginate.Page;
  */
 public class JsfUrlParamsPage<T> extends Page<T> {
 
+    /** 默认构造器 */
     public JsfUrlParamsPage() {
     }
 

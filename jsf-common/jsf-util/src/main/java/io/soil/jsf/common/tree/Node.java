@@ -43,6 +43,7 @@ public class Node<ID,TYPE>{
   /** 子节点列表 */
   private Collection<Node<ID,TYPE>> children;
 
+  /** 默认构造器，子节点列表初始化为空列表 */
   public Node(){
     children = Collections.emptyList();
   }
