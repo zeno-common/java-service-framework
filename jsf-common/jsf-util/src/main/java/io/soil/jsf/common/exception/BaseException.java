@@ -10,14 +10,22 @@ import java.text.MessageFormat;
 import java.util.Collections;
 
 /**
- * 异常基类。
+ * 业务异常基类，所有模块级异常的统一抽象父类。
  * <p>
- * 主要以下用途
- * 1. 用于制定通用的异常信息，给派生类的构建函数定义进行参考。
- * 2. 有助于构异异常类的构建，并提供多种场景下异常类构建函数的定义参考，
- * 方便快速定义异常类和易于实例化异常类对象。
+ * 制定异常规约：每个业务模块从本类派生并实现 {@link #module()} 方法，返回业务模块名称，
+ * 以便在日志和监控中快速定位异常来源。
+ * <p>
+ * 消息格式化：异常消息支持 {@link MessageFormat} 模板语法，
+ * 使用 {@code {0}}、{@code {1}} 等占位符进行参数替换，例如：
+ * <pre>{@code
+ *   new MyException("用户 {0} 不存在", userId)
+ * }</pre>
+ * <p>
+ * 异常栈输出：{@link #getStackTraceString()} 方法仅在 DEBUG 日志级别下返回完整异常栈，
+ * 非 DEBUG 级别返回空字符串，避免生产环境输出冗余信息。
  *
  * @author zeno.w
+ * @see MessageFormat
  */
 @Slf4j
 public abstract class BaseException extends RuntimeException {
