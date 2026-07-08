@@ -1,4 +1,4 @@
-﻿# jsf-wsf
+# jsf-wsf
 
 基于 Spring Boot 封装的 Web Service Framework 通用的依赖模块，提供 Spring web 应用启动的基本配置、全局异常处理、Restful API Jackson 序列化配置、健康探针和常用工具类。 引入即生效，零配置。
 
@@ -150,9 +150,6 @@ io.soil.jsf.wsf/
 │   └── ProbeController.java              # 健康探针
 ├── exception/
 │   ├── WebBizException.java              # Web 业务异常类（带 HTTP 状态码）
-│   ├── BizException.java                 # 业务异常类（Domain/App 层业务规则违规）
-│   ├── SysException.java                 # 系统异常类（Infrastructure 层技术异常包装）
-│   ├── ParamException.java               # 参数校验异常类（Adapter 层入参校验失败）
 │   ├── RestGlobalExceptionResolver.java  # 全局异常处理器
 │   └── RestExceptionResponse.java        # 异常响应 VO
 └── util/
