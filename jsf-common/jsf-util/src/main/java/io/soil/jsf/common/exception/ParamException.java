@@ -1,7 +1,6 @@
 package io.soil.jsf.common.exception;
 
 import java.text.MessageFormat;
-import java.util.Collections;
 
 /**
  * 参数校验异常，用于表示请求入参不合法（如非空、格式校验失败等）。在 Adapter 层进行参数校验时抛出。
@@ -12,29 +11,6 @@ import java.util.Collections;
  * @author zeno
  */
 public class ParamException extends BaseException {
-
-  /**
-   * 根据错误定义创建参数校验异常
-   *
-   * @param errorDefine 错误定义，提供异常码和消息模板
-   * @param msgArgs     消息模板参数，用于 {@link MessageFormat#format} 格式化
-   * @return 参数校验异常对象
-   */
-  public static ParamException of(ErrorDefine errorDefine, Object... msgArgs) {
-    return of(null, errorDefine, msgArgs);
-  }
-
-  /**
-   * 根据错误定义创建参数校验异常，可附带原始异常
-   *
-   * @param throwable   原始异常，可为 null
-   * @param errorDefine 错误定义，提供异常码和消息模板
-   * @param msgArgs     消息模板参数，用于 {@link MessageFormat#format} 格式化
-   * @return 参数校验异常对象
-   */
-  public  static ParamException of(Throwable throwable, ErrorDefine errorDefine, Object... msgArgs) {
-    return new ParamException(errorDefine.code(),throwable, errorDefine.msg(), msgArgs);
-  }
 
 
   protected ParamException(String msg) {
