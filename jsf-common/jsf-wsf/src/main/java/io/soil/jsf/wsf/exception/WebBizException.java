@@ -30,10 +30,10 @@ public class WebBizException extends BizException {
   /**
    * 将 BizException 重新包装为 WebBizException 对象，保留原始异常码和消息，同时指定 HTTP 状态码。
    *
-   * @param e      原始业务异常
    * @param status HTTP 状态码
+   * @param e      原始业务异常
    */
-  public static WebBizException of(BizException e, HttpStatus status) {
+  public static WebBizException of(HttpStatus status, BizException e) {
     return new WebBizException(status, e.code(),  e, e.getMessage());
   }
 
