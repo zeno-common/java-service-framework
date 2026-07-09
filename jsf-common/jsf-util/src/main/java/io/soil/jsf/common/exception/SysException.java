@@ -12,35 +12,35 @@ import java.text.MessageFormat;
  */
 public class SysException extends BaseException {
 
-  protected SysException(String msg) {
+  public SysException(String msg) {
     super( msg);
   }
 
-  protected SysException(String msgPattern, Object... msgArgs) {
+  public SysException(String msgPattern, Object... msgArgs) {
     super(msgPattern, msgArgs);
   }
 
-  protected SysException(Throwable throwable) {
+  public SysException(Throwable throwable) {
     super(throwable);
   }
 
-  protected SysException(Throwable throwable, String msg) {
+  public SysException(Throwable throwable, String msg) {
     super(throwable, msg);
   }
 
-  protected SysException(Throwable throwable, String msgPattern, Object... msgArgs) {
+  public SysException(Throwable throwable, String msgPattern, Object... msgArgs) {
     super(throwable, msgPattern, msgArgs);
   }
 
-  protected SysException(String code, Throwable throwable) {
+  public SysException(String code, Throwable throwable) {
     super(code, throwable);
   }
 
-  protected SysException(String code, Throwable throwable, String msg) {
+  public SysException(String code, Throwable throwable, String msg) {
     super(code, throwable, msg);
   }
 
-  protected SysException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
+  public SysException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
     super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
   }
 

@@ -13,35 +13,35 @@ import java.text.MessageFormat;
 public class ParamException extends BaseException {
 
 
-  protected ParamException(String msg) {
+  public ParamException(String msg) {
     super( msg);
   }
 
-  protected ParamException(String msgPattern, Object... msgArgs) {
+  public ParamException(String msgPattern, Object... msgArgs) {
     super(msgPattern, msgArgs);
   }
 
-  protected ParamException(Throwable throwable) {
+  public ParamException(Throwable throwable) {
     super(throwable);
   }
 
-  protected ParamException(Throwable throwable, String msg) {
+  public ParamException(Throwable throwable, String msg) {
     super(throwable, msg);
   }
 
-  protected ParamException(Throwable throwable, String msgPattern, Object... msgArgs) {
+  public ParamException(Throwable throwable, String msgPattern, Object... msgArgs) {
     super(throwable, msgPattern, msgArgs);
   }
 
-  protected ParamException(String code, Throwable throwable) {
+  public ParamException(String code, Throwable throwable) {
     super(code, throwable);
   }
 
-  protected ParamException(String code, Throwable throwable, String msg) {
+  public ParamException(String code, Throwable throwable, String msg) {
     super(code, throwable, msg);
   }
 
-  protected ParamException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
+  public ParamException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
     super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
   }
 

@@ -12,35 +12,35 @@ import java.text.MessageFormat;
  */
 public class BizException extends BaseException {
 
-  protected BizException(String msg) {
+  public BizException(String msg) {
     super( msg);
   }
 
-  protected BizException(String msgPattern, Object... msgArgs) {
+  public BizException(String msgPattern, Object... msgArgs) {
     super(msgPattern, msgArgs);
   }
 
-  protected BizException(Throwable throwable) {
+  public BizException(Throwable throwable) {
     super(throwable);
   }
 
-  protected BizException(Throwable throwable, String msg) {
+  public BizException(Throwable throwable, String msg) {
     super(throwable, msg);
   }
 
-  protected BizException(Throwable throwable, String msgPattern, Object... msgArgs) {
+  public BizException(Throwable throwable, String msgPattern, Object... msgArgs) {
     super(throwable, msgPattern, msgArgs);
   }
 
-  protected BizException(String code, Throwable throwable) {
+  public BizException(String code, Throwable throwable) {
     super(code, throwable);
   }
 
-  protected BizException(String code, Throwable throwable, String msg) {
+  public BizException(String code, Throwable throwable, String msg) {
     super(code, throwable, msg);
   }
 
-  protected BizException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
+  public BizException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
     super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
   }
 
