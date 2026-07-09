@@ -20,7 +20,7 @@ import java.util.Collections;
  *
  * @author zeno
  */
-public class WebBizException extends BizException {
+public final class WebBizException extends BizException {
 
   /**
    * http 状态码

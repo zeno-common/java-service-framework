@@ -10,7 +10,7 @@ import java.text.MessageFormat;
  *
  * @author zeno
  */
-public class SysException extends BaseException {
+public final class SysException extends BaseException {
 
   public SysException(String msg) {
     super( msg);

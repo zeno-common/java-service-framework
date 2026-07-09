@@ -10,7 +10,7 @@ import java.text.MessageFormat;
  *
  * @author zeno
  */
-public class ParamException extends BaseException {
+public final class ParamException extends BaseException {
 
 
   public ParamException(String msg) {

@@ -10,7 +10,7 @@ import java.text.MessageFormat;
  *
  * @author zeno
  */
-public class BizException extends BaseException {
+public  class BizException extends BaseException {
 
   public BizException(String msg) {
     super( msg);
