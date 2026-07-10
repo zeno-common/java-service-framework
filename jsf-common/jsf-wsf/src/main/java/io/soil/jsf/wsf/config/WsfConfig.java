@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.soil.jsf.wsf.controller.ProbeController;
+import io.soil.jsf.wsf.exception.RestGlobalExceptionResolver;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,7 +33,7 @@ import static io.soil.jsf.common.date.OffsetDateTimeUtil.OFFSET_DATE_TIME_FORMAT
  * @author zeno
  */
 @Configuration
-@ComponentScan(basePackageClasses = {ProbeController.class})
+@ComponentScan(basePackageClasses = {ProbeController.class, RestGlobalExceptionResolver.class})
 public class WsfConfig {
 
 

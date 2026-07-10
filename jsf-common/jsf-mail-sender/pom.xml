@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>io.soil.jsf</groupId>
+    <artifactId>jsf-dependencies</artifactId>
+    <version>0.0.1</version>
+    <relativePath/>
+  </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jsf-mail-sender</artifactId>
+
+    <description>
+        Spring 邮件发送模块, 基于 JavaMailSender 通过 SMTP 协议发送文本/HTML 邮件及附件
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
