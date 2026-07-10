@@ -41,7 +41,7 @@ public final class SysException extends BaseException {
   }
 
   public SysException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
-    super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
+    super(code,throwable, msgPattern, msgArgs);
   }
 
   @Override

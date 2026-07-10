@@ -41,7 +41,7 @@ public  class BizException extends BaseException {
   }
 
   public BizException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
-    super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
+    super(code,throwable, msgPattern, msgArgs );
   }
 
   @Override

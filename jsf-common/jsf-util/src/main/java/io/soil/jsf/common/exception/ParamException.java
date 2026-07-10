@@ -42,7 +42,7 @@ public final class ParamException extends BaseException {
   }
 
   public ParamException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
-    super(code,throwable, MessageFormat.format(msgPattern, msgArgs));
+    super(code,throwable, msgPattern, msgArgs);
   }
 
   @Override

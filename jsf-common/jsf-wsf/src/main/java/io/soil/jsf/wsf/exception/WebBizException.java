@@ -37,91 +37,58 @@ public final class WebBizException extends BizException {
     return new WebBizException(status, e.code(),  e, e.getMessage());
   }
 
-  /**
-   * 使用 HTTP 状态码和消息构造 Web 业务 异常
-   *
-   * @param status HTTP 状态码
-   * @param msg    异常消息
-   */
-  public WebBizException(HttpStatus status, String msg) {
-    this(status, status.name(),  msg);
-  }
 
   /**
-   * 使用 HTTP 状态码和消息模板构造 Web 业务 异常
+   * 指定 HTTP 状态码和自定义异常状态码、异常栈和消息内容构造 Web 业务 异常
    *
    * @param status     HTTP 状态码
-   * @param msgPattern java.text.MessageFormat 消息模板
-   * @param msgArgs    消息模板参数
-   */
-  public WebBizException(HttpStatus status, String msgPattern, Object... msgArgs) {
-    this(status, status.name(),  msgPattern, msgArgs);
-  }
-
-  /**
-   * 使用自定义异常状态码和 HTTP 状态码构造 Web 业务 异常
-   *
-   * @param status HTTP 状态码
-   * @param code   自定义异常状态码
-   * @param msg    异常消息
+   * @param code       自定义异常状态码
+   * @param msg        消息内容
    */
   public WebBizException(HttpStatus status, String code, String msg) {
-    this(status, code,  msg, Collections.emptyList());
+    this(status, code, msg, Collections.emptyList());
   }
 
   /**
-   * 使用自定义异常状态码、HTTP 状态码和消息模板构造 Web 业务 异常
+   * 指定 HTTP 状态码和自定义异常状态码、异常栈和消息内容构造 Web 业务 异常
    *
    * @param status     HTTP 状态码
    * @param code       自定义异常状态码
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
    */
-  public WebBizException(HttpStatus status, String code,  String msgPattern, Object... msgArgs) {
-    this(status, code,  null, msgPattern, msgArgs);
+  public WebBizException(HttpStatus status, String code, String msgPattern, Object... msgArgs) {
+    this(status, code, null, msgPattern, msgArgs);
   }
 
   /**
-   * 使用异常栈构造 Web 业务 异常，默认 HTTP 状态码 500
+   * 指定 HTTP 状态码和自定义异常状态码、异常栈和消息内容构造 Web 业务 异常
    *
-   * @param throwable 原始异常
-   */
-  public WebBizException(Throwable throwable) {
-    this(
-      HttpStatus.INTERNAL_SERVER_ERROR,
-      HttpStatus.INTERNAL_SERVER_ERROR.name(),
-      throwable,
-      throwable.getMessage(),
-      Collections.emptyList());
-  }
-
-  /**
-   * 使用自定义异常状态码和异常栈构造 Web 业务 异常
-   *
-   * @param code      自定义异常状态码
-   * @param throwable 原始异常
-   */
-  public WebBizException(String code, Throwable throwable) {
-    this(code, throwable, throwable.getMessage(), Collections.emptyList());
-  }
-
-  /**
-   * 使用自定义异常状态码、异常栈和消息模板构造 Web 业务 异常
-   *
+   * @param status     HTTP 状态码
    * @param code       自定义异常状态码
    * @param throwable  原始异常
-   * @param msgPattern java.text.MessageFormat 消息模板
-   * @param msgArgs    消息模板参数
    */
-  public WebBizException(String code, Throwable throwable, String msgPattern, Object... msgArgs) {
-    this(HttpStatus.INTERNAL_SERVER_ERROR, code, throwable, msgPattern, msgArgs);
+  public WebBizException(HttpStatus status, String code, Throwable throwable) {
+    this(status, code, throwable, throwable.getMessage(), Collections.emptyList());
+  }
+
+  /**
+   * 指定 HTTP 状态码和自定义异常状态码、异常栈和消息内容构造 Web 业务 异常
+   *
+   * @param status     HTTP 状态码
+   * @param code       自定义异常状态码
+   * @param throwable  原始异常
+   * @param msg        消息内容
+   */
+  public WebBizException(HttpStatus status, String code, Throwable throwable, String msg) {
+    this(status, code, throwable, msg, Collections.emptyList());
   }
 
   /**
    * 全参数构造 Web 业务 异常
    *
-   * @param code       自定义异常状态码
    * @param status     HTTP 状态码
+   * @param code       自定义异常状态码
    * @param throwable  原始异常
    * @param msgPattern java.text.MessageFormat 消息模板
    * @param msgArgs    消息模板参数
