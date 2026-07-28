@@ -11,7 +11,6 @@
   <modules>
     <module>jsf-alibaba-dependencies</module>
     <module>jsf-common-dependencies</module>
-    <module>jsf-components-dependencies</module>
     <module>jsf-jdbc-dependencies</module>
     <module>jsf-redis-dependencies</module>
     <module>jsf-spring-dependencies</module>

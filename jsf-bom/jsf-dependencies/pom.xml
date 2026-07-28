@@ -48,6 +48,15 @@
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <log4j2.version>2.24.3</log4j2.version>
+    <validation-api.version>3.1.1</validation-api.version>
+    <jackson.version>2.18.4</jackson.version>
+    <disruptor.version>4.0.0</disruptor.version>
+    <commons-io.version>2.19.0</commons-io.version>
+    <apache.commons.lang3.version>3.17.0</apache.commons.lang3.version>
+    <apache.commons.collections4.version>4.5.0</apache.commons.collections4.version>
+    <caffeine.version>3.2.0</caffeine.version>
   </properties>
 
   <dependencyManagement>
@@ -61,14 +70,14 @@
       </dependency>
       <dependency>
         <groupId>io.soil.jsf</groupId>
-        <artifactId>jsf-common-dependencies</artifactId>
+        <artifactId>jsf-tools-dependencies</artifactId>
         <version>${jsf.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.soil.jsf</groupId>
-        <artifactId>jsf-components-dependencies</artifactId>
+        <artifactId>jsf-common-dependencies</artifactId>
         <version>${jsf.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -94,14 +103,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>io.soil.jsf</groupId>
-        <artifactId>jsf-tools-dependencies</artifactId>
-        <version>${jsf.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
@@ -179,6 +180,58 @@
         <groupId>net.logstash.logback</groupId>
         <artifactId>logstash-logback-encoder</artifactId>
         <version>${logstash-logback-encoder.version}</version>
+      </dependency>
+
+      <!-- 工具库（原 jsf-tools-dependencies，已合并至本模块直接管理） -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.lmax</groupId>
+        <artifactId>disruptor</artifactId>
+        <version>${disruptor.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.ben-manes.caffeine</groupId>
+        <artifactId>caffeine</artifactId>
+        <version>${caffeine.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>${validation-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${apache.commons.lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>${apache.commons.collections4.version}</version>
       </dependency>
     </dependencies>
 

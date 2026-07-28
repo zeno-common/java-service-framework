@@ -13,6 +13,7 @@
 - **Logstash Logback Encoder** - 日志推送
 - **MapStruct-Plus** - 对象映射
 - **Lombok** - 代码简化
+- **工具库** - Jackson / Caffeine / Log4j2 / Commons 等（原 jsf-tools-dependencies，已合并至本模块直接管理）
 
 ## 聚合的子 BOM
 
@@ -20,11 +21,10 @@
 |--------|------|
 | jsf-spring-dependencies | Spring Boot & Spring Cloud |
 | jsf-alibaba-dependencies | Spring Cloud Alibaba |
-| jsf-common-dependencies | JSF 通用模块 |
-| jsf-components-dependencies | JSF 业务组件 |
+| jsf-tools-dependencies | JSF 通用模块（jsf-pojo / jsf-util / jsf-wsf / jsf-leaf-id / jsf-unit-test） |
+| jsf-common-dependencies | JSF 业务组件（jsf-mongodb） |
 | jsf-jdbc-dependencies | 数据库 & ORM |
 | jsf-redis-dependencies | Redis |
-| jsf-tools-dependencies | 工具库 |
 
 ## 默认依赖
 

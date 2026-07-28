@@ -1,4 +1,4 @@
-﻿﻿﻿# jsf-bom
+﻿# jsf-bom
 
 JSF 框架的 Maven BOM（Bill of Materials）模块，统一管理所有依赖版本、构建配置和多环境 Profile。
 
@@ -10,11 +10,10 @@ JSF 框架的 Maven BOM（Bill of Materials）模块，统一管理所有依赖�
 | [jsf-parent](./jsf-parent) | 父 POM，提供多环境 Profile 和 Docker 构建能力 |
 | [jsf-spring-dependencies](./jsf-spring-dependencies) | Spring Boot & Spring Cloud 依赖管理 |
 | [jsf-alibaba-dependencies](./jsf-alibaba-dependencies) | Spring Cloud Alibaba / Nacos / Sentinel / Seata / Dubbo |
-| [jsf-common-dependencies](./jsf-common-dependencies) | JSF 通用模块（jsf-pojo / jsf-util / jsf-unit-test） |
-| [jsf-components-dependencies](./jsf-components-dependencies) | JSF 组件模块（jsf-wsf / jsf-leaf-id / jsf-mongodb） |
+| [jsf-tools-dependencies](./jsf-tools-dependencies) | JSF 通用模块（jsf-pojo / jsf-util / jsf-wsf / jsf-leaf-id / jsf-unit-test） |
+| [jsf-common-dependencies](./jsf-common-dependencies) | JSF 组件模块（jsf-mongodb） |
 | [jsf-jdbc-dependencies](./jsf-jdbc-dependencies) | 数据库 & ORM（MyBatis-Flex / PageHelper） |
 | [jsf-redis-dependencies](./jsf-redis-dependencies) | Redis（Redisson） |
-| [jsf-tools-dependencies](./jsf-tools-dependencies) | 工具库（Jackson / Caffeine / MapStruct-Plus / Commons） |
 
 ## 依赖层级关系
 
@@ -23,11 +22,10 @@ jsf-parent
 └── jsf-dependencies (聚合入口)
     ├── jsf-spring-dependencies       (Spring Boot 3.5.15 / Spring Cloud 2025.0.3)
     ├── jsf-alibaba-dependencies      (Spring Cloud Alibaba 2025.0.0.0 / Nacos 2.5.1 / Dubbo 3.0.0)
-    ├── jsf-common-dependencies       (jsf-pojo / jsf-util / jsf-unit-test)
-    ├── jsf-components-dependencies   (jsf-wsf / jsf-leaf-id / jsf-mongodb)
+    ├── jsf-tools-dependencies       (jsf-pojo / jsf-util / jsf-wsf / jsf-leaf-id / jsf-unit-test)
+    ├── jsf-common-dependencies   (jsf-mongodb)
     ├── jsf-jdbc-dependencies         (MyBatis-Flex 1.11.7 / PageHelper 6.1.1)
     ├── jsf-redis-dependencies        (Redisson 3.49.0)
-    ├── jsf-tools-dependencies        (Jackson 2.18.4 / Caffeine 3.2.0 / MapStruct-Plus 1.4.8 / Commons)
     └── [直接管理]                    (Sa-Token Dubbo3 / RocketMQ / Lombok / FastJSON / SkyWalking / ...)
 ```
 
@@ -130,17 +128,17 @@ jsf-parent
 
 | 依赖 | 版本 | 来源 |
 |------|------|------|
-| Jackson | 2.18.4 | jsf-tools-dependencies |
-| Log4j2 | 2.24.3 | jsf-tools-dependencies |
+| Jackson | 2.18.4 | jsf-dependencies |
+| Log4j2 | 2.24.3 | jsf-dependencies |
 | Lombok | 1.18.46 | jsf-dependencies 直接管理 |
-| MapStruct-Plus | 1.4.8 | jsf-tools-dependencies / jsf-dependencies |
-| Caffeine | 3.2.0 | jsf-tools-dependencies |
-| Commons IO | 2.19.0 | jsf-tools-dependencies |
-| Commons Lang3 | 3.17.0 | jsf-tools-dependencies |
-| Commons Collections4 | 4.5.0 | jsf-tools-dependencies |
-| Disruptor | 4.0.0 | jsf-tools-dependencies |
-| Jakarta Validation | 3.1.1 | jsf-tools-dependencies |
-| ip2region | 2.7.0 | jsf-tools-dependencies / jsf-dependencies |
+| MapStruct-Plus | 1.4.8 | jsf-dependencies |
+| Caffeine | 3.2.0 | jsf-dependencies |
+| Commons IO | 2.19.0 | jsf-dependencies |
+| Commons Lang3 | 3.17.0 | jsf-dependencies |
+| Commons Collections4 | 4.5.0 | jsf-dependencies |
+| Disruptor | 4.0.0 | jsf-dependencies |
+| Jakarta Validation | 3.1.1 | jsf-dependencies |
+| ip2region | 2.7.0 | jsf-dependencies |
 
 ### 其他
 

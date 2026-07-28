@@ -1,4 +1,7 @@
 ######################################################################
+
+jsf-leaf/
+
 # Build Tools
 
 .gradle
@@ -12,6 +15,7 @@ target/
 # IDE
 .agent/
 .trae/
+.codebuddy/
 
 ### STS ###
 .apt_generated
