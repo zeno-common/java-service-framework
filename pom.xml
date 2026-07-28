@@ -18,7 +18,7 @@
 
   <modules>
     <module>jsf-bom</module>
+    <module>jsf-tools</module>
     <module>jsf-common</module>
-    <module>jsf-components</module>
   </modules>
 </project>
