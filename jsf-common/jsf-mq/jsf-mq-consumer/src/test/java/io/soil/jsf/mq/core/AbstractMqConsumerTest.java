@@ -3,7 +3,7 @@ package io.soil.jsf.mq.core;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureHandler;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureRecord;
 import io.soil.jsf.mq.core.idempotent.MqIdempotentStore;
-import io.soil.jsf.mq.exception.MqException;
+import io.soil.jsf.mq.exception.MqConsumerException;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -57,17 +57,17 @@ class AbstractMqConsumerTest {
     }
 
     @Test
-    void exception_defaultsToRetryLater_throwsMqException() {
+    void exception_defaultsToRetryLater_throwsMqConsumerException() {
         TestConsumer consumer = new TestConsumer();
         consumer.toThrow = new RuntimeException("boom");
-        assertThrows(MqException.class, () -> consumer.onMessage("x"));
+        assertThrows(MqConsumerException.class, () -> consumer.onMessage("x"));
     }
 
     @Test
-    void retryLater_throwsMqException() {
+    void retryLater_throwsMqConsumerException() {
         TestConsumer consumer = new TestConsumer();
         consumer.result = ConsumeStatus.RETRY_LATER;
-        assertThrows(MqException.class, () -> consumer.onMessage("x"));
+        assertThrows(MqConsumerException.class, () -> consumer.onMessage("x"));
     }
 
     @Test
@@ -128,7 +128,7 @@ class AbstractMqConsumerTest {
         when(store.tryClaim(eq("k1"), anyLong())).thenReturn(true);
         consumer.setIdempotentStore(store);
 
-        assertThrows(MqException.class, () -> consumer.onMessage("msg"));
+        assertThrows(MqConsumerException.class, () -> consumer.onMessage("msg"));
 
         verify(store).release("k1");
         verify(store, never()).markProcessed(any());

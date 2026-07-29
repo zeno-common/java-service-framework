@@ -1,6 +1,6 @@
 package io.soil.jsf.mq.core.outbox;
 
-import io.soil.jsf.mq.config.properties.MqProperties;
+import io.soil.jsf.mq.config.properties.MqProducerProperties;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,7 +20,7 @@ class MqOutboxRelayTest {
     void relay_dispatchesEachPendingMessage() {
         MqOutboxStore store = mock(MqOutboxStore.class);
         MqOutbox outbox = mock(MqOutbox.class);
-        MqProperties.Outbox props = new MqProperties.Outbox();
+        MqProducerProperties.Outbox props = new MqProducerProperties.Outbox();
         MqOutboxRelay relay = new MqOutboxRelay(store, outbox, props);
 
         MqOutboxMessage m1 = new MqOutboxMessage();
@@ -43,7 +43,7 @@ class MqOutboxRelayTest {
     void relay_emptyBatch_doesNothing() {
         MqOutboxStore store = mock(MqOutboxStore.class);
         MqOutbox outbox = mock(MqOutbox.class);
-        MqOutboxRelay relay = new MqOutboxRelay(store, outbox, new MqProperties.Outbox());
+        MqOutboxRelay relay = new MqOutboxRelay(store, outbox, new MqProducerProperties.Outbox());
 
         when(store.fetchPending(anyInt(), anyLong())).thenReturn(List.of());
 
@@ -55,7 +55,7 @@ class MqOutboxRelayTest {
     void relay_singleDispatchException_doesNotAbortBatch() {
         MqOutboxStore store = mock(MqOutboxStore.class);
         MqOutbox outbox = mock(MqOutbox.class);
-        MqOutboxRelay relay = new MqOutboxRelay(store, outbox, new MqProperties.Outbox());
+        MqOutboxRelay relay = new MqOutboxRelay(store, outbox, new MqProducerProperties.Outbox());
 
         MqOutboxMessage bad = new MqOutboxMessage();
         bad.setId(1L);

@@ -1,6 +1,6 @@
 package io.soil.jsf.mq.core;
 
-import io.soil.jsf.mq.exception.MqException;
+import io.soil.jsf.mq.exception.MqProducerException;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -52,10 +52,10 @@ class MqProducerTest {
     }
 
     @Test
-    void send_wrapsExceptionAsMqException() {
+    void send_wrapsExceptionAsMqProducerException() {
         when(rocketMQTemplate.syncSend(anyString(), Mockito.<Object>any())).thenThrow(new RuntimeException("boom"));
 
-        MqException ex = assertThrows(MqException.class, () -> mqProducer.send("t", "p"));
+        MqProducerException ex = assertThrows(MqProducerException.class, () -> mqProducer.send("t", "p"));
         assertEquals("MQ-SEND-FAILED", ex.code());
     }
 
@@ -73,7 +73,7 @@ class MqProducerTest {
     }
 
     @Test
-    void sendAsync_invokesErrorCallbackWithMqException() {
+    void sendAsync_invokesErrorCallbackWithMqProducerException() {
         ArgumentCaptor<SendCallback> captor = ArgumentCaptor.forClass(SendCallback.class);
         doNothing().when(rocketMQTemplate).asyncSend(eq("t"), eq("p"), captor.capture());
 
@@ -82,8 +82,8 @@ class MqProducerTest {
 
         captor.getValue().onException(new RuntimeException("boom"));
 
-        assertInstanceOf(MqException.class, holder[0]);
-        assertEquals("MQ-SEND-FAILED", ((MqException) holder[0]).code());
+        assertInstanceOf(MqProducerException.class, holder[0]);
+        assertEquals("MQ-SEND-FAILED", ((MqProducerException) holder[0]).code());
     }
 
     @Test
@@ -107,11 +107,11 @@ class MqProducerTest {
     }
 
     @Test
-    void sendDelay_wrapsExceptionAsMqException() {
+    void sendDelay_wrapsExceptionAsMqProducerException() {
         when(rocketMQTemplate.syncSend(anyString(), any(Message.class), anyLong(), anyInt()))
                 .thenThrow(new RuntimeException("boom"));
 
-        MqException ex = assertThrows(MqException.class, () -> mqProducer.sendDelay("t", "p", 2));
+        MqProducerException ex = assertThrows(MqProducerException.class, () -> mqProducer.sendDelay("t", "p", 2));
         assertEquals("MQ-SEND-FAILED", ex.code());
     }
 }

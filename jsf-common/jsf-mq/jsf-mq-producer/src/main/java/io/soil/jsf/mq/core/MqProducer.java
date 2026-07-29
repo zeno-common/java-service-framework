@@ -1,6 +1,6 @@
 package io.soil.jsf.mq.core;
 
-import io.soil.jsf.mq.exception.MqException;
+import io.soil.jsf.mq.exception.MqProducerException;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * jsf-mq 统一消息生产者，封装 {@link RocketMQTemplate} 的常用发送能力。
  * <p>
  * 对外提供同步发送、异步发送（带回调）、单向发送以及延迟消息四类核心 API，
- * 所有发送异常统一包装为 {@link MqException} 并保留原始异常链。
+ * 所有发送异常统一包装为 {@link MqProducerException} 并保留原始异常链。
  * </p>
  * <p>
  * destination 支持 {@code topic} 及 {@code topic:tag} 两种格式。
@@ -40,12 +40,12 @@ public class MqProducer {
         try {
             return rocketMQTemplate.syncSend(destination, payload);
         } catch (Exception e) {
-            throw MqException.sendFailed(e, "同步消息发送失败 destination={0}", destination);
+            throw MqProducerException.sendFailed(e, "同步消息发送失败 destination={0}", destination);
         }
     }
 
     /**
-     * 异步发送消息（仅成功回调，异常将包装为 {@link MqException} 抛出）
+     * 异步发送消息（仅成功回调，异常将包装为 {@link MqProducerException} 抛出）
      *
      * @param destination topic 或 topic:tag
      * @param payload     消息体
@@ -66,7 +66,7 @@ public class MqProducer {
      * @param destination topic 或 topic:tag
      * @param payload     消息体
      * @param onSuccess   成功回调
-     * @param onError     失败回调（入参为包装后的 {@link MqException}）
+     * @param onError     失败回调（入参为包装后的 {@link MqProducerException}）
      */
     public void sendAsync(String destination, Object payload,
                           Consumer<SendResult> onSuccess, Consumer<Throwable> onError) {
@@ -78,7 +78,7 @@ public class MqProducer {
 
             @Override
             public void onException(Throwable throwable) {
-                onError.accept(MqException.sendFailed(throwable, "异步消息发送失败 destination={0}", destination));
+                onError.accept(MqProducerException.sendFailed(throwable, "异步消息发送失败 destination={0}", destination));
             }
         });
     }
@@ -93,7 +93,7 @@ public class MqProducer {
         try {
             rocketMQTemplate.sendOneWay(destination, payload);
         } catch (Exception e) {
-            throw MqException.sendFailed(e, "单向消息发送失败 destination={0}", destination);
+            throw MqProducerException.sendFailed(e, "单向消息发送失败 destination={0}", destination);
         }
     }
 
@@ -110,7 +110,7 @@ public class MqProducer {
             Message<?> message = MessageBuilder.withPayload(payload).build();
             return rocketMQTemplate.syncSend(destination, message, 3000L, delayLevel);
         } catch (Exception e) {
-            throw MqException.sendFailed(e, "延迟消息发送失败 destination={0}, delayLevel={1}", destination, delayLevel);
+            throw MqProducerException.sendFailed(e, "延迟消息发送失败 destination={0}, delayLevel={1}", destination, delayLevel);
         }
     }
 }

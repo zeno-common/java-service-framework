@@ -1,7 +1,7 @@
 # jsf-mq 消息可靠性设计
 
 > 归档时间：2026-07-29
-> 涉及模块：`jsf-mq-common` / `jsf-mq-producer` / `jsf-mq-consumer`（核心拆分）、`jsf-mq-producer-mongodb` / `jsf-mq-consumer-mongodb`（MongoDB 落库实现）
+> 涉及模块：`jsf-mq-producer` / `jsf-mq-consumer`（核心拆分，两侧完全独立，异常与配置各归各侧）、`jsf-mq-producer-mongodb` / `jsf-mq-consumer-mongodb`（MongoDB 落库实现）
 
 ## 1. 背景与目标
 
@@ -126,7 +126,7 @@ protected abstract ConsumeStatus handleMessage(T message) throws Exception;
 | 返回值 | 基类行为 | 适用场景 |
 |---|---|---|
 | `SUCCESS`（或 null） | ack 确认；幂等 markProcessed | 正常 |
-| `RETRY_LATER` | 抛 `MqException` 触发 broker 重试（16 次后进 `%DLQ%+group`）；幂等 release | 瞬时故障（下游超时等） |
+| `RETRY_LATER` | 抛 `MqConsumerException` 触发 broker 重试（16 次后进 `%DLQ%+group`）；幂等 release | 瞬时故障（下游超时等） |
 | `DISCARD` | 不重试；`MqConsumeFailureHandler` 落库；幂等 release（不阻塞重放） | 不可重试失败（格式错误、业务拒绝） |
 
 处理逻辑抛出的异常默认按 `RETRY_LATER` 处理。
@@ -143,21 +143,22 @@ protected abstract ConsumeStatus handleMessage(T message) throws Exception;
 **所有状态字段一律定义为枚举**（`MqOutboxStatus` / `MqConsumeFailureStatus`），禁止魔法字符串。
 Spring Data Mongo 按枚举 `name()` 存为字符串，可直接在库里按 `status: "PENDING"` 查询，无需自定义 Converter。
 
-## 7. 配置项（前缀 `jsf.mq.outbox`）
+## 7. 配置项（前缀 `jsf.mq.producer.outbox`）
 
 ```yaml
 jsf:
   mq:
-    outbox:
-      immediate-send: true          # 事务提交后立即投递（false 则纯 relay 轮询）
-      max-attempts: 16              # 重试耗尽阈值，耗尽置 FAILED
-      lock-seconds: 60              # 认领锁时长，SENDING 超时视为僵尸行
-      initial-backoff-seconds: 10   # 首次退避，同时是 insert 时的 relay 缓冲
-      max-backoff-seconds: 3600     # 退避上限
-      relay:
-        enabled: true               # relay 兜底开关（需应用 @EnableScheduling）
-        interval: 5000              # 扫描间隔（毫秒）
-        batch-size: 100             # 单轮批量
+    producer:
+      outbox:
+        immediate-send: true          # 事务提交后立即投递（false 则纯 relay 轮询）
+        max-attempts: 16              # 重试耗尽阈值，耗尽置 FAILED
+        lock-seconds: 60              # 认领锁时长，SENDING 超时视为僵尸行
+        initial-backoff-seconds: 10   # 首次退避，同时是 insert 时的 relay 缓冲
+        max-backoff-seconds: 3600     # 退避上限
+        relay:
+          enabled: true               # relay 兜底开关（需应用 @EnableScheduling）
+          interval: 5000              # 扫描间隔（毫秒）
+          batch-size: 100             # 单轮批量
 ```
 
 ## 8. MongoDB Collection 设计

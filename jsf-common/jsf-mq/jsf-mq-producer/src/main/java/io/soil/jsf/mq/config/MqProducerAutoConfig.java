@@ -1,7 +1,7 @@
 package io.soil.jsf.mq.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.soil.jsf.mq.config.properties.MqProperties;
+import io.soil.jsf.mq.config.properties.MqProducerProperties;
 import io.soil.jsf.mq.core.MqProducer;
 import io.soil.jsf.mq.core.outbox.MqOutbox;
 import io.soil.jsf.mq.core.outbox.MqOutboxRelay;
@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(RocketMQTemplate.class)
+@EnableConfigurationProperties(MqProducerProperties.class)
 public class MqProducerAutoConfig {
 
     /** 注册统一消息生产者。 */
@@ -40,7 +42,7 @@ public class MqProducerAutoConfig {
     @ConditionalOnMissingBean
     @ConditionalOnBean(MqOutboxStore.class)
     public MqOutbox mqOutbox(MqOutboxStore store, MqProducer producer,
-                             ObjectProvider<ObjectMapper> objectMapper, MqProperties properties) {
+                             ObjectProvider<ObjectMapper> objectMapper, MqProducerProperties properties) {
         return new MqOutbox(store, producer, objectMapper.getIfAvailable(ObjectMapper::new), properties.getOutbox());
     }
 
@@ -48,8 +50,8 @@ public class MqProducerAutoConfig {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnBean(MqOutbox.class)
-    @ConditionalOnProperty(prefix = "jsf.mq.outbox.relay", name = "enabled", havingValue = "true", matchIfMissing = true)
-    public MqOutboxRelay mqOutboxRelay(MqOutboxStore store, MqOutbox outbox, MqProperties properties) {
+    @ConditionalOnProperty(prefix = "jsf.mq.producer.outbox.relay", name = "enabled", havingValue = "true", matchIfMissing = true)
+    public MqOutboxRelay mqOutboxRelay(MqOutboxStore store, MqOutbox outbox, MqProducerProperties properties) {
         return new MqOutboxRelay(store, outbox, properties.getOutbox());
     }
 }

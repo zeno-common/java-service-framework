@@ -25,11 +25,6 @@
           </dependency>
           <dependency>
             <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-mq-common</artifactId>
-            <version>${jsf.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-mq-producer</artifactId>
             <version>${jsf.version}</version>
           </dependency>

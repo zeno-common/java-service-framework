@@ -1,11 +1,13 @@
 package io.soil.jsf.mq.config;
 
+import io.soil.jsf.mq.config.properties.MqConsumerProperties;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureHandler;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureStore;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(RocketMQTemplate.class)
+@EnableConfigurationProperties(MqConsumerProperties.class)
 public class MqConsumerAutoConfig {
 
     /** 注册消费失败处理器（DISCARD 落库 / 重放编排）。 */

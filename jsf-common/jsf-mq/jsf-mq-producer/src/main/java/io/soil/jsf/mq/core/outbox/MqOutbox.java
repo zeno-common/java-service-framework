@@ -1,9 +1,9 @@
 package io.soil.jsf.mq.core.outbox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.soil.jsf.mq.config.properties.MqProperties;
+import io.soil.jsf.mq.config.properties.MqProducerProperties;
 import io.soil.jsf.mq.core.MqProducer;
-import io.soil.jsf.mq.exception.MqException;
+import io.soil.jsf.mq.exception.MqProducerException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -33,10 +33,10 @@ public class MqOutbox {
     private final MqOutboxStore store;
     private final MqProducer producer;
     private final ObjectMapper objectMapper;
-    private final MqProperties.Outbox props;
+    private final MqProducerProperties.Outbox props;
 
     public MqOutbox(MqOutboxStore store, MqProducer producer,
-                    ObjectMapper objectMapper, MqProperties.Outbox props) {
+                    ObjectMapper objectMapper, MqProducerProperties.Outbox props) {
         this.store = store;
         this.producer = producer;
         this.objectMapper = objectMapper;
@@ -128,7 +128,7 @@ public class MqOutbox {
         try {
             return objectMapper.writeValueAsString(payload);
         } catch (Exception e) {
-            throw MqException.sendFailed(e, "Outbox 消息序列化失败 topic={0}", topic);
+            throw MqProducerException.sendFailed(e, "Outbox 消息序列化失败 topic={0}", topic);
         }
     }
 }

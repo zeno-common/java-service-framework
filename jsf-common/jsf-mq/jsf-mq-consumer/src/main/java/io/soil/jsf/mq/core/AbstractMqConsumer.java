@@ -3,7 +3,7 @@ package io.soil.jsf.mq.core;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureHandler;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureRecord;
 import io.soil.jsf.mq.core.idempotent.MqIdempotentStore;
-import io.soil.jsf.mq.exception.MqException;
+import io.soil.jsf.mq.exception.MqConsumerException;
 import io.soil.jsf.util.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -21,7 +21,7 @@ import java.time.OffsetDateTime;
  * {@link #handleMessage(Object)} 返回 {@link ConsumeStatus} 三态结果：
  * <ul>
  *   <li>{@link ConsumeStatus#SUCCESS} — 正常确认（ack）；</li>
- *   <li>{@link ConsumeStatus#RETRY_LATER} — 抛出 {@link MqException} 触发 broker 重试
+ *   <li>{@link ConsumeStatus#RETRY_LATER} — 抛出 {@link MqConsumerException} 触发 broker 重试
  *       （重试耗尽后自动进入 {@code %DLQ%+group} 死信队列）；处理逻辑抛出的异常默认按此处理；</li>
  *   <li>{@link ConsumeStatus#DISCARD} — 不重试，交由 {@link MqConsumeFailureHandler} 落库，供后续重放。</li>
  * </ul>
@@ -88,7 +88,7 @@ public abstract class AbstractMqConsumer<T> implements RocketMQListener<T> {
                 if (claimed) {
                     idempotentStore.release(key);
                 }
-                throw MqException.consumeFailed(error, "消息消费失败，触发 broker 重试 consumer={0}", getClass().getName());
+                throw MqConsumerException.consumeFailed(error, "消息消费失败，触发 broker 重试 consumer={0}", getClass().getName());
             }
             case DISCARD -> {
                 if (claimed) {

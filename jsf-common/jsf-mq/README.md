@@ -4,7 +4,7 @@
 
 ## 功能特性
 
-- **统一生产者** — 同步 / 异步 / 单向 / 延迟四类发送，异常统一包装为 `MqException`
+- **统一生产者** — 同步 / 异步 / 单向 / 延迟四类发送，异常统一包装为 `MqProducerException`
 - **消费者基类** — 继承 `AbstractMqConsumer`，返回 `SUCCESS / RETRY_LATER / DISCARD` 三态结果
 - **消费幂等** — 可选 `idempotentKey` 启用去重（依赖 `MqIdempotentStore` 实现）
 - **可靠发送（Outbox）** — 事务内落库 + 提交后立即投递 + relay 兜底补发，弥合"本地写库与发消息"的原子性缺口
@@ -12,11 +12,10 @@
 
 ## 模块与引入依赖
 
-jsf-mq 已按职责拆分为 5 个模块，按需引入：
+jsf-mq 已按职责拆分为 4 个模块，producer 与 consumer 完全独立（异常、配置各归各侧），按需引入：
 
 | 模块 | 职责 | 何时引入 |
 |------|------|---------|
-| `jsf-mq-common` | 统一异常、配置属性（共享基础） | 必选（被 producer/consumer 传递依赖，通常无需显式声明） |
 | `jsf-mq-producer` | 统一生产者 API、Outbox 可靠发送 | 需要发消息 / Outbox 时 |
 | `jsf-mq-consumer` | 消费者基类、失败落库重放、幂等抽象 | 需要消费消息时 |
 | `jsf-mq-producer-mongodb` | Outbox 的 MongoDB 落库实现 | 使用 Outbox 可靠发送时 |
@@ -48,27 +47,29 @@ jsf-mq 已按职责拆分为 5 个模块，按需引入：
 </dependency>
 ```
 
-> `jsf-mq-common` 由 producer/consumer 传递引入，无需显式声明。
 > 仅引入 producer/consumer 也能发/收消息；`jsf-mq-*-mongodb` 提供 MongoDB 落库实现，引入后对应可靠性组件才会被条件装配。
-> RocketMQ 连接信息复用 `rocketmq.name-server`（或 `jsf.mq.name-server`）。
+> RocketMQ 连接信息默认复用 `rocketmq.name-server`，生产者/消费者也可各自独立配置 NameServer。
 
 ## 配置
 
+生产者与消费者配置完全独立（前缀分别为 `jsf.mq.producer` / `jsf.mq.consumer`）：
+
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `jsf.mq.name-server` | `127.0.0.1:9876` | RocketMQ NameServer 地址（缺省回退） |
-| `jsf.mq.consumer.enabled` | `true` | 是否启用消费者（本地开发可关闭避免连接 RocketMQ） |
+| `jsf.mq.producer.name-server` | 回退 `rocketmq.name-server`，再回退 `127.0.0.1:9876` | 生产者侧 NameServer 地址 |
 | `jsf.mq.producer.group` | `jsf-mq-producer` | 默认生产者组 |
-| `jsf.mq.outbox.immediate-send` | `true` | 事务提交后立即投递（false 则纯 relay 轮询） |
-| `jsf.mq.outbox.max-attempts` | `16` | 最大发送尝试，耗尽置 FAILED（人工介入） |
-| `jsf.mq.outbox.lock-seconds` | `60` | 认领锁时长（秒），SENDING 超时视为僵尸行 |
-| `jsf.mq.outbox.initial-backoff-seconds` | `10` | 首次退避（秒），同时作为 insert 时 relay 缓冲 |
-| `jsf.mq.outbox.max-backoff-seconds` | `3600` | 退避上限（秒） |
-| `jsf.mq.outbox.relay.enabled` | `true` | relay 兜底开关（需应用 `@EnableScheduling`） |
-| `jsf.mq.outbox.relay.interval` | `5000` | 扫描间隔（毫秒） |
-| `jsf.mq.outbox.relay.batch-size` | `100` | 单轮扫描批量 |
+| `jsf.mq.consumer.name-server` | 回退 `rocketmq.name-server`，再回退 `127.0.0.1:9876` | 消费者侧 NameServer 地址 |
+| `jsf.mq.consumer.enabled` | `true` | 是否启用消费者（本地开发可关闭避免连接 RocketMQ） |
+| `jsf.mq.producer.outbox.immediate-send` | `true` | 事务提交后立即投递（false 则纯 relay 轮询） |
+| `jsf.mq.producer.outbox.max-attempts` | `16` | 最大发送尝试，耗尽置 FAILED（人工介入） |
+| `jsf.mq.producer.outbox.lock-seconds` | `60` | 认领锁时长（秒），SENDING 超时视为僵尸行 |
+| `jsf.mq.producer.outbox.initial-backoff-seconds` | `10` | 首次退避（秒），同时作为 insert 时 relay 缓冲 |
+| `jsf.mq.producer.outbox.max-backoff-seconds` | `3600` | 退避上限（秒） |
+| `jsf.mq.producer.outbox.relay.enabled` | `true` | relay 兜底开关（需应用 `@EnableScheduling`） |
+| `jsf.mq.producer.outbox.relay.interval` | `5000` | 扫描间隔（毫秒） |
+| `jsf.mq.producer.outbox.relay.batch-size` | `100` | 单轮扫描批量 |
 
-完整配置项见 [MqProperties](../../docs/jsf-docs/skills/jsf-mq-doc/references/io.soil.jsf.mq.config.properties/MqProperties.md)。
+完整配置项见 [生产者配置属性](../../docs/jsf-docs/skills/jsf-mq-doc/references/io.soil.jsf.mq.config.properties/MqProducerProperties.md) 与 [消费者配置属性](../../docs/jsf-docs/skills/jsf-mq-doc/references/io.soil.jsf.mq.config.properties/MqConsumerProperties.md)。
 
 ## 快速开始
 
@@ -104,7 +105,7 @@ public class OrderConsumer extends AbstractMqConsumer<OrderCreatedEvent> {
             orderService.process(msg);
             return ConsumeStatus.SUCCESS;
         } catch (TransientException e) {     // 瞬时故障
-            return ConsumeStatus.RETRY_LATER; // 抛 MqException 触发 broker 重试
+            return ConsumeStatus.RETRY_LATER; // 抛 MqConsumerException 触发 broker 重试
         } catch (InvalidDataException e) {   // 不可重试
             return ConsumeStatus.DISCARD;     // 落库 + 待重放
         }
@@ -173,9 +174,9 @@ public class FailureReplayJob {
 
 | 自动配置类（所在模块） | 容器存在 | 注册 Bean |
 |------------------------|----------|-----------|
-| `MqPropertiesAutoConfig`（jsf-mq-common） | 始终 | 配置属性 `MqProperties` |
-| `MqProducerAutoConfig`（jsf-mq-producer） | 始终 | `MqProducer` |
+| `MqProducerAutoConfig`（jsf-mq-producer） | 始终 | `MqProducer`、配置属性 `MqProducerProperties` |
 | `MqProducerAutoConfig`（jsf-mq-producer） | `MqOutboxStore`（引入 jsf-mq-producer-mongodb） | `MqOutbox` + `MqOutboxRelay`（需 `@EnableScheduling`） |
+| `MqConsumerAutoConfig`（jsf-mq-consumer） | 始终 | 配置属性 `MqConsumerProperties` |
 | `MqConsumerAutoConfig`（jsf-mq-consumer） | `MqConsumeFailureStore`（引入 jsf-mq-consumer-mongodb） | `MqConsumeFailureHandler` |
 
 所有 Bean 均 `@ConditionalOnMissingBean`，业务可自定义实现覆盖。各 Store 接口由 `jsf-mq-*-mongodb` 以 MongoDB 实现，未来可新增其他存储实现而核心无需改动。

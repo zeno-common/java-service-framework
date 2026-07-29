@@ -1,9 +1,9 @@
 package io.soil.jsf.mq.core.outbox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.soil.jsf.mq.config.properties.MqProperties;
+import io.soil.jsf.mq.config.properties.MqProducerProperties;
 import io.soil.jsf.mq.core.MqProducer;
-import io.soil.jsf.mq.exception.MqException;
+import io.soil.jsf.mq.exception.MqProducerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,14 +28,14 @@ class MqOutboxTest {
 
     private MqOutboxStore store;
     private MqProducer producer;
-    private MqProperties.Outbox props;
+    private MqProducerProperties.Outbox props;
     private MqOutbox outbox;
 
     @BeforeEach
     void setUp() {
         store = mock(MqOutboxStore.class);
         producer = mock(MqProducer.class);
-        props = new MqProperties.Outbox();
+        props = new MqProducerProperties.Outbox();
         outbox = new MqOutbox(store, producer, new ObjectMapper(), props);
         // insert 回填 id（模拟存储实现行为）
         doAnswer(inv -> {
@@ -81,7 +81,7 @@ class MqOutboxTest {
     @Test
     void dispatch_sendFails_marksFailedWithBackoff() {
         when(store.claim(eq(100L), anyLong())).thenReturn(true);
-        when(producer.send(anyString(), any())).thenThrow(MqException.sendFailed(new RuntimeException("down"), "x"));
+        when(producer.send(anyString(), any())).thenThrow(MqProducerException.sendFailed(new RuntimeException("down"), "x"));
         MqOutboxMessage msg = message();
 
         assertFalse(outbox.dispatch(msg));
@@ -93,7 +93,7 @@ class MqOutboxTest {
     @Test
     void dispatch_attemptsExhausted_marksDead() {
         when(store.claim(eq(100L), anyLong())).thenReturn(true);
-        when(producer.send(anyString(), any())).thenThrow(MqException.sendFailed(new RuntimeException("down"), "x"));
+        when(producer.send(anyString(), any())).thenThrow(MqProducerException.sendFailed(new RuntimeException("down"), "x"));
         MqOutboxMessage msg = message();
         msg.setAttempt(props.getMaxAttempts() - 1);
 
