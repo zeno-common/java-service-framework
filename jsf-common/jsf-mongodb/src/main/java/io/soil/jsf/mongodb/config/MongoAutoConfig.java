@@ -66,6 +66,7 @@ public class MongoAutoConfig {
      * @return Entity Callback 实例
      */
     @Bean
+    @ConditionalOnMissingBean
     public MongoDocIdCallback leafIdCallback() {
         return new MongoDocIdCallback();
     }

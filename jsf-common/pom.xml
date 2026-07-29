@@ -11,6 +11,8 @@
 
   <modules>
     <module>jsf-mongodb</module>
+    <module>jsf-mq</module>
+    <module>jsf-mq-mongodb</module>
   </modules>
 
 

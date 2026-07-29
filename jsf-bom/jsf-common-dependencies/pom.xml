@@ -23,6 +23,16 @@
             <artifactId>jsf-mongodb</artifactId>
             <version>${jsf.version}</version>
           </dependency>
+          <dependency>
+            <groupId>io.soil.jsf</groupId>
+            <artifactId>jsf-mq</artifactId>
+            <version>${jsf.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.soil.jsf</groupId>
+            <artifactId>jsf-mq-mongodb</artifactId>
+            <version>${jsf.version}</version>
+          </dependency>
         </dependencies>
     </dependencyManagement>
 

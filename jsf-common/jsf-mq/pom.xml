@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.soil.jsf</groupId>
+    <artifactId>jsf-dependencies</artifactId>
+    <version>0.0.1</version>
+    <relativePath/>
+  </parent>
+
+  <artifactId>jsf-mq</artifactId>
+  <packaging>jar</packaging>
+
+  <description>
+    JSF 通用消息中间件模块，基于 RocketMQ 5.5 封装统一的生产者 API 与消费者基类。
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-spring-boot-starter</artifactId>
+    </dependency>
+    <!-- 显式锁定 RocketMQ 5.5 客户端版本，覆盖 starter 传递依赖 -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-client</artifactId>
+      <version>5.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.soil.jsf</groupId>
+      <artifactId>jsf-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+    </dependency>
+    <!-- Outbox 事务同步（TransactionSynchronizationManager） -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>
