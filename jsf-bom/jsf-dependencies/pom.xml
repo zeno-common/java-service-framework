@@ -26,8 +26,6 @@
 
     <!-- SMS 配置 -->
     <sms4j.version>3.3.4</sms4j.version>
-    <!-- mq配置 -->
-    <rocketmq.version>2.3.0</rocketmq.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <!-- 插件版本号 -->
     <docker-plugin.version>0.48.1</docker-plugin.version>
@@ -166,13 +164,6 @@
         <groupId>io.github.linpeilie</groupId>
         <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
         <version>${mapstruct-plus.version}</version>
-      </dependency>
-
-      <!--消息队列-->
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-spring-boot-starter</artifactId>
-        <version>${rocketmq.version}</version>
       </dependency>
 
       <!-- logback appenders -->
