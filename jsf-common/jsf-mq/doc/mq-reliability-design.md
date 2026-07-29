@@ -113,27 +113,29 @@ tryClaim(key, ttl) ──true──► handleMessage ──成功──► markP
 
 - 声明带 `claimExpireAt`：消费者崩溃未 release 时，声明过期后可被原子接管（findAndModify），避免消息丢失；
 - Mongo 实现：`key` 唯一索引保证 insert 原子性；`expireAt` TTL 索引自动清理历史（默认保留 7 天）；
-- 消费者启用方式：覆写 `idempotentKey(T message)` 返回非空键即可（需容器存在 `MqIdempotentStore` 实现）。
+- 消费者启用方式：覆写 `idempotentKey(T message, MqConsumeContext ctx)` 返回非空键即可（需容器存在 `MqIdempotentStore` 实现）。
 
 ## 5. 消费失败：ConsumeStatus 三态 + 失败落库 + 重放
 
 ### 5.1 三态枚举（替代原 `rethrowOnError()` 布尔开关）
 
 ```java
-protected abstract ConsumeStatus handleMessage(T message) throws Exception;
+protected abstract ConsumeStatus handleMessage(T message, MqConsumeContext ctx) throws Exception;
 ```
 
 | 返回值 | 基类行为 | 适用场景 |
 |---|---|---|
 | `SUCCESS`（或 null） | ack 确认；幂等 markProcessed | 正常 |
-| `RETRY_LATER` | 抛 `MqConsumerException` 触发 broker 重试（16 次后进 `%DLQ%+group`）；幂等 release | 瞬时故障（下游超时等） |
-| `DISCARD` | 不重试；`MqConsumeFailureHandler` 落库；幂等 release（不阻塞重放） | 不可重试失败（格式错误、业务拒绝） |
+| `RETRY_LATER` | 抛 `MqConsumerException` 触发 broker 重试（16 次后进 `%DLQ%+group`）；幂等 release；**最后一次投递（即将进死信队列前）由 `MqConsumeFailureHandler` 落库 reason=`RETRY_EXHAUSTED`** | 瞬时故障（下游超时等） |
+| `DISCARD` | 不重试；`MqConsumeFailureHandler` 落库 reason=`DISCARDED`；幂等 release（不阻塞重放） | 不可重试失败（格式错误、业务拒绝） |
 
 处理逻辑抛出的异常默认按 `RETRY_LATER` 处理。
 
 ### 5.2 失败记录与重放
 
-- 落库内容：topic/tag/consumerGroup/consumerClass/bizKey/payload/errorMsg/stackTrace/failedAt；
+- 落库内容：topic/tag/consumerGroup/consumerClass/bizKey/payload/reason/errorMsg/stackTrace/failedAt；
+- `reason` 枚举 `MqConsumeFailureReason`：`DISCARDED`（业务主动丢弃）/ `RETRY_EXHAUSTED`（broker 重试耗尽）；`RETRY_EXHAUSTED` 仅在最后一次投递时落库（避免每次重试重复记录）；
+- `errorMsg`/`stackTrace` 在 `RETRY_EXHAUSTED`（携带异常）与主动 `DISCARD` 时均会填充；
 - 状态枚举 `MqConsumeFailureStatus`：`PENDING → REPLAYED`；
 - 重放入口：`MqConsumeFailureHandler.replay(limit, replayer)`，单条失败保持 PENDING 不影响其余；
 - `save` 内部吞掉存储异常（只记 error 日志），失败落库不反噬消费线程。

@@ -8,8 +8,9 @@ import java.time.OffsetDateTime;
 /**
  * 消费失败记录（核心 POJO，与具体存储无关）。
  * <p>
- * 消费者判定 {@code DISCARD} 时由 {@link MqConsumeFailureHandler} 持久化，
- * 保留完整的消息上下文（payload + 异常 + 元数据），供后续人工排查与重放补偿。
+ * 消费者判定 {@code DISCARD} 或 broker 重试耗尽（即将进死信队列）时由 {@link MqConsumeFailureHandler}
+ * 持久化，保留完整的消息上下文（payload + 异常 + 元数据）与 {@link MqConsumeFailureReason}，
+ * 供后续人工排查与重放补偿。
  * </p>
  *
  * @author zeno.w
@@ -36,8 +37,14 @@ public class MqConsumeFailureRecord {
     /** 消息 ID（如有） */
     private String messageId;
 
+    /** 消息 keys（业务键 / 幂等键，如有） */
+    private String keys;
+
     /** 业务键 / 幂等键（如有） */
     private String bizKey;
+
+    /** 失败原因（DISCARD 主动丢弃 / RETRY_EXHAUSTED 重试耗尽） */
+    private MqConsumeFailureReason reason;
 
     /** 消息体 JSON */
     private String payload;

@@ -1,6 +1,7 @@
 package io.soil.jsf.mq.mongodb.doc;
 
 import io.soil.jsf.mongodb.doc.BaseMongoDoc;
+import io.soil.jsf.mq.core.failure.MqConsumeFailureReason;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +39,10 @@ public class MqConsumeFailureDoc extends BaseMongoDoc<Long> {
 
     @Field("bizKey")
     private String bizKey;
+
+    /** 失败原因（枚举，按 name() 存字符串） */
+    @Field("reason")
+    private MqConsumeFailureReason reason;
 
     /** 消息体 JSON */
     @Field("payload")

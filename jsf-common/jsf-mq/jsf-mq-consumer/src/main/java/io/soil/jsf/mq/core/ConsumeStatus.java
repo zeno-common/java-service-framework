@@ -1,7 +1,7 @@
 package io.soil.jsf.mq.core;
 
 /**
- * 消费结果状态，由 {@link AbstractMqConsumer#handleMessage(Object)} 返回，
+ * 消费结果状态，由 {@link AbstractMqConsumer#handleMessage(Object, MqConsumeContext)} 返回，
  * 基类据此决定 ack / broker 重试 / 失败落库。
  *
  * @author zeno.w

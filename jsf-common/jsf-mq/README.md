@@ -81,8 +81,8 @@ public class OrderEventPublisher {
     private MqProducer mqProducer;
 
     public void publish(OrderCreatedEvent event) {
-        mqProducer.send("order-topic", "created", event);              // 同步
-        mqProducer.sendDelay("order-topic", "created", event, 3);      // 延迟（delayLevel 1~18）
+        mqProducer.send("order-topic:created", event);                // 同步
+        mqProducer.sendDelay("order-topic:created", event, 3);         // 延迟（delayLevel 1~18）
     }
 }
 ```
@@ -98,7 +98,7 @@ public class OrderConsumer extends AbstractMqConsumer<OrderCreatedEvent> {
     private OrderService orderService;
 
     @Override
-    protected ConsumeStatus handleMessage(OrderCreatedEvent msg) throws Exception {
+    protected ConsumeStatus handleMessage(OrderCreatedEvent msg, MqConsumeContext ctx) throws Exception {
         try {
             orderService.process(msg);
             return ConsumeStatus.SUCCESS;
@@ -111,13 +111,45 @@ public class OrderConsumer extends AbstractMqConsumer<OrderCreatedEvent> {
 
     // 启用幂等去重（需容器存在 MqIdempotentStore 实现，如引入 jsf-mq-consumer-mongodb）
     @Override
-    protected String idempotentKey(OrderCreatedEvent msg) {
+    protected String idempotentKey(OrderCreatedEvent msg, MqConsumeContext ctx) {
         return msg.getOrderId();
     }
 }
 ```
 
-> `RETRY_LATER` 由 broker 自动指数退避重试（默认 16 次后进 `%DLQ%+group` 死信队列）；`DISCARD` 由 `MqConsumeFailureHandler` 落库。
+> `RETRY_LATER` 由 broker 自动指数退避重试（默认 16 次后进 `%DLQ%+group` 死信队列）；**最后一次重试（即将进死信队列前）会由 `MqConsumeFailureHandler` 落库**（reason=`RETRY_EXHAUSTED`），避免异常类失败无声丢失。`DISCARD` 由 `MqConsumeFailureHandler` 落库（reason=`DISCARDED`）。两类失败均供后续重放。
+
+### 2.1 消息元信息（metadata）
+
+jsf-mq 不把业务 payload 包成信封，而是用 RocketMQ 的 **keys / 用户属性** 承载元信息，链路字节保持纯业务 JSON，兼容 Outbox 与既有消费者。
+
+**发送侧** —— 通过 `MqSendOptions` 设置 keys（业务键 / 幂等键）与自定义属性（如 traceId / eventType）：
+
+```java
+mqProducer.send("order-topic", "created", MqSendOptions.builder()
+        .keys(order.getOrderId())                       // consumer 侧 getKeys() 可读
+        .property("traceId", traceId)                   // consumer 侧 getProperty("traceId") 可读
+        .build(), event);
+```
+
+**消费侧** —— 实现带 `MqConsumeContext` 的 `handleMessage` 读取元信息（`ctx` 始终可用，不使用时忽略即可）：
+
+```java
+@Override
+protected ConsumeStatus handleMessage(OrderCreatedEvent msg, MqConsumeContext ctx) throws Exception {
+    log.info("收到消息 msgId={} keys={} traceId={}", ctx.getMessageId(), ctx.getKeys(), ctx.getProperty("traceId"));
+    orderService.process(msg);   // 业务不变，msg 即反序列化后的业务体
+    return ConsumeStatus.SUCCESS;
+}
+
+// 用发送方 keys 作为幂等键（需引入 jsf-mq-consumer-mongodb）
+@Override
+protected String idempotentKey(OrderCreatedEvent msg, MqConsumeContext ctx) {
+    return ctx.getKeys();
+}
+```
+
+> `MqConsumeContext` 提供 `messageId / topic / tag / bornTimestamp / keys / properties`；`topic`、`tag` 取消息真实值（而非消费端 selector 表达式），`DISCARD` 落库的记录也更准确。
 
 ### 3. 可靠发送（Outbox）
 

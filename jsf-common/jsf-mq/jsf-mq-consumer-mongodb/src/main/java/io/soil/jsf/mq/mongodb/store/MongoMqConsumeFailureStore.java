@@ -1,6 +1,7 @@
 package io.soil.jsf.mq.mongodb.store;
 
 import io.soil.jsf.mq.core.failure.MqConsumeFailureRecord;
+import io.soil.jsf.mq.core.failure.MqConsumeFailureReason;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureStatus;
 import io.soil.jsf.mq.core.failure.MqConsumeFailureStore;
 import io.soil.jsf.mq.mongodb.doc.MqConsumeFailureDoc;
@@ -35,6 +36,7 @@ public class MongoMqConsumeFailureStore implements MqConsumeFailureStore {
         doc.setConsumerClass(record.getConsumerClass());
         doc.setMessageId(record.getMessageId());
         doc.setBizKey(record.getBizKey());
+        doc.setReason(record.getReason());
         doc.setPayload(record.getPayload());
         doc.setErrorMsg(record.getErrorMsg());
         doc.setStackTrace(record.getStackTrace());
@@ -71,6 +73,7 @@ public class MongoMqConsumeFailureStore implements MqConsumeFailureStore {
         record.setConsumerClass(doc.getConsumerClass());
         record.setMessageId(doc.getMessageId());
         record.setBizKey(doc.getBizKey());
+        record.setReason(doc.getReason());
         record.setPayload(doc.getPayload());
         record.setErrorMsg(doc.getErrorMsg());
         record.setStackTrace(doc.getStackTrace());
