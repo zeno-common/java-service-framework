@@ -56,9 +56,7 @@ jsf-mq 已按职责拆分为 4 个模块，producer 与 consumer 完全独立（
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `jsf.mq.producer.name-server` | 回退 `rocketmq.name-server`，再回退 `127.0.0.1:9876` | 生产者侧 NameServer 地址 |
 | `jsf.mq.producer.group` | `jsf-mq-producer` | 默认生产者组 |
-| `jsf.mq.consumer.name-server` | 回退 `rocketmq.name-server`，再回退 `127.0.0.1:9876` | 消费者侧 NameServer 地址 |
 | `jsf.mq.consumer.enabled` | `true` | 是否启用消费者（本地开发可关闭避免连接 RocketMQ） |
 | `jsf.mq.producer.outbox.immediate-send` | `true` | 事务提交后立即投递（false 则纯 relay 轮询） |
 | `jsf.mq.producer.outbox.max-attempts` | `16` | 最大发送尝试，耗尽置 FAILED（人工介入） |

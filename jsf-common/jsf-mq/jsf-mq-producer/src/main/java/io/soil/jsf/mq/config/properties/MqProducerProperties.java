@@ -1,5 +1,6 @@
 package io.soil.jsf.mq.config.properties;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -12,11 +13,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author zeno.w
  */
+@Data
 @ConfigurationProperties(prefix = "jsf.mq.producer")
 public class MqProducerProperties {
-
-    @Value("${rocketmq.name-server:127.0.0.1:9876}")
-    private String nameServer;
 
     /** 是否启用生产者（本地开发可关闭以避免连接 RocketMQ） */
     private boolean enabled = true;
@@ -26,35 +25,8 @@ public class MqProducerProperties {
 
     private final Outbox outbox = new Outbox();
 
-    public String getNameServer() {
-        return nameServer;
-    }
-
-    public void setNameServer(String nameServer) {
-        this.nameServer = nameServer;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public Outbox getOutbox() {
-        return outbox;
-    }
-
     /** Outbox（可靠发送）相关配置，前缀 {@code jsf.mq.producer.outbox} */
+    @Data
     public static class Outbox {
         /** 是否在事务提交后立即投递（false 则纯 relay 轮询模式） */
         private boolean immediateSend = true;
@@ -69,51 +41,8 @@ public class MqProducerProperties {
 
         private final Relay relay = new Relay();
 
-        public boolean isImmediateSend() {
-            return immediateSend;
-        }
-
-        public void setImmediateSend(boolean immediateSend) {
-            this.immediateSend = immediateSend;
-        }
-
-        public int getMaxAttempts() {
-            return maxAttempts;
-        }
-
-        public void setMaxAttempts(int maxAttempts) {
-            this.maxAttempts = maxAttempts;
-        }
-
-        public long getLockSeconds() {
-            return lockSeconds;
-        }
-
-        public void setLockSeconds(long lockSeconds) {
-            this.lockSeconds = lockSeconds;
-        }
-
-        public long getInitialBackoffSeconds() {
-            return initialBackoffSeconds;
-        }
-
-        public void setInitialBackoffSeconds(long initialBackoffSeconds) {
-            this.initialBackoffSeconds = initialBackoffSeconds;
-        }
-
-        public long getMaxBackoffSeconds() {
-            return maxBackoffSeconds;
-        }
-
-        public void setMaxBackoffSeconds(long maxBackoffSeconds) {
-            this.maxBackoffSeconds = maxBackoffSeconds;
-        }
-
-        public Relay getRelay() {
-            return relay;
-        }
-
         /** Outbox relay 兜底补发配置，前缀 {@code jsf.mq.producer.outbox.relay} */
+        @Data
         public static class Relay {
             /** 是否启用 relay 定时兜底（需应用开启 @EnableScheduling） */
             private boolean enabled = true;

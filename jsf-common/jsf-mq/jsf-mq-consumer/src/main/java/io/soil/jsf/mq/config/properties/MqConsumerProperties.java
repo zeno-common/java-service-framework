@@ -17,9 +17,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "jsf.mq.consumer")
 public class MqConsumerProperties {
 
-    @Value("${rocketmq.name-server:127.0.0.1:9876}")
-    private String nameServer;
-
     /** 是否启用消费者（本地开发可关闭以避免连接 RocketMQ） */
     private boolean enabled = true;
 }
