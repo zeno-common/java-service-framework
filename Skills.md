@@ -2,7 +2,7 @@ npx skills add https://github.com/zeno-common/soil-coding-skills --skill spring-
 
 npx skills update zeno-common/soil-coding-skills  --agent trae-cn --all
 
-
+npx skills add https://github.com/zeno-common/soil-coding-skills --all
 npx skills add https://github.com/zeno-common/soil-coding-skills --list
 
 npx skills add https://github.com/Fission-AI/OpenSpec --all

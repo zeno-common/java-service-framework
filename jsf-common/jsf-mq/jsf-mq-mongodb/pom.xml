@@ -21,7 +21,7 @@
   <dependencies>
     <dependency>
       <groupId>io.soil.jsf</groupId>
-      <artifactId>jsf-mq</artifactId>
+      <artifactId>jsf-mq-core</artifactId>
       <version>0.0.1</version>
     </dependency>
     <dependency>
