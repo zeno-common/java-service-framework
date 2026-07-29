@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.soil.jsf</groupId>
+    <artifactId>jsf-dependencies</artifactId>
+    <version>0.0.1</version>
+    <relativePath/>
+  </parent>
+
+  <artifactId>jsf-mq-consumer</artifactId>
+  <packaging>jar</packaging>
+
+  <description>
+    jsf-mq 消费者侧：消费者基类（三态结果 + 可选幂等）、消费失败落库与重放、幂等存储抽象。
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.soil.jsf</groupId>
+      <artifactId>jsf-mq-common</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-spring-boot-starter</artifactId>
+    </dependency>
+    <!-- 显式锁定 RocketMQ 5.5 客户端版本，覆盖 starter 传递依赖 -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-client</artifactId>
+      <version>5.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.soil.jsf</groupId>
+      <artifactId>jsf-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.soil.jsf</groupId>
+      <artifactId>jsf-unit-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

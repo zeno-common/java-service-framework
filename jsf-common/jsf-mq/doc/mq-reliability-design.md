@@ -1,7 +1,7 @@
 # jsf-mq 消息可靠性设计
 
 > 归档时间：2026-07-29
-> 涉及模块：`jsf-mq`（核心）、`jsf-mq-mongodb`（MongoDB 落库实现）
+> 涉及模块：`jsf-mq-common` / `jsf-mq-producer` / `jsf-mq-consumer`（核心拆分）、`jsf-mq-producer-mongodb` / `jsf-mq-consumer-mongodb`（MongoDB 落库实现）
 
 ## 1. 背景与目标
 
@@ -13,11 +13,11 @@ RocketMQ 为 **at-least-once** 语义：消息可能重复投递、发送与业�
 
 ## 2. 架构：依赖倒置（DIP）
 
-核心 `jsf-mq` **只定义接口与编排逻辑，零存储依赖**；落库方式作为可插拔实现模块提供。当前提供 MongoDB 实现（`jsf-mq-mongodb`），未来支持其他存储只需新增同类模块实现三个 Store 接口。
+核心 **只定义接口与编排逻辑，零存储依赖**；落库方式作为可插拔实现模块提供。当前提供 MongoDB 实现（`jsf-mq-producer-mongodb` 负责 Outbox、`jsf-mq-consumer-mongodb` 负责幂等/失败记录），未来支持其他存储只需新增同类模块实现对应 Store 接口。
 
 ```mermaid
 flowchart LR
-    subgraph core["jsf-mq (核心，零存储依赖)"]
+    subgraph core["jsf-mq 核心（common/producer/consumer，零存储依赖）"]
       I1[MqIdempotentStore]
       I2[MqConsumeFailureStore]
       I3[MqOutboxStore]
@@ -25,21 +25,27 @@ flowchart LR
       H[MqConsumeFailureHandler]
       C[AbstractMqConsumer + ConsumeStatus]
     end
-    subgraph mongo["jsf-mq-mongodb (实现)"]
+    subgraph mongop["jsf-mq-producer-mongodb (实现)"]
+      M3[MongoMqOutboxStore]
+      A1[MqMongoOutboxAutoConfig]
+    end
+    subgraph mongoc["jsf-mq-consumer-mongodb (实现)"]
       M1[MongoMqIdempotentStore]
       M2[MongoMqConsumeFailureStore]
-      M3[MongoMqOutboxStore]
-      A[MqMongoAutoConfig]
+      A2[MqMongoConsumeAutoConfig]
     end
-    core -.定义接口.-> mongo
-    mongo -.注册 Store Bean.-> core
-    mongo --> JB[jsf-mongodb: BaseMongoDoc / MongoTemplate / 事务]
+    core -.定义接口.-> mongop
+    core -.定义接口.-> mongoc
+    mongop -.注册 Store Bean.-> core
+    mongoc -.注册 Store Bean.-> core
+    mongop --> JB[jsf-mongodb: BaseMongoDoc / MongoTemplate / 事务]
+    mongoc --> JB
 ```
 
 装配机制：
 
-- `MqMongoAutoConfig` 标注 `@AutoConfigureBefore(MqAutoConfig.class)`，保证 Store Bean 先注册；
-- 核心 `MqAutoConfig` 通过 `@ConditionalOnBean(XxxStore.class)` 条件装配 `MqOutbox` / `MqOutboxRelay` / `MqConsumeFailureHandler`；
+- `MqMongoOutboxAutoConfig` 标注 `@AutoConfigureBefore(MqProducerAutoConfig.class)`，`MqMongoConsumeAutoConfig` 标注 `@AutoConfigureBefore(MqConsumerAutoConfig.class)`，保证 Store Bean 先注册；
+- 核心 `MqProducerAutoConfig` / `MqConsumerAutoConfig` 分别通过 `@ConditionalOnBean(XxxStore.class)` 条件装配 `MqOutbox` / `MqOutboxRelay` / `MqConsumeFailureHandler`；
 - 所有 Bean 均 `@ConditionalOnMissingBean`，业务可自定义实现覆盖。
 
 ## 3. 发送可靠：Outbox + 立即投递 + relay 兜底

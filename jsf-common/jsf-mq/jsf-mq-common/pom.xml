@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.soil.jsf</groupId>
+    <artifactId>jsf-dependencies</artifactId>
+    <version>0.0.1</version>
+    <relativePath/>
+  </parent>
+
+  <artifactId>jsf-mq-common</artifactId>
+  <packaging>jar</packaging>
+
+  <description>
+    jsf-mq 共享抽象与配置：统一异常、配置属性、配置启用自动配置。
+    生产者侧（jsf-mq-producer）与消费者侧（jsf-mq-consumer）的公共基础，自身不包含任何 RocketMQ 生产/消费逻辑。
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.soil.jsf</groupId>
+      <artifactId>jsf-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+</project>
