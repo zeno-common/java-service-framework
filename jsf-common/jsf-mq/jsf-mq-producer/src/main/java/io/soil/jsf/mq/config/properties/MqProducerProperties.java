@@ -18,6 +18,9 @@ public class MqProducerProperties {
     @Value("${rocketmq.name-server:127.0.0.1:9876}")
     private String nameServer;
 
+    /** 是否启用生产者（本地开发可关闭以避免连接 RocketMQ） */
+    private boolean enabled = true;
+
     /** 默认生产者组 */
     private String group = "jsf-mq-producer";
 
@@ -29,6 +32,14 @@ public class MqProducerProperties {
 
     public void setNameServer(String nameServer) {
         this.nameServer = nameServer;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getGroup() {

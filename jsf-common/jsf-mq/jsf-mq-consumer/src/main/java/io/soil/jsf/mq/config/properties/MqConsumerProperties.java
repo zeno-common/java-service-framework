@@ -1,5 +1,6 @@
 package io.soil.jsf.mq.config.properties;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -12,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author zeno.w
  */
+@Data
 @ConfigurationProperties(prefix = "jsf.mq.consumer")
 public class MqConsumerProperties {
 
@@ -20,20 +22,4 @@ public class MqConsumerProperties {
 
     /** 是否启用消费者（本地开发可关闭以避免连接 RocketMQ） */
     private boolean enabled = true;
-
-    public String getNameServer() {
-        return nameServer;
-    }
-
-    public void setNameServer(String nameServer) {
-        this.nameServer = nameServer;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

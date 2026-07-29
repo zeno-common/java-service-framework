@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(RocketMQTemplate.class)
+@ConditionalOnProperty(prefix = "jsf.mq.producer", name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(MqProducerProperties.class)
 public class MqProducerAutoConfig {
 
