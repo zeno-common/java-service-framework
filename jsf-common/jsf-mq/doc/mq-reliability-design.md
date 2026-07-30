@@ -1,7 +1,7 @@
 # jsf-mq 消息可靠性设计
 
 > 归档时间：2026-07-29
-> 涉及模块：`jsf-mq-producer` / `jsf-mq-consumer`（核心拆分，两侧完全独立，异常与配置各归各侧）、`jsf-mq-producer-mongodb` / `jsf-mq-consumer-mongodb`（MongoDB 落库实现）
+> 涉及模块：`jsf-mq-core`（生产者与消费者核心，两侧完全独立，异常与配置各归各侧）、`jsf-mq-mongodb`（MongoDB 落库实现）
 
 ## 1. 背景与目标
 
@@ -13,11 +13,11 @@ RocketMQ 为 **at-least-once** 语义：消息可能重复投递、发送与业�
 
 ## 2. 架构：依赖倒置（DIP）
 
-核心 **只定义接口与编排逻辑，零存储依赖**；落库方式作为可插拔实现模块提供。当前提供 MongoDB 实现（`jsf-mq-producer-mongodb` 负责 Outbox、`jsf-mq-consumer-mongodb` 负责幂等/失败记录），未来支持其他存储只需新增同类模块实现对应 Store 接口。
+核心 **只定义接口与编排逻辑，零存储依赖**；落库方式作为可插拔实现模块提供。当前提供 MongoDB 实现（`jsf-mq-mongodb` 负责 Outbox 落库、幂等/失败记录），未来支持其他存储只需新增同类模块实现对应 Store 接口。
 
 ```mermaid
 flowchart LR
-    subgraph core["jsf-mq 核心（common/producer/consumer，零存储依赖）"]
+    subgraph core["jsf-mq-core（consumer/producer，零存储依赖）"]
       I1[MqIdempotentStore]
       I2[MqConsumeFailureStore]
       I3[MqOutboxStore]
@@ -25,13 +25,11 @@ flowchart LR
       H[MqConsumeFailureHandler]
       C[AbstractMqConsumer + ConsumeStatus]
     end
-    subgraph mongop["jsf-mq-producer-mongodb (实现)"]
+    subgraph mongop["jsf-mq-mongodb (实现)"]
       M3[MongoMqOutboxStore]
-      A1[MqMongoOutboxAutoConfig]
-    end
-    subgraph mongoc["jsf-mq-consumer-mongodb (实现)"]
       M1[MongoMqIdempotentStore]
       M2[MongoMqConsumeFailureStore]
+      A1[MqMongoOutboxAutoConfig]
       A2[MqMongoConsumeAutoConfig]
     end
     core -.定义接口.-> mongop

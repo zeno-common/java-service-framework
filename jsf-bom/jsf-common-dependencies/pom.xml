@@ -25,22 +25,12 @@
           </dependency>
           <dependency>
             <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-mq-producer</artifactId>
+            <artifactId>jsf-mq-core</artifactId>
             <version>${jsf.version}</version>
           </dependency>
           <dependency>
             <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-mq-consumer</artifactId>
-            <version>${jsf.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-mq-producer-mongodb</artifactId>
-            <version>${jsf.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.soil.jsf</groupId>
-            <artifactId>jsf-mq-consumer-mongodb</artifactId>
+            <artifactId>jsf-mq-mongodb</artifactId>
             <version>${jsf.version}</version>
           </dependency>
         </dependencies>

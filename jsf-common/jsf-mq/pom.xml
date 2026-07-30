@@ -13,10 +13,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>jsf-mq-producer</module>
-    <module>jsf-mq-consumer</module>
-    <module>jsf-mq-producer-mongodb</module>
-    <module>jsf-mq-consumer-mongodb</module>
+    <module>jsf-mq-core</module>
+    <module>jsf-mq-mongodb</module>
   </modules>
 
 </project>

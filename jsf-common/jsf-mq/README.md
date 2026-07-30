@@ -12,14 +12,12 @@
 
 ## 模块与引入依赖
 
-jsf-mq 已按职责拆分为 4 个模块，producer 与 consumer 完全独立（异常、配置各归各侧），按需引入：
+jsf-mq 由 2 个模块组成，core 含生产者与消费者核心（异常、配置各归各侧），mongodb 提供两侧共用的可靠性落库实现，按需引入：
 
 | 模块 | 职责 | 何时引入 |
 |------|------|---------|
-| `jsf-mq-producer` | 统一生产者 API、Outbox 可靠发送 | 需要发消息 / Outbox 时 |
-| `jsf-mq-consumer` | 消费者基类、失败落库重放、幂等抽象 | 需要消费消息时 |
-| `jsf-mq-producer-mongodb` | Outbox 的 MongoDB 落库实现 | 使用 Outbox 可靠发送时 |
-| `jsf-mq-consumer-mongodb` | 幂等去重 / 消费失败记录的 MongoDB 实现 | 启用消费幂等 / 失败重放时 |
+| `jsf-mq-core` | 统一生产者 API、Outbox 可靠发送、消费者基类、失败落库重放、幂等抽象 | 需要发/收消息时（必选） |
+| `jsf-mq-mongodb` | Outbox / 幂等去重 / 消费失败记录的 MongoDB 落库实现 | 使用 Outbox 可靠发送、启用消费幂等 / 失败重放时 |
 
 前置条件：通过 [jsf-bom](../../jsf-bom/README.md) 管理依赖版本（继承 jsf-parent 或导入 jsf-dependencies BOM）。
 
@@ -27,27 +25,17 @@ jsf-mq 已按职责拆分为 4 个模块，producer 与 consumer 完全独立（
 <!-- 发/收消息核心（必选） -->
 <dependency>
     <groupId>io.soil.jsf</groupId>
-    <artifactId>jsf-mq-producer</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.soil.jsf</groupId>
-    <artifactId>jsf-mq-consumer</artifactId>
+    <artifactId>jsf-mq-core</artifactId>
 </dependency>
 
 <!-- 可靠性组件 MongoDB 落库实现（按需） -->
-<!-- 仅生产者侧需要 Outbox 可靠发送 -->
 <dependency>
     <groupId>io.soil.jsf</groupId>
-    <artifactId>jsf-mq-producer-mongodb</artifactId>
-</dependency>
-<!-- 仅消费者侧需要幂等去重 / 失败重放 -->
-<dependency>
-    <groupId>io.soil.jsf</groupId>
-    <artifactId>jsf-mq-consumer-mongodb</artifactId>
+    <artifactId>jsf-mq-mongodb</artifactId>
 </dependency>
 ```
 
-> 仅引入 producer/consumer 也能发/收消息；`jsf-mq-*-mongodb` 提供 MongoDB 落库实现，引入后对应可靠性组件才会被条件装配。
+> 仅引入 `jsf-mq-core` 也能发/收消息；`jsf-mq-mongodb` 提供 MongoDB 落库实现，引入后 `MqOutbox` / `MqOutboxRelay` / `MqConsumeFailureHandler` 才会被条件装配。
 > RocketMQ 连接信息默认复用 `rocketmq.name-server`，生产者/消费者也可各自独立配置 NameServer。
 
 ## 配置
@@ -109,7 +97,7 @@ public class OrderConsumer extends AbstractMqConsumer<OrderCreatedEvent> {
         }
     }
 
-    // 启用幂等去重（需容器存在 MqIdempotentStore 实现，如引入 jsf-mq-consumer-mongodb）
+    // 启用幂等去重（需容器存在 MqIdempotentStore 实现，如引入 jsf-mq-mongodb）
     @Override
     protected String idempotentKey(OrderCreatedEvent msg, MqConsumeContext ctx) {
         return msg.getOrderId();
@@ -142,7 +130,7 @@ protected ConsumeStatus handleMessage(OrderCreatedEvent msg, MqConsumeContext ct
     return ConsumeStatus.SUCCESS;
 }
 
-// 用发送方 keys 作为幂等键（需引入 jsf-mq-consumer-mongodb）
+// 用发送方 keys 作为幂等键（需引入 jsf-mq-mongodb）
 @Override
 protected String idempotentKey(OrderCreatedEvent msg, MqConsumeContext ctx) {
     return ctx.getKeys();
@@ -204,12 +192,12 @@ public class FailureReplayJob {
 
 | 自动配置类（所在模块） | 容器存在 | 注册 Bean |
 |------------------------|----------|-----------|
-| `MqProducerAutoConfig`（jsf-mq-producer） | 始终 | `MqProducer`、配置属性 `MqProducerProperties` |
-| `MqProducerAutoConfig`（jsf-mq-producer） | `MqOutboxStore`（引入 jsf-mq-producer-mongodb） | `MqOutbox` + `MqOutboxRelay`（需 `@EnableScheduling`） |
-| `MqConsumerAutoConfig`（jsf-mq-consumer） | 始终 | 配置属性 `MqConsumerProperties` |
-| `MqConsumerAutoConfig`（jsf-mq-consumer） | `MqConsumeFailureStore`（引入 jsf-mq-consumer-mongodb） | `MqConsumeFailureHandler` |
+| `MqProducerAutoConfig`（jsf-mq-core） | 始终 | `MqProducer`、配置属性 `MqProducerProperties` |
+| `MqProducerAutoConfig`（jsf-mq-core） | `MqOutboxStore`（引入 jsf-mq-mongodb） | `MqOutbox` + `MqOutboxRelay`（需 `@EnableScheduling`） |
+| `MqConsumerAutoConfig`（jsf-mq-core） | 始终 | 配置属性 `MqConsumerProperties` |
+| `MqConsumerAutoConfig`（jsf-mq-core） | `MqConsumeFailureStore`（引入 jsf-mq-mongodb） | `MqConsumeFailureHandler` |
 
-所有 Bean 均 `@ConditionalOnMissingBean`，业务可自定义实现覆盖。各 Store 接口由 `jsf-mq-*-mongodb` 以 MongoDB 实现，未来可新增其他存储实现而核心无需改动。
+所有 Bean 均 `@ConditionalOnMissingBean`，业务可自定义实现覆盖。各 Store 接口由 `jsf-mq-mongodb` 以 MongoDB 实现，未来可新增其他存储实现而核心无需改动。
 
 ## 设计文档
 

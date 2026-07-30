@@ -1,0 +1,2 @@
+io.soil.jsf.mq.mongodb.config.MqMongoOutboxAutoConfig
+io.soil.jsf.mq.mongodb.config.MqMongoConsumeFailureAutoConfig
