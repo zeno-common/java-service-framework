@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
-    <version>0.0.1</version>
+    <version>jsf.0.1.1</version>
     <relativePath/>
   </parent>
   <modelVersion>4.0.0</modelVersion>

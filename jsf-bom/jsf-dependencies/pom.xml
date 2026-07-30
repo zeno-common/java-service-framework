@@ -7,11 +7,11 @@
 
   <groupId>io.soil.jsf</groupId>
   <artifactId>jsf-dependencies</artifactId>
-  <version>0.0.1</version>
+  <version>jsf.0.1.1</version>
   <packaging>pom</packaging>
 
   <properties>
-    <jsf.version>0.0.1</jsf.version>
+    <jsf.version>jsf.0.1.1</jsf.version>
     <skywalking-toolkit.version>9.3.0</skywalking-toolkit.version>
     <lombok.version>1.18.46</lombok.version>
     <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
