@@ -16,6 +16,7 @@
   <packaging>pom</packaging>
 
   <properties>
+    <docker.host>http://workbench.soil:3000</docker.host>
   </properties>
 
   <dependencies>
@@ -29,29 +30,23 @@
       </properties>
     </profile>
     <profile>
-      <id>d-backend</id>
-      <properties>
-        <env>backend</env>
-      </properties>
-    </profile>
-    <profile>
       <id>d-dev</id>
       <properties>
         <env>dev</env>
       </properties>
     </profile>
     <profile>
-      <id>d-uat</id>
+      <id>d-staing</id>
       <properties>
-        <env>uat</env>
-        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
+        <env>staing</env>
+<!--        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>-->
       </properties>
     </profile>
     <profile>
       <id>d-prod</id>
       <properties>
         <env>prod</env>
-        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>
+<!--        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>-->
       </properties>
     </profile>
 
