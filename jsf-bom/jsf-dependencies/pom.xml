@@ -7,11 +7,11 @@
 
   <groupId>io.soil.jsf</groupId>
   <artifactId>jsf-dependencies</artifactId>
-  <version>jsf.0.1.1</version>
+  <version>jsf.0.1.2</version>
   <packaging>pom</packaging>
 
   <properties>
-    <jsf.version>jsf.0.1.1</jsf.version>
+    <jsf.version>jsf.0.1.2</jsf.version>
     <skywalking-toolkit.version>9.3.0</skywalking-toolkit.version>
     <lombok.version>1.18.46</lombok.version>
     <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
@@ -28,7 +28,7 @@
     <sms4j.version>3.3.4</sms4j.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <!-- 插件版本号 -->
-    <docker-plugin.version>0.48.1</docker-plugin.version>
+    <docker-plugin.version>0.49.0</docker-plugin.version>
     <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
     <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
@@ -344,7 +344,7 @@
           <sourceDirectories>
             <dir>${project.basedir}/src/main/java</dir>
           </sourceDirectories>
-          <outputDir>${project.basedir}/${artifactId}-${version}</outputDir>
+          <outputDir>${project.basedir}/${project.artifactId}-${project.version}</outputDir>
           <documentedVisibilities>
             <visibility>PUBLIC</visibility>
             <visibility>INTERNAL</visibility>

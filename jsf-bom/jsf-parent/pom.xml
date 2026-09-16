@@ -8,7 +8,7 @@
   <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
-    <version>jsf.0.1.1</version>
+    <version>jsf.0.1.2</version>
     <relativePath/>
   </parent>
 
@@ -49,11 +49,10 @@
 <!--        <docker.push.registry>crpi-gq7wp4xitzhccl7a.cn-guangzhou.personal.cr.aliyuncs.com</docker.push.registry>-->
       </properties>
     </profile>
-
     <profile>
       <id>pd-docker</id>
       <properties>
-        <docker.from>eclipse-temurin:21.0.4_7-jre-alpine</docker.from>
+        <docker.from>eclipse-temurin:25-jre-alpine</docker.from>
       </properties>
       <build>
         <plugins>
@@ -72,8 +71,7 @@
                   <build>
                     <from>${docker.from}</from>
                     <tags>
-                      <tag>${env}-${project.version}</tag>
-                      <tag>${env}-latest</tag>
+                      <tag>${project.version}</tag>
                     </tags>
                     <workdir>/programs</workdir>
                     <assemblies>
@@ -89,11 +87,27 @@
                     <entryPoint>
                       <exec>
                         <arg>java</arg>
-                        <arg>-Dspring.profiles.active=${env}</arg>
+                        <arg>-Dfile.encoding=UTF-8</arg>
+                        <arg>-Djdk.virtualThreadScheduler.maxPoolSize=256</arg>
+                        <arg>-Xss512k</arg>
+                        <arg>-Xlog:gc*:file=/programs/logs/gc.log:time,uptime,level,tags:filecount=3,filesize=100M</arg>
+                        <arg>-XX:+UseG1GC</arg>
+                        <arg>-XX:+UseCompactObjectHeaders</arg>
+                        <arg>-XX:MaxDirectMemorySize=512m</arg>
+                        <arg>-XX:+AlwaysPreTouch</arg>
+                        <arg>-XX:+HeapDumpOnOutOfMemoryError</arg>
+                        <arg>-XX:HeapDumpPath=/programs/heapdump.hprof</arg>
+                        <arg>-XX:ConcGCThreads=4</arg>
+                        <arg>-Djava.security.egd=file:/dev/urandom</arg>
                         <arg>-jar</arg>
                         <arg>${project.build.finalName}.jar</arg>
                       </exec>
                     </entryPoint>
+                    <env>
+                      <TZ>Asia/Shanghai</TZ>
+                      <LANG>C.UTF-8</LANG>
+                      <LC_ALL>C.UTF-8</LC_ALL>
+                    </env>
                   </build>
                   <run>
                     <!--                    <hostname>${project.artifactId}-${env}</hostname>-->
