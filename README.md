@@ -61,7 +61,7 @@ mvn clean package -P d-local
 mvn clean package -P d-prod,pd-docker
 ```
 
-多环境 Profile（`d-local` / `d-backend` / `d-dev` / `d-uat` / `d-prod`）与 Docker 配置详见 [jsf-bom/README.md](./jsf-bom/README.md)。
+多环境 Profile（`d-local` / `d-dev` / `d-staing` / `d-prod`，另加 `pd-docker` 启用镜像构建）与 Docker 配置详见 [jsf-bom/README.md](./jsf-bom/README.md)。
 
 ## 目录结构
 
@@ -102,7 +102,7 @@ java-service-framework/
 ```
 
 
-> **前置条件**：已安装 Node.js 且 `npx` 可用。目录联结（`mklink /J`）在部分系统需管理员权限终端。
+> **前置条件**：已安装 Node.js 且 `npx` 可用。目录联结（`mklink /J`）在普通权限终端即可创建，无需管理员（与符号链接 `mklink /D` 不同）。
 >
 > **执行策略**：若直接运行 `.ps1` 被系统拦截，请以管理员身份执行 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`，或使用 `powershell -ExecutionPolicy Bypass -File docs\scripts\install-agent-skills.ps1 ...`。
 >

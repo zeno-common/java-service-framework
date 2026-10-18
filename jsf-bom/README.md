@@ -1,4 +1,4 @@
-﻿# jsf-bom
+# jsf-bom
 
 JSF 框架的 Maven BOM（Bill of Materials）模块，统一管理所有依赖版本、构建配置和多环境 Profile。
 
@@ -11,7 +11,7 @@ JSF 框架的 Maven BOM（Bill of Materials）模块，统一管理所有依赖�
 | [jsf-spring-dependencies](./jsf-spring-dependencies) | Spring Boot & Spring Cloud 依赖管理 |
 | [jsf-alibaba-dependencies](./jsf-alibaba-dependencies) | Spring Cloud Alibaba / Nacos / Sentinel / Seata / Dubbo |
 | [jsf-tools-dependencies](./jsf-tools-dependencies) | JSF 通用模块（jsf-pojo / jsf-util / jsf-wsf / jsf-leaf-id / jsf-unit-test） |
-| [jsf-common-dependencies](./jsf-common-dependencies) | JSF 组件模块（jsf-mongodb） |
+| [jsf-common-dependencies](./jsf-common-dependencies) | JSF 组件模块（jsf-mongodb / jsf-mq-core / jsf-mq-mongodb） |
 | [jsf-jdbc-dependencies](./jsf-jdbc-dependencies) | 数据库 & ORM（MyBatis-Flex / PageHelper） |
 | [jsf-redis-dependencies](./jsf-redis-dependencies) | Redis（Redisson） |
 
@@ -20,13 +20,13 @@ JSF 框架的 Maven BOM（Bill of Materials）模块，统一管理所有依赖�
 ```
 jsf-parent
 └── jsf-dependencies (聚合入口)
-    ├── jsf-spring-dependencies       (Spring Boot 3.5.15 / Spring Cloud 2025.0.3)
-    ├── jsf-alibaba-dependencies      (Spring Cloud Alibaba 2025.0.0.0 / Nacos 2.5.1 / Dubbo 3.0.0)
+    ├── jsf-spring-dependencies       (Spring Boot 3.5.16 / Spring Cloud 2025.0.3)
+    ├── jsf-alibaba-dependencies      (Spring Cloud Alibaba 2025.0.0.0 / Nacos 3.2.4 / Dubbo 3.0.0)
     ├── jsf-tools-dependencies       (jsf-pojo / jsf-util / jsf-wsf / jsf-leaf-id / jsf-unit-test)
-    ├── jsf-common-dependencies   (jsf-mongodb)
+    ├── jsf-common-dependencies   (jsf-mongodb / jsf-mq-core / jsf-mq-mongodb)
     ├── jsf-jdbc-dependencies         (MyBatis-Flex 1.11.7 / PageHelper 6.1.1)
     ├── jsf-redis-dependencies        (Redisson 3.49.0)
-    └── [直接管理]                    (Sa-Token Dubbo3 / RocketMQ / Lombok / FastJSON / SkyWalking / ...)
+    └── [直接管理]                    (Lombok / Jackson / FastJSON / SkyWalking / Commons / ...)
 ```
 
 ## 使用方式
@@ -37,7 +37,7 @@ jsf-parent
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
-    <version>0.0.1</version>
+    <version>jsf.0.1.2</version>
 </parent>
 ```
 
@@ -49,7 +49,7 @@ jsf-parent
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
-    <version>0.0.1</version>
+    <version>jsf.0.1.2</version>
 </parent>
 ```
 
@@ -61,7 +61,7 @@ jsf-parent
         <dependency>
             <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-dependencies</artifactId>
-            <version>0.0.1</version>
+            <version>jsf.0.1.2</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -87,7 +87,7 @@ jsf-parent
 <dependency>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-util</artifactId>
-    <version>0.0.1</version>  <!-- 不要写！ -->
+    <version>jsf.0.1.2</version>  <!-- 不要写！ -->
 </dependency>
 ```
 
@@ -98,7 +98,7 @@ jsf-parent
 | 依赖 | 版本 |
 |------|------|
 | Java | 21 |
-| Spring Boot | 3.5.15 |
+| Spring Boot | 3.5.16 |
 | Spring Cloud | 2025.0.3 |
 | Spring Cloud Alibaba | 2025.0.0.0 |
 
@@ -106,12 +106,12 @@ jsf-parent
 
 | 依赖 | 版本 | 来源 |
 |------|------|------|
-| Nacos Client | 2.5.1 | jsf-alibaba-dependencies |
+| Nacos Client | 3.2.4 | jsf-alibaba-dependencies |
 | Sentinel | *(由 Spring Cloud Alibaba BOM 管理)* | jsf-alibaba-dependencies |
 | Seata | *(由 Spring Cloud Alibaba BOM 管理)* | jsf-alibaba-dependencies |
 | Dubbo | 3.0.0 | jsf-alibaba-dependencies |
 | Redisson | 3.49.0 | jsf-redis-dependencies |
-| RocketMQ | 2.3.0 | jsf-dependencies 直接管理 |
+| RocketMQ spring-boot-starter | 2.3.6 | jsf-mq-core 自带（非本 BOM 管理） |
 
 ### 数据库
 
@@ -152,13 +152,14 @@ jsf-parent
 
 通过 `-P <profileId>` 激活对应环境：
 
-| Profile ID | env 值 | Docker Push | 用途 |
-|------------|--------|-------------|------|
-| `d-local` | local | — | 本地开发 |
-| `d-backend` | backend | — | 后端开发环境 |
-| `d-dev` | dev | — | 开发环境 |
-| `d-uat` | uat | ✅ 阿里云 ACR | 用户验收测试 |
-| `d-prod` | prod | ✅ 阿里云 ACR | 生产环境 |
+| Profile ID | env 值 | 用途 |
+|------------|--------|------|
+| `d-local` | local | 本地开发 |
+| `d-dev` | dev | 开发环境 |
+| `d-staing` | staing | 预发/仿真环境 |
+| `d-prod` | prod | 生产环境 |
+
+> `jsf-parent` 当前仅定义以上 4 个环境 Profile；镜像推送仓库（`docker.push.registry`）在 pom 中处于注释状态，未默认启用。
 
 ### Docker 构建
 
@@ -176,10 +177,10 @@ Docker 配置：
 
 | 配置项 | 值 |
 |--------|-----|
-| 基础镜像 | `eclipse-temurin:21.0.4_7-jre-alpine` |
+| 基础镜像 | `eclipse-temurin:25-jre-alpine` |
 | 镜像名 | `soil/${project.artifactId}` |
-| Tag 规则 | `${env}-${project.version}` / `${env}-latest` |
-| 入口命令 | `java -Dspring.profiles.active=${env} -jar ${project.build.finalName}.jar` |
+| Tag 规则 | `${project.version}-${env}` |
+| 入口命令 | `java -Dfile.encoding=UTF-8 -XX:+UseG1GC ... -jar ${project.build.finalName}.jar` |
 
 ## 构建插件
 
@@ -195,7 +196,7 @@ Docker 配置：
 | maven-checkstyle-plugin | 3.2.0 | |
 | spotbugs-maven-plugin | 4.8.6.2 | |
 | sonar-maven-plugin | 3.9.1.2184 | |
-| docker-maven-plugin | 0.48.1 | Fabric8 Docker 插件 |
+| docker-maven-plugin | 0.49.0 | Fabric8 Docker 插件 |
 | dokka-maven-plugin | 2.2.0 | Kotlin/Java 文档生成 |
 | smart-doc-maven-plugin | 3.1.2 | API 文档生成 |
 
@@ -211,7 +212,7 @@ Docker 配置：
   <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
-    <version>0.0.1</version>
+    <version>jsf.0.1.2</version>
   </parent>
 
   <artifactId>my-service</artifactId>
