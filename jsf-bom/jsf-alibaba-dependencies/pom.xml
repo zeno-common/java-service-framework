@@ -15,7 +15,7 @@
     <properties>
         <jsf.version>jsf.0.1.2</jsf.version>
         <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
-        <nacos.client.version>2.5.1</nacos.client.version>
+        <nacos.client.version>3.2.4</nacos.client.version>
         <dubbo.version>3.0.0</dubbo.version>
     </properties>
     <dependencyManagement>

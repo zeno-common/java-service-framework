@@ -13,9 +13,10 @@ target/
 
 ######################################################################
 # IDE
-.agent/
+.agents/
 .trae/
 .codebuddy/
+.qoder/
 
 ### STS ###
 .apt_generated
@@ -54,6 +55,3 @@ nbdist/
 
 skills-lock.json
 .flattened-pom.xml
-.trae
-.agents
-/jsf-common/jsf-leaf-id/jsf-leaf/

@@ -71,7 +71,7 @@
                   <build>
                     <from>${docker.from}</from>
                     <tags>
-                      <tag>${project.version}</tag>
+                      <tag>${project.version}-${env}</tag>
                     </tags>
                     <workdir>/programs</workdir>
                     <assemblies>
@@ -89,6 +89,7 @@
                         <arg>java</arg>
                         <arg>-Dfile.encoding=UTF-8</arg>
                         <arg>-Djdk.virtualThreadScheduler.maxPoolSize=256</arg>
+                        <arg>-Djava.security.egd=file:/dev/urandom</arg>
                         <arg>-Xss512k</arg>
                         <arg>-Xlog:gc*:file=/programs/logs/gc.log:time,uptime,level,tags:filecount=3,filesize=100M</arg>
                         <arg>-XX:+UseG1GC</arg>
@@ -98,7 +99,9 @@
                         <arg>-XX:+HeapDumpOnOutOfMemoryError</arg>
                         <arg>-XX:HeapDumpPath=/programs/heapdump.hprof</arg>
                         <arg>-XX:ConcGCThreads=4</arg>
-                        <arg>-Djava.security.egd=file:/dev/urandom</arg>
+                        <arg>--enable-native-access=ALL-UNNAMED</arg>
+<!--                        <arg>&#45;&#45;add-opens java.base/java.lang=ALL-UNNAMED</arg>-->
+                        <arg>--sun-misc-unsafe-memory-access=allow</arg>
                         <arg>-jar</arg>
                         <arg>${project.build.finalName}.jar</arg>
                       </exec>
