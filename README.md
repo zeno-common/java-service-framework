@@ -3,8 +3,8 @@
 Java 服务端开发脚手架，提供统一依赖版本管理（BOM）、通用工具库与可插拔的公共组件，用于快速搭建微服务或单体应用。
 
 - **GroupId**：`io.soil.jsf`
-- **当前版本**：`jsf.0.1.2`
-- **基础环境**：Java 21 / Spring Boot 3.5.x / Spring Cloud 2025.0.x
+- **当前版本**：`jsf.0.2.1`
+- **基础环境**：Java 25 / Spring Boot 3.5.x / Spring Cloud 2025.0.x
 
 ## 模块总览
 
@@ -20,13 +20,13 @@ Java 服务端开发脚手架，提供统一依赖版本管理（BOM）、通用
 
 ### 1. 引入 BOM 管理依赖版本
 
-推荐继承 `jsf-parent`，自动获得全部依赖版本管理、Java 21 配置、多环境 Profile 与 Docker 构建能力：
+推荐继承 `jsf-parent`，自动获得全部依赖版本管理、Java 25 配置、多环境 Profile 与 Docker 构建能力：
 
 ```xml
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
 </parent>
 ```
 

@@ -24,7 +24,7 @@ JSF 组件模块依赖管理，统一管理 `jsf-common` 下组件的版本。
         <dependency>
             <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-common-dependencies</artifactId>
-            <version>jsf.0.1.2</version>
+            <version>jsf.0.2.1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>

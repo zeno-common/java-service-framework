@@ -1,6 +1,6 @@
 # jsf-bom 依赖版本清单
 
-> 所有条目均已在 BOM 的 `dependencyManagement` 中托管，声明时**省略 `<version>`**。数据取自 `jsf-bom/**/pom.xml`（权威来源），版本 `jsf.0.1.2`。
+> 所有条目均已在 BOM 的 `dependencyManagement` 中托管，声明时**省略 `<version>`**。数据取自 `jsf-bom/**/pom.xml`（权威来源），版本 `jsf.0.2.1`。
 
 ## Spring / 微服务框架
 
@@ -49,7 +49,7 @@
 | mapstruct-plus-spring-boot-starter | 1.4.8 | Dubbo 映射用 |
 | apm-toolkit-logback-1.x / apm-toolkit-trace | 9.3.0 | SkyWalking |
 
-## JSF 自有构件（io.soil.jsf，均 jsf.0.1.2）
+## JSF 自有构件（io.soil.jsf，均 jsf.0.2.1）
 
 | 来源子 BOM | 构件 |
 |-----------|------|

@@ -18,7 +18,7 @@ description: "Use when coding with jsf-mq-core SDK, need API reference for Rocke
         <dependency>
             <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-dependencies</artifactId>
-            <version>jsf.0.1.2</version>
+            <version>jsf.0.2.1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -34,7 +34,7 @@ description: "Use when coding with jsf-mq-core SDK, need API reference for Rocke
 </dependencies>
 ```
 
-> 若为启动项目，也可直接继承 `io.soil.jsf:jsf-parent:jsf.0.1.2` 作为 `<parent>`，自动获得全部依赖版本管理与构建配置。
+> 若为启动项目，也可直接继承 `io.soil.jsf:jsf-parent:jsf.0.2.1` 作为 `<parent>`，自动获得全部依赖版本管理与构建配置。
 
 ## 依赖引入
 

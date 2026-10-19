@@ -1,6 +1,6 @@
 # jsf-bom 构建 Profile 与插件
 
-> 取自 `jsf-bom/jsf-parent/pom.xml` 与 `jsf-dependencies/pom.xml`（权威来源），版本 `jsf.0.1.2`。
+> 取自 `jsf-bom/jsf-parent/pom.xml` 与 `jsf-dependencies/pom.xml`（权威来源），版本 `jsf.0.2.1`。
 
 ## 多环境 Profile
 
@@ -64,6 +64,6 @@ io.fabric8 docker-maven-plugin 关键配置：
 
 | 项 | 值 |
 |----|-----|
-| Java 版本 | 21（source/target/release） |
+| Java 版本 | 25（source/target/release） |
 | 源码编码 | UTF-8 |
 | 报告输出编码 | UTF-8 |

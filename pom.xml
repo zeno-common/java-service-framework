@@ -5,7 +5,7 @@
   <groupId>io.soil.jsf</groupId>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>java-service-framework</artifactId>
-  <version>jsf.0.1.2</version>
+  <version>jsf.0.2.1</version>
   <packaging>pom</packaging>
 
   <description>
@@ -13,7 +13,7 @@
   </description>
 
   <properties>
-    <jsf.version>jsf.0.1.2</jsf.version>
+    <jsf.version>jsf.0.2.1</jsf.version>
   </properties>
 
   <modules>

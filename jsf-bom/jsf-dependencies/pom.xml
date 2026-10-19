@@ -7,11 +7,11 @@
 
   <groupId>io.soil.jsf</groupId>
   <artifactId>jsf-dependencies</artifactId>
-  <version>jsf.0.1.2</version>
+  <version>jsf.0.2.1</version>
   <packaging>pom</packaging>
 
   <properties>
-    <jsf.version>jsf.0.1.2</jsf.version>
+    <jsf.version>jsf.0.2.1</jsf.version>
     <skywalking-toolkit.version>9.3.0</skywalking-toolkit.version>
     <lombok.version>1.18.46</lombok.version>
     <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
@@ -41,9 +41,9 @@
     <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
-    <maven.compiler.release>21</maven.compiler.release>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+    <maven.compiler.release>25</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 

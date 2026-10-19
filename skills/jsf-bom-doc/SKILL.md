@@ -1,7 +1,7 @@
 ---
 name: "jsf-bom-doc"
 description: "Use when setting up Maven dependencies for an io.soil.jsf project, need the jsf-bom import methods, the managed artifact list, version catalog, or build profiles."
-version: "jsf.0.1.2"
+version: "jsf.0.2.1"
 ---
 
 # jsf-bom 使用参考
@@ -10,7 +10,7 @@ JSF 框架的 Maven BOM（Bill of Materials），统一管理所有依赖版本�
 
 ## 引入方式
 
-三选一，聚合入口为 `io.soil.jsf:jsf-dependencies`（版本统一 `jsf.0.1.2`）。
+三选一，聚合入口为 `io.soil.jsf:jsf-dependencies`（版本统一 `jsf.0.2.1`）。
 
 ### 方式一：继承 jsf-parent（推荐，用于启动项目）
 
@@ -18,11 +18,11 @@ JSF 框架的 Maven BOM（Bill of Materials），统一管理所有依赖版本�
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
 </parent>
 ```
 
-自动获得：`jsf-dependencies` 全部依赖版本管理、Java 21 编译配置、多环境 Profile、Docker 镜像构建能力。
+自动获得：`jsf-dependencies` 全部依赖版本管理、Java 25 编译配置、多环境 Profile、Docker 镜像构建能力。
 
 ### 方式二：继承 jsf-dependencies（用于非启动项目）
 
@@ -30,7 +30,7 @@ JSF 框架的 Maven BOM（Bill of Materials），统一管理所有依赖版本�
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
 </parent>
 ```
 
@@ -42,7 +42,7 @@ JSF 框架的 Maven BOM（Bill of Materials），统一管理所有依赖版本�
         <dependency>
             <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-dependencies</artifactId>
-            <version>jsf.0.1.2</version>
+            <version>jsf.0.2.1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -65,7 +65,7 @@ JSF 框架的 Maven BOM（Bill of Materials），统一管理所有依赖版本�
 <dependency>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-util</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
 </dependency>
 ```
 

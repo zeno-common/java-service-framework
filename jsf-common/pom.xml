@@ -6,7 +6,7 @@
 
   <groupId>io.soil.jsf</groupId>
   <artifactId>jsf-common</artifactId>
-  <version>jsf.0.1.2</version>
+  <version>jsf.0.2.1</version>
   <packaging>pom</packaging>
 
   <modules>

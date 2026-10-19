@@ -37,11 +37,11 @@ jsf-parent
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
 </parent>
 ```
 
-自动获得：jsf-dependencies 全部依赖版本管理、Java 21 配置、多环境 Profile、Docker 镜像构建能力。
+自动获得：jsf-dependencies 全部依赖版本管理、Java 25 配置、多环境 Profile、Docker 镜像构建能力。
 
 ### 方式二：继承 jsf-dependencies（用于非启动项目）
 
@@ -49,7 +49,7 @@ jsf-parent
 <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-dependencies</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
 </parent>
 ```
 
@@ -61,7 +61,7 @@ jsf-parent
         <dependency>
             <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-dependencies</artifactId>
-            <version>jsf.0.1.2</version>
+            <version>jsf.0.2.1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -87,7 +87,7 @@ jsf-parent
 <dependency>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-util</artifactId>
-    <version>jsf.0.1.2</version>  <!-- 不要写！ -->
+    <version>jsf.0.2.1</version>  <!-- 不要写！ -->
 </dependency>
 ```
 
@@ -97,7 +97,7 @@ jsf-parent
 
 | 依赖 | 版本 |
 |------|------|
-| Java | 21 |
+| Java | 25 |
 | Spring Boot | 3.5.16 |
 | Spring Cloud | 2025.0.3 |
 | Spring Cloud Alibaba | 2025.0.0.0 |
@@ -212,7 +212,7 @@ Docker 配置：
   <parent>
     <groupId>io.soil.jsf</groupId>
     <artifactId>jsf-parent</artifactId>
-    <version>jsf.0.1.2</version>
+    <version>jsf.0.2.1</version>
   </parent>
 
   <artifactId>my-service</artifactId>

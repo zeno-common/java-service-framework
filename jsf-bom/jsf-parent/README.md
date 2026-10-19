@@ -30,7 +30,7 @@ mvn package -P d-dev,pd-docker
 
 Docker 构建配置：
 
-- **基础镜像**: `eclipse-temurin:21.0.4_7-jre-alpine`
+- **基础镜像**: `eclipse-temurin:25-jre-alpine`
 - **镜像命名**: `soil/${project.artifactId}`
 - **Tag 规则**: `${env}-${project.version}` 和 `${env}-latest`
 - **入口命令**: `java -Dspring.profiles.active=${env} -jar ${project.build.finalName}.jar`

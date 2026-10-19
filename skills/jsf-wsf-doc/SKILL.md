@@ -1,7 +1,7 @@
 ---
 name: "jsf-wsf-doc"
 description: "Use when coding with jsf-wsf SDK, need API reference for global exception handling, Jackson serialization config, health probe and client IP utilities."
-version: "jsf.0.1.2"
+version: "jsf.0.2.1"
 ---
 
 # jsf-wsf SDK 参考
@@ -17,7 +17,7 @@ version: "jsf.0.1.2"
         <dependency>
             <groupId>io.soil.jsf</groupId>
             <artifactId>jsf-dependencies</artifactId>
-            <version>jsf.0.1.2</version>
+            <version>jsf.0.2.1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -33,7 +33,7 @@ version: "jsf.0.1.2"
 </dependencies>
 ```
 
-> 启动项目也可直接继承 `io.soil.jsf:jsf-parent:jsf.0.1.2` 作为 `<parent>`，自动获得全部依赖版本管理。
+> 启动项目也可直接继承 `io.soil.jsf:jsf-parent:jsf.0.2.1` 作为 `<parent>`，自动获得全部依赖版本管理。
 
 ## 类索引
 
